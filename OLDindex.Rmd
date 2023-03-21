@@ -1,9 +1,0 @@
---- 
-title: "208 Course Notes"
-author: "Abhishek Chakraborty"
-date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
----
-
-# Down the rabbit-hole
-

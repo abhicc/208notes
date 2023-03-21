@@ -1,7 +1,8 @@
+fig:unnamed-chunk-1
+fig:unnamed-chunk-2
+fig:unnamed-chunk-3
+fig:unnamed-chunk-4
 down-the-rabbit-hole
-the-pool-of-tears
-a-caucus-race-and-a-long-tale
-prerequisites
 what-is-machine-learning
 what-is-machine-learning-1
 question
@@ -17,3 +18,6 @@ unsupervised-learning
 supervised-learning-2
 supervised-learning-3
 supervised-learning-prediction
+the-pool-of-tears
+a-caucus-race-and-a-long-tale
+prerequisites
