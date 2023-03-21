@@ -1,0 +1,165 @@
+# What is Machine Learning?
+
+* Machine Learning is the study of tools/techniques for understanding complex datasets.
+
+* The name machine learning was coined in 1959 by Arthur Samuel.
+
+    + "Field of study that gives computers the ability to learn without being explicitly programmed."
+
+## What is Machine Learning?
+
+Tom M. Mitchell (1998) defined algorithms studied in the machine learning field as
+
+"A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E."
+
+
+### <span style="color:blue">Question!!!</span>
+
+Suppose your email program watches which emails you do or do not mark as spam, and based on that learns how to better filter spam. According to Tom Mitchell's definition, what is the task T, experience E, and performance measure P in this setting?
+
+* The number (or fraction) of emails correctly classified as spam/ham.
+* Classifying emails as spam or ham (not spam)
+* Watching you label emails as spam or ham.
+  
+## Statistical Learning vs Machine Learning vs Data Science
+
+* Machine learning arose as a subfield of Artificial Intelligence.
+* Statistical learning arose as a subfield of Statistics.
+* There is much overlap, a great deal of "cross-fertilization".
+* "Data Science" - Reflects the fact that both statistical and machine learning are about data.
+* "Machine learning" or "Data Science" are "fancier" terms.
+
+
+## Notations
+
+* Matrices - Bold, Upper-case $\mathbf{X}$
+
+* Vectors - Bold, Lower-case $\mathbf{x}$
+
+* Scalars - Normal, Lower-case $x$
+
+* Random Variables - Normal, Upper-case $X$
+
+* No. of data points/observations - $n$
+
+* No. of variables - $p$
+
+## Notations
+
+```{r , echo=FALSE,  fig.align='center', fig.cap="A matrix of dimension n x p", out.width = '40%'}
+knitr::include_graphics("EFT/DataMatrix1.png")
+```
+
+```{r , echo=FALSE,  fig.align='center', fig.cap="A n-dimensional vector", out.width = '15%'}
+knitr::include_graphics("EFT/Vector.png")
+```
+
+```{r , echo=FALSE,  fig.align='center', fig.cap="Matrix", out.width = '40%'}
+knitr::include_graphics("EFT/DataMatrix2.png")
+```
+
+## <span style="color:blue">Question!!!</span>
+
+Suppose you are given the following feature matrix.
+
+$$
+\mathbf{X}=\begin{pmatrix}
+8.5 & 11.2 & 7.0 & 9.3 \\
+8.0 & 11.5 & 13.1 & 7.4 \\
+6.4 & 9.6 & 7.0 & 6.8 \\
+9.5 & -3.2 & 14.4 & 1.6
+\end{pmatrix}
+$$
+
+* What are the corresponding values of $n$ and $p$?
+
+* What will be the dimension of the corresponding response vector \(\mathbf{y}\)?
+
+* What is the value of the 3rd feature for the 2nd observation?
+
+## <span style="color:blue">Question!!!</span>
+
+Suppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients. 
+
+* What are the values of $n$ and $p$ in this dataset?
+
+* What are the inputs/features?
+
+## Supervised vs Unsupervised
+
+```{r , echo=FALSE,  fig.align='center', fig.cap="Machine Learning Tasks", out.width = '100%'}
+knitr::include_graphics("EFT/SupUnsup.png")
+```
+
+## Supervised Learning
+
+* Labeled **training data**
+
+* Inputs/Features/Regressors/Covariates/Independent Variables
+
+```{r , echo=FALSE,  fig.align='center', out.width = '40%'}
+knitr::include_graphics("EFT/DataMatrix1.png")
+```
+
+* Response/Target/Dependent Variable
+
+```{r , echo=FALSE,  fig.align='center', out.width = '20%'}
+knitr::include_graphics("EFT/Vector.png")
+```
+
+## Supervised Learning
+
+The objective is to learn the overall pattern of the relationship between the inputs ($\mathbf{X}$) and response ($\mathbf{y}$) in order to
+
+* Investigate the relationship between inputs and response.
+* Predict for potential unseen **test** cases.
+* Assess the quality of predictions.
+
+
+Supervised Learning problems can be categorized into
+
+* **Regression** problems (response is quantitative, continuous)
+* **Classification** problems (response is qualitative, categorical)
+
+## Unsupervised Learning
+
+* No outcome variable, just $\mathbf{X}$.
+* Understand structure within data.
+    + find similar groups of observations based on features (**clustering**)
+    + find a smaller subset of features with the most variation (**dimensionality reduction**)
+* No gold-standard.
+* Easier to collect unlabeled data.
+* Useful pre-processing step for supervised learning.
+
+
+## Supervised Learning
+
+More mathematically, the "true"/population model can be represented by
+
+$$Y=f(\mathbf{X}) + \epsilon$$
+
+where $\epsilon$ is a **random** error term (includes measurement error, other discrepancies) independent of $\mathbf{X}$ and has mean zero.
+
+## Supervised Learning
+
+The primary objective is to:
+
+* **Regression**: response $Y$ is quantitative
+
+Build a model $\hat{Y} = \hat{f}(\mathbf{X})$
+
+* **Classification**: response $Y$ is qualitative
+
+Build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$
+
+
+## Supervised Learning: Prediction
+
+When we estimate $f(\mathbf{X})$ using $\hat{f}(\mathbf{X})$, then,
+
+$$E\left[Y-\hat{Y}\right]^2=E\left[f(\mathbf{X})+\epsilon - \hat{f}(\mathbf{X})\right]^2=\underbrace{\left[f(\mathbf{X})-\hat{f}(\mathbf{X})\right]^2}_{Reducible} + \underbrace{Var(\epsilon)}_{Irreducible}$$
+
+$E\left[Y-\hat{Y}\right]^2$: Expected (average) squared difference between predicted and actual (observed) response.
+
+We will focus on techniques for estimating $f(\mathbf{X})$ with the objective of minimizing the reducible error.
+
