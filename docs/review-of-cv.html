@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Review of CV | 208 Course Notes</title>
+  <meta name="description" content="Chapter 6 Review of CV | 208 Course Notes" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Review of CV | 208 Course Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Review of CV | 208 Course Notes" />
+  
+  
+  
+
+<meta name="author" content="Abhishek Chakraborty" />
+
+
+<meta name="date" content="2023-03-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="k-nearest-neighbors-classifier.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">208 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html"><i class="fa fa-check"></i><b>2</b> What is Machine Learning?</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#what-is-machine-learning-1"><i class="fa fa-check"></i><b>2.1</b> What is Machine Learning?</a></li>
+<li class="chapter" data-level="2.2" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question"><i class="fa fa-check"></i><b>2.2</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.3" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#statistical-learning-vs-machine-learning-vs-data-science"><i class="fa fa-check"></i><b>2.3</b> Statistical Learning vs Machine Learning vs Data Science</a></li>
+<li class="chapter" data-level="2.4" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#notations"><i class="fa fa-check"></i><b>2.4</b> Notations</a></li>
+<li class="chapter" data-level="2.5" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#notations-1"><i class="fa fa-check"></i><b>2.5</b> Notations</a></li>
+<li class="chapter" data-level="2.6" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-1"><i class="fa fa-check"></i><b>2.6</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.7" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-2"><i class="fa fa-check"></i><b>2.7</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.8" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-vs-unsupervised"><i class="fa fa-check"></i><b>2.8</b> Supervised vs Unsupervised</a></li>
+<li class="chapter" data-level="2.9" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>2.9</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.10" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-1"><i class="fa fa-check"></i><b>2.10</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.11" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>2.11</b> Unsupervised Learning</a></li>
+<li class="chapter" data-level="2.12" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-3"><i class="fa fa-check"></i><b>2.12</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.13" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-2"><i class="fa fa-check"></i><b>2.13</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.14" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-3"><i class="fa fa-check"></i><b>2.14</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.15" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-4"><i class="fa fa-check"></i><b>2.15</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.16" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-5"><i class="fa fa-check"></i><b>2.16</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.17" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-why-estimate-fmathbfx"><i class="fa fa-check"></i><b>2.17</b> Supervised Learning: Why Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?</a></li>
+<li class="chapter" data-level="2.18" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference"><i class="fa fa-check"></i><b>2.18</b> Supervised Learning: Prediction and Inference</a></li>
+<li class="chapter" data-level="2.19" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference-1"><i class="fa fa-check"></i><b>2.19</b> Supervised Learning: Prediction and Inference</a></li>
+<li class="chapter" data-level="2.20" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction"><i class="fa fa-check"></i><b>2.20</b> Supervised Learning: Prediction</a></li>
+<li class="chapter" data-level="2.21" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-4"><i class="fa fa-check"></i><b>2.21</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.22" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-how-do-we-estimate-fmathbfx"><i class="fa fa-check"></i><b>2.22</b> Supervised Learning: How Do We Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?</a></li>
+<li class="chapter" data-level="2.23" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-parametric-methods"><i class="fa fa-check"></i><b>2.23</b> Supervised Learning: Parametric Methods</a></li>
+<li class="chapter" data-level="2.24" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-parametric-methods-1"><i class="fa fa-check"></i><b>2.24</b> Supervised Learning: Parametric Methods</a></li>
+<li class="chapter" data-level="2.25" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-non-parametric-methods"><i class="fa fa-check"></i><b>2.25</b> Supervised Learning: Non-parametric Methods</a></li>
+<li class="chapter" data-level="2.26" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-flexibility-of-models"><i class="fa fa-check"></i><b>2.26</b> Supervised Learning: Flexibility of Models</a></li>
+<li class="chapter" data-level="2.27" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-some-trade-offs"><i class="fa fa-check"></i><b>2.27</b> Supervised Learning: Some Trade-offs</a></li>
+<li class="chapter" data-level="2.28" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-some-trade-offs-1"><i class="fa fa-check"></i><b>2.28</b> Supervised Learning: Some Trade-offs</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html"><i class="fa fa-check"></i><b>3</b> Supervised Learning: Assessing Model Accuracy</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-1"><i class="fa fa-check"></i><b>3.1</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.2" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-2"><i class="fa fa-check"></i><b>3.2</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.3" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-3"><i class="fa fa-check"></i><b>3.3</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.4" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-4"><i class="fa fa-check"></i><b>3.4</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.5" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-5"><i class="fa fa-check"></i><b>3.5</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.6" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-6"><i class="fa fa-check"></i><b>3.6</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.7" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off"><i class="fa fa-check"></i><b>3.7</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.8" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-1"><i class="fa fa-check"></i><b>3.8</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.9" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-2"><i class="fa fa-check"></i><b>3.9</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.10" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-5"><i class="fa fa-check"></i><b>3.10</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.11" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#simple-linear-regression-slr"><i class="fa fa-check"></i><b>3.11</b> Simple Linear Regression (SLR)</a></li>
+<li class="chapter" data-level="3.12" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-6"><i class="fa fa-check"></i><b>3.12</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.13" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters"><i class="fa fa-check"></i><b>3.13</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.14" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-1"><i class="fa fa-check"></i><b>3.14</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.15" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-2"><i class="fa fa-check"></i><b>3.15</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.16" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset"><i class="fa fa-check"></i><b>3.16</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="3.17" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset-1"><i class="fa fa-check"></i><b>3.17</b> Ames Housing dataset</a></li>
+<li class="chapter" data-level="3.18" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-3"><i class="fa fa-check"></i><b>3.18</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.19" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-model"><i class="fa fa-check"></i><b>3.19</b> SLR: Model</a></li>
+<li class="chapter" data-level="3.20" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-model-1"><i class="fa fa-check"></i><b>3.20</b> SLR: Model</a></li>
+<li class="chapter" data-level="3.21" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-prediction"><i class="fa fa-check"></i><b>3.21</b> SLR: Prediction</a></li>
+<li class="chapter" data-level="3.22" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-interpreting-parameters"><i class="fa fa-check"></i><b>3.22</b> SLR: Interpreting Parameters</a></li>
+<li class="chapter" data-level="3.23" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model"><i class="fa fa-check"></i><b>3.23</b> SLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="3.24" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model-1"><i class="fa fa-check"></i><b>3.24</b> SLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="3.25" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#your-turn"><i class="fa fa-check"></i><b>3.25</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="3.26" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-7"><i class="fa fa-check"></i><b>3.26</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.27" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-8"><i class="fa fa-check"></i><b>3.27</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.28" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-9"><i class="fa fa-check"></i><b>3.28</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.29" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging"><i class="fa fa-check"></i><b>3.29</b> Regression: Conditional Averaging</a></li>
+<li class="chapter" data-level="3.30" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging-1"><i class="fa fa-check"></i><b>3.30</b> Regression: Conditional Averaging</a></li>
+<li class="chapter" data-level="3.31" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression"><i class="fa fa-check"></i><b>3.31</b> K-Nearest Neighbors Regression</a></li>
+<li class="chapter" data-level="3.32" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-fit"><i class="fa fa-check"></i><b>3.32</b> K-Nearest Neighbors Regression: Fit</a></li>
+<li class="chapter" data-level="3.33" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-prediction"><i class="fa fa-check"></i><b>3.33</b> K-Nearest Neighbors Regression: Prediction</a></li>
+<li class="chapter" data-level="3.34" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-methods-comparison"><i class="fa fa-check"></i><b>3.34</b> Regression Methods: Comparison</a></li>
+<li class="chapter" data-level="3.35" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#your-turn-1"><i class="fa fa-check"></i><b>3.35</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="3.36" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-10"><i class="fa fa-check"></i><b>3.36</b> <span style="color:blue">Question!!!</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html"><i class="fa fa-check"></i><b>4</b> Multiple Linear Regression (MLR)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters"><i class="fa fa-check"></i><b>4.1</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-1"><i class="fa fa-check"></i><b>4.2</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-2"><i class="fa fa-check"></i><b>4.3</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-interpreting-parameters"><i class="fa fa-check"></i><b>4.4</b> MLR: Interpreting Parameters</a></li>
+<li class="chapter" data-level="4.5" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-prediction"><i class="fa fa-check"></i><b>4.5</b> MLR: Prediction</a></li>
+<li class="chapter" data-level="4.6" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model"><i class="fa fa-check"></i><b>4.6</b> MLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="4.7" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#your-turn-2"><i class="fa fa-check"></i><b>4.7</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="4.8" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model-1"><i class="fa fa-check"></i><b>4.8</b> MLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="4.9" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#question-11"><i class="fa fa-check"></i><b>4.9</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="4.10" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors"><i class="fa fa-check"></i><b>4.10</b> K-Nearest Neighbors Regression (multiple predictors)</a></li>
+<li class="chapter" data-level="4.11" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors-1"><i class="fa fa-check"></i><b>4.11</b> K-Nearest Neighbors Regression (multiple predictors)</a></li>
+<li class="chapter" data-level="4.12" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#linear-regression-vs-k-nearest-neighbors"><i class="fa fa-check"></i><b>4.12</b> Linear Regression vs K-Nearest Neighbors</a></li>
+<li class="chapter" data-level="4.13" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems"><i class="fa fa-check"></i><b>4.13</b> Classification Problems</a></li>
+<li class="chapter" data-level="4.14" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems-example"><i class="fa fa-check"></i><b>4.14</b> Classification Problems: Example</a></li>
+<li class="chapter" data-level="4.15" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems-example-1"><i class="fa fa-check"></i><b>4.15</b> Classification Problems: Example</a></li>
+<li class="chapter" data-level="4.16" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#why-not-linear-regression"><i class="fa fa-check"></i><b>4.16</b> Why Not Linear Regression?</a></li>
+<li class="chapter" data-level="4.17" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#why-not-linear-regression-1"><i class="fa fa-check"></i><b>4.17</b> Why Not Linear Regression?</a></li>
+<li class="chapter" data-level="4.18" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression"><i class="fa fa-check"></i><b>4.18</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.19" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.19</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.20" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#your-turn-3"><i class="fa fa-check"></i><b>4.20</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="4.21" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-example"><i class="fa fa-check"></i><b>4.21</b> Logistic Regression: Example</a></li>
+<li class="chapter" data-level="4.22" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-estimating-parameters"><i class="fa fa-check"></i><b>4.22</b> Logistic Regression: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.23" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-individual-predictions"><i class="fa fa-check"></i><b>4.23</b> Logistic Regression: Individual Predictions</a></li>
+<li class="chapter" data-level="4.24" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions"><i class="fa fa-check"></i><b>4.24</b> Logistic Regression: Test Set Predictions</a></li>
+<li class="chapter" data-level="4.25" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions-1"><i class="fa fa-check"></i><b>4.25</b> Logistic Regression: Test Set Predictions</a></li>
+<li class="chapter" data-level="4.26" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-performance"><i class="fa fa-check"></i><b>4.26</b> Logistic Regression: Performance</a></li>
+<li class="chapter" data-level="4.27" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#confusion-matrix-terms"><i class="fa fa-check"></i><b>4.27</b> Confusion Matrix Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html"><i class="fa fa-check"></i><b>5</b> K-Nearest Neighbors Classifier</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-4"><i class="fa fa-check"></i><b>5.1</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="5.2" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-split-data"><i class="fa fa-check"></i><b>5.2</b> K-Nearest Neighbors Classifier: Split Data</a></li>
+<li class="chapter" data-level="5.3" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-build-model"><i class="fa fa-check"></i><b>5.3</b> K-Nearest Neighbors Classifier: Build Model</a></li>
+<li class="chapter" data-level="5.4" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-predictions"><i class="fa fa-check"></i><b>5.4</b> K-Nearest Neighbors Classifier: Predictions</a></li>
+<li class="chapter" data-level="5.5" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-performance"><i class="fa fa-check"></i><b>5.5</b> K-Nearest Neighbors Classifier: Performance</a></li>
+<li class="chapter" data-level="5.6" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#roc-curve-and-auc"><i class="fa fa-check"></i><b>5.6</b> ROC Curve and AUC</a></li>
+<li class="chapter" data-level="5.7" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#roc-curve-and-auc-1"><i class="fa fa-check"></i><b>5.7</b> ROC Curve and AUC</a></li>
+<li class="chapter" data-level="5.8" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#data-splitting"><i class="fa fa-check"></i><b>5.8</b> Data Splitting</a></li>
+<li class="chapter" data-level="5.9" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#resampling-methods"><i class="fa fa-check"></i><b>5.9</b> Resampling Methods</a></li>
+<li class="chapter" data-level="5.10" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#cross-validation-cv"><i class="fa fa-check"></i><b>5.10</b> Cross-Validation (CV)</a></li>
+<li class="chapter" data-level="5.11" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>5.11</b> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="5.12" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#leave-one-out-cross-validation-loocv-1"><i class="fa fa-check"></i><b>5.12</b> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="5.13" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>5.13</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
+<li class="chapter" data-level="5.14" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation"><i class="fa fa-check"></i><b>5.14</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.15" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-1"><i class="fa fa-check"></i><b>5.15</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.16" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-2"><i class="fa fa-check"></i><b>5.16</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.17" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-3"><i class="fa fa-check"></i><b>5.17</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.18" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-4"><i class="fa fa-check"></i><b>5.18</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.19" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-5"><i class="fa fa-check"></i><b>5.19</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.20" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-results"><i class="fa fa-check"></i><b>5.20</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Results</a></li>
+<li class="chapter" data-level="5.21" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#final-model-and-prediction-error-estimate"><i class="fa fa-check"></i><b>5.21</b> Final Model and Prediction Error Estimate</a></li>
+<li class="chapter" data-level="5.22" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#variable-importance"><i class="fa fa-check"></i><b>5.22</b> Variable Importance</a></li>
+<li class="chapter" data-level="5.23" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#bias-variance-trade-off-for-loocv-and-k-fold-cv"><i class="fa fa-check"></i><b>5.23</b> Bias-Variance Trade-off for LOOCV and <span class="math inline">\(k\)</span>-fold CV</a></li>
+<li class="chapter" data-level="5.24" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-5"><i class="fa fa-check"></i><b>5.24</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="5.25" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-split-data"><i class="fa fa-check"></i><b>5.25</b> <span style="color:blue">Your Turn!!!</span>: Split Data</a></li>
+<li class="chapter" data-level="5.26" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-perform-cv"><i class="fa fa-check"></i><b>5.26</b> <span style="color:blue">Your Turn!!!</span>: Perform CV</a></li>
+<li class="chapter" data-level="5.27" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-observe-cv-results"><i class="fa fa-check"></i><b>5.27</b> <span style="color:blue">Your Turn!!!</span>: Observe CV Results</a></li>
+<li class="chapter" data-level="5.28" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-final-model"><i class="fa fa-check"></i><b>5.28</b> <span style="color:blue">Your Turn!!!</span>: Final Model</a></li>
+<li class="chapter" data-level="5.29" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#mid-term-check"><i class="fa fa-check"></i><b>5.29</b> Mid-Term Check</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="review-of-cv.html"><a href="review-of-cv.html"><i class="fa fa-check"></i><b>6</b> Review of CV</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="review-of-cv.html"><a href="review-of-cv.html#data-leakage-a-serious-common-problem"><i class="fa fa-check"></i><b>6.1</b> Data Leakage (A Serious, Common Problem)</a></li>
+<li class="chapter" data-level="6.2" data-path="review-of-cv.html"><a href="review-of-cv.html#data-preprocessing-and-feature-enginnering"><i class="fa fa-check"></i><b>6.2</b> Data Preprocessing and Feature Enginnering</a></li>
+<li class="chapter" data-level="6.3" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-2"><i class="fa fa-check"></i><b>6.3</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.4" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-3"><i class="fa fa-check"></i><b>6.4</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.5" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-4"><i class="fa fa-check"></i><b>6.5</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.6" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-5"><i class="fa fa-check"></i><b>6.6</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.7" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-6"><i class="fa fa-check"></i><b>6.7</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.8" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-7"><i class="fa fa-check"></i><b>6.8</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.9" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables"><i class="fa fa-check"></i><b>6.9</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.10" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-1"><i class="fa fa-check"></i><b>6.10</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.11" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-2"><i class="fa fa-check"></i><b>6.11</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.12" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries"><i class="fa fa-check"></i><b>6.12</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.13" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries-1"><i class="fa fa-check"></i><b>6.13</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.14" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries-2"><i class="fa fa-check"></i><b>6.14</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.15" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables"><i class="fa fa-check"></i><b>6.15</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.16" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-1"><i class="fa fa-check"></i><b>6.16</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.17" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-2"><i class="fa fa-check"></i><b>6.17</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.18" data-path="review-of-cv.html"><a href="review-of-cv.html#standardizing-centering-and-scaling-numeric-predictors"><i class="fa fa-check"></i><b>6.18</b> Standardizing (centering and scaling) Numeric Predictors</a></li>
+<li class="chapter" data-level="6.19" data-path="review-of-cv.html"><a href="review-of-cv.html#lumping-predictors"><i class="fa fa-check"></i><b>6.19</b> Lumping Predictors</a></li>
+<li class="chapter" data-level="6.20" data-path="review-of-cv.html"><a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors"><i class="fa fa-check"></i><b>6.20</b> One-hot/dummy Encoding Categorical Predictors</a></li>
+<li class="chapter" data-level="6.21" data-path="review-of-cv.html"><a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors-1"><i class="fa fa-check"></i><b>6.21</b> One-hot/dummy Encoding Categorical Predictors</a></li>
+<li class="chapter" data-level="6.22" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-steps"><i class="fa fa-check"></i><b>6.22</b> Preprocessing Steps</a></li>
+<li class="chapter" data-level="6.23" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-with-recipes-package"><i class="fa fa-check"></i><b>6.23</b> Preprocessing With <code>recipes</code> Package</a></li>
+<li class="chapter" data-level="6.24" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-with-recipes-package-1"><i class="fa fa-check"></i><b>6.24</b> Preprocessing With <code>recipes</code> Package</a></li>
+<li class="chapter" data-level="6.25" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model"><i class="fa fa-check"></i><b>6.25</b> Training Model</a></li>
+<li class="chapter" data-level="6.26" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model-1"><i class="fa fa-check"></i><b>6.26</b> Training Model</a></li>
+<li class="chapter" data-level="6.27" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model-2"><i class="fa fa-check"></i><b>6.27</b> Training Model</a></li>
+<li class="chapter" data-level="6.28" data-path="review-of-cv.html"><a href="review-of-cv.html#final-model-and-test-set-error"><i class="fa fa-check"></i><b>6.28</b> Final Model and Test Set Error</a></li>
+<li class="chapter" data-level="6.29" data-path="review-of-cv.html"><a href="review-of-cv.html#variable-importance-1"><i class="fa fa-check"></i><b>6.29</b> Variable Importance</a></li>
+<li class="chapter" data-level="6.30" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-6"><i class="fa fa-check"></i><b>6.30</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="6.31" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1"><i class="fa fa-check"></i><b>6.31</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.32" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-1"><i class="fa fa-check"></i><b>6.32</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.33" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-2"><i class="fa fa-check"></i><b>6.33</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.34" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-3"><i class="fa fa-check"></i><b>6.34</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.35" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-4"><i class="fa fa-check"></i><b>6.35</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.36" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-2"><i class="fa fa-check"></i><b>6.36</b> <span style="color:blue">Your Turn!!!</span> Step 2</a></li>
+<li class="chapter" data-level="6.37" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-3"><i class="fa fa-check"></i><b>6.37</b> <span style="color:blue">Your Turn!!!</span> Step 3</a></li>
+<li class="chapter" data-level="6.38" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4"><i class="fa fa-check"></i><b>6.38</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.39" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4-1"><i class="fa fa-check"></i><b>6.39</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.40" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4-2"><i class="fa fa-check"></i><b>6.40</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.41" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5"><i class="fa fa-check"></i><b>6.41</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+<li class="chapter" data-level="6.42" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5-1"><i class="fa fa-check"></i><b>6.42</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+<li class="chapter" data-level="6.43" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5-2"><i class="fa fa-check"></i><b>6.43</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">208 Course Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="review-of-cv" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Review of CV<a href="review-of-cv.html#review-of-cv" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<ul>
+<li><strong>KNN Classification: Toy Example</strong></li>
+</ul>
+<center>
+<table>
+<thead>
+<tr class="header">
+<th>Obs.</th>
+<th><span class="math inline">\(X_1\)</span></th>
+<th><span class="math inline">\(X_2\)</span></th>
+<th>Y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1033</td>
+<td>1.7</td>
+<td>Red</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1112</td>
+<td>1.5</td>
+<td>Red</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1500</td>
+<td>1</td>
+<td>Red</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>999</td>
+<td>1</td>
+<td>Green</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>1012</td>
+<td>1.5</td>
+<td>Green</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>1013</td>
+<td>1</td>
+<td>Red</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>1233</td>
+<td>1</td>
+<td>Green</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>1332</td>
+<td>1</td>
+<td>Red</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><br />
+</p>
+<p>Suppose you implement 4-fold CV. What is the size of each training and validation set?</p>
+<p>Let’s say the folds are randomly chosen to be observation pairs (2, 3), (4, 7), (1, 8), and (5, 6).</p>
+<div id="data-leakage-a-serious-common-problem" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Data Leakage (A Serious, Common Problem)<a href="review-of-cv.html#data-leakage-a-serious-common-problem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Data leakage is when information from outside the training data set is used to create the model. Data leakage often occurs when the data preprocessing task is implemented with CV. To minimize this, feature engineering should be done in isolation of each resampling iteration.</p>
+</div>
+<div id="data-preprocessing-and-feature-enginnering" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Data Preprocessing and Feature Enginnering<a href="review-of-cv.html#data-preprocessing-and-feature-enginnering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Data preprocessing and engineering techniques generally refer to the addition, deletion, or transformation of data.</p>
+<p>We will cover several fundamental and common preprocessing tasks that can potentially significantly improve modeling performance.</p>
+<ul>
+<li><p>Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables</p></li>
+<li><p>Imputing missing entries</p></li>
+<li><p>Label encoding ordinal categorical variables</p></li>
+<li><p>Standardizing (centering and scaling) numeric predictors</p></li>
+<li><p>Lumping predictors</p></li>
+<li><p>One-hot/dummy encoding categorical predictors</p></li>
+</ul>
+</div>
+<div id="ames-housing-dataset-2" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Ames Housing Dataset<a href="review-of-cv.html#ames-housing-dataset-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="review-of-cv.html#cb109-1" aria-hidden="true" tabindex="-1"></a>ames <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;AmesHousing.rds&quot;</span>)   <span class="co"># load dataset</span></span>
+<span id="cb109-2"><a href="review-of-cv.html#cb109-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-3"><a href="review-of-cv.html#cb109-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ames &lt;- ames %&gt;% mutate_if(is.character, as.factor)   # convert all character variables to factor variables</span></span>
+<span id="cb109-4"><a href="review-of-cv.html#cb109-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-5"><a href="review-of-cv.html#cb109-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(ames))    <span class="co"># check missing values</span></span></code></pre></div>
+<pre><code>## [1] 113</code></pre>
+</div>
+<div id="ames-housing-dataset-3" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Ames Housing Dataset<a href="review-of-cv.html#ames-housing-dataset-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="review-of-cv.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ames)  <span class="co"># check type of variables, missing entries?</span></span></code></pre></div>
+<pre><code>## Rows: 881
+## Columns: 20
+## $ Sale_Price    &lt;int&gt; 244000, 213500, 185000, 394432, 190000, 149000, 149900, …
+## $ Gr_Liv_Area   &lt;int&gt; 2110, 1338, 1187, 1856, 1844, NA, NA, 1069, 1940, 1544, …
+## $ Garage_Type   &lt;fct&gt; Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, Attchd, …
+## $ Garage_Cars   &lt;dbl&gt; 2, 2, 2, 3, 2, 2, 2, 2, 3, 3, 2, 3, 3, 2, 2, 2, 3, 2, 2,…
+## $ Garage_Area   &lt;dbl&gt; 522, 582, 420, 834, 546, 480, 500, 440, 606, 868, 532, 7…
+## $ Street        &lt;fct&gt; Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pave, Pa…
+## $ Utilities     &lt;fct&gt; AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, AllPub, …
+## $ Pool_Area     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ Neighborhood  &lt;fct&gt; North_Ames, Stone_Brook, Gilbert, Stone_Brook, Northwest…
+## $ Screen_Porch  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 165, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ Overall_Qual  &lt;fct&gt; Good, Very_Good, Above_Average, Excellent, Above_Average…
+## $ Lot_Area      &lt;int&gt; 11160, 4920, 7980, 11394, 11751, 11241, 12537, 4043, 101…
+## $ Lot_Frontage  &lt;dbl&gt; 93, 41, 0, 88, 105, 0, 0, 53, 83, 94, 95, 90, 105, 61, 6…
+## $ MS_SubClass   &lt;fct&gt; One_Story_1946_and_Newer_All_Styles, One_Story_PUD_1946_…
+## $ Misc_Val      &lt;int&gt; 0, 0, 500, 0, 0, 700, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ Open_Porch_SF &lt;int&gt; 0, 0, 21, 0, 122, 0, 0, 55, 95, 35, 70, 74, 130, 82, 48,…
+## $ TotRms_AbvGrd &lt;int&gt; 8, 6, 6, 8, 7, 5, 6, 4, 8, 7, 7, 7, 7, 6, 7, 7, 10, 7, 7…
+## $ First_Flr_SF  &lt;int&gt; 2110, 1338, 1187, 1856, 1844, 1004, 1078, 1069, 1940, 15…
+## $ Second_Flr_SF &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 563, 0, 886, 656, 11…
+## $ Year_Built    &lt;int&gt; 1968, 2001, 1992, 2010, 1977, 1970, 1971, 1977, 2009, 20…</code></pre>
+</div>
+<div id="ames-housing-dataset-4" class="section level2 smaller hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Ames Housing Dataset<a href="review-of-cv.html#ames-housing-dataset-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="review-of-cv.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ames)  <span class="co"># check type of variables, missing entries?</span></span></code></pre></div>
+<pre><code>##    Sale_Price      Gr_Liv_Area                Garage_Type   Garage_Cars   
+##  Min.   : 34900   Min.   : 334   Attchd             :514   Min.   :0.000  
+##  1st Qu.:129500   1st Qu.:1118   Basment            : 10   1st Qu.:1.000  
+##  Median :160000   Median :1442   BuiltIn            : 55   Median :2.000  
+##  Mean   :181115   Mean   :1495   CarPort            :  5   Mean   :1.762  
+##  3rd Qu.:213500   3rd Qu.:1728   Detchd             :234   3rd Qu.:2.000  
+##  Max.   :755000   Max.   :5642   More_Than_Two_Types:  9   Max.   :4.000  
+##                   NA&#39;s   :113    No_Garage          : 54                  
+##   Garage_Area      Street     Utilities     Pool_Area     
+##  Min.   :   0.0   Grvl:  4   AllPub:880   Min.   :  0.00  
+##  1st Qu.: 324.0   Pave:877   NoSeWa:  0   1st Qu.:  0.00  
+##  Median : 480.0              NoSewr:  1   Median :  0.00  
+##  Mean   : 476.5                           Mean   :  2.41  
+##  3rd Qu.: 592.0                           3rd Qu.:  0.00  
+##  Max.   :1418.0                           Max.   :576.00  
+##                                                           
+##              Neighborhood  Screen_Porch           Overall_Qual    Lot_Area     
+##  North_Ames        :127   Min.   :  0.00   Average      :243   Min.   :  1300  
+##  College_Creek     : 86   1st Qu.:  0.00   Above_Average:217   1st Qu.:  7449  
+##  Old_Town          : 83   Median :  0.00   Good         :177   Median :  9512  
+##  Northridge_Heights: 52   Mean   : 18.11   Very_Good    : 99   Mean   : 10105  
+##  Somerset          : 50   3rd Qu.:  0.00   Below_Average: 83   3rd Qu.: 11526  
+##  Edwards           : 49   Max.   :490.00   Excellent    : 38   Max.   :159000  
+##  (Other)           :434                    (Other)      : 24                   
+##   Lot_Frontage                                  MS_SubClass     Misc_Val      
+##  Min.   :  0.00   One_Story_1946_and_Newer_All_Styles :335   Min.   :   0.00  
+##  1st Qu.: 43.00   Two_Story_1946_and_Newer            :171   1st Qu.:   0.00  
+##  Median : 63.00   One_and_Half_Story_Finished_All_Ages: 92   Median :   0.00  
+##  Mean   : 57.78   One_Story_PUD_1946_and_Newer        : 53   Mean   :  37.97  
+##  3rd Qu.: 78.00   Duplex_All_Styles_and_Ages          : 40   3rd Qu.:   0.00  
+##  Max.   :313.00   One_Story_1945_and_Older            : 36   Max.   :8300.00  
+##                   (Other)                             :154                    
+##  Open_Porch_SF    TotRms_AbvGrd     First_Flr_SF  Second_Flr_SF   
+##  Min.   :  0.00   Min.   : 2.000   Min.   : 334   Min.   :   0.0  
+##  1st Qu.:  0.00   1st Qu.: 5.000   1st Qu.: 877   1st Qu.:   0.0  
+##  Median : 27.00   Median : 6.000   Median :1092   Median :   0.0  
+##  Mean   : 49.93   Mean   : 6.413   Mean   :1171   Mean   : 319.6  
+##  3rd Qu.: 72.00   3rd Qu.: 7.000   3rd Qu.:1426   3rd Qu.: 682.0  
+##  Max.   :742.00   Max.   :12.000   Max.   :4692   Max.   :2065.0  
+##                                                                   
+##    Year_Built  
+##  Min.   :1875  
+##  1st Qu.:1954  
+##  Median :1972  
+##  Mean   :1971  
+##  3rd Qu.:2000  
+##  Max.   :2010  
+## </code></pre>
+</div>
+<div id="ames-housing-dataset-5" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Ames Housing Dataset<a href="review-of-cv.html#ames-housing-dataset-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="review-of-cv.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual)   <span class="co"># the levels are NOT properly ordered</span></span></code></pre></div>
+<pre><code>##  [1] &quot;Above_Average&quot;  &quot;Average&quot;        &quot;Below_Average&quot;  &quot;Excellent&quot;     
+##  [5] &quot;Fair&quot;           &quot;Good&quot;           &quot;Poor&quot;           &quot;Very_Excellent&quot;
+##  [9] &quot;Very_Good&quot;      &quot;Very_Poor&quot;</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="review-of-cv.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># relevel the levels</span></span>
+<span id="cb117-2"><a href="review-of-cv.html#cb117-2" aria-hidden="true" tabindex="-1"></a>ames<span class="sc">$</span>Overall_Qual <span class="ot">&lt;-</span> <span class="fu">factor</span>(ames<span class="sc">$</span>Overall_Qual, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Very_Poor&quot;</span>, <span class="st">&quot;Poor&quot;</span>, <span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Below_Average&quot;</span>, </span>
+<span id="cb117-3"><a href="review-of-cv.html#cb117-3" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Average&quot;</span>, <span class="st">&quot;Above_Average&quot;</span>, <span class="st">&quot;Good&quot;</span>, <span class="st">&quot;Very_Good&quot;</span>, </span>
+<span id="cb117-4"><a href="review-of-cv.html#cb117-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">&quot;Excellent&quot;</span>, <span class="st">&quot;Very_Excellent&quot;</span>))</span>
+<span id="cb117-5"><a href="review-of-cv.html#cb117-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-6"><a href="review-of-cv.html#cb117-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ames<span class="sc">$</span>Overall_Qual)   <span class="co"># the levels are properly ordered</span></span></code></pre></div>
+<pre><code>##  [1] &quot;Very_Poor&quot;      &quot;Poor&quot;           &quot;Fair&quot;           &quot;Below_Average&quot; 
+##  [5] &quot;Average&quot;        &quot;Above_Average&quot;  &quot;Good&quot;           &quot;Very_Good&quot;     
+##  [9] &quot;Excellent&quot;      &quot;Very_Excellent&quot;</code></pre>
+</div>
+<div id="ames-housing-dataset-6" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Ames Housing Dataset<a href="review-of-cv.html#ames-housing-dataset-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="review-of-cv.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># split the dataset into training and test sets</span></span>
+<span id="cb119-2"><a href="review-of-cv.html#cb119-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-3"><a href="review-of-cv.html#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)   <span class="co"># set seed</span></span>
+<span id="cb119-4"><a href="review-of-cv.html#cb119-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-5"><a href="review-of-cv.html#cb119-5" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(ames<span class="sc">$</span>Sale_Price, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)   <span class="co"># &#39;Sale_Price&#39; is the response</span></span>
+<span id="cb119-6"><a href="review-of-cv.html#cb119-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-7"><a href="review-of-cv.html#cb119-7" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> ames[index,]   <span class="co"># training data</span></span>
+<span id="cb119-8"><a href="review-of-cv.html#cb119-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-9"><a href="review-of-cv.html#cb119-9" aria-hidden="true" tabindex="-1"></a>ames_test <span class="ot">&lt;-</span> ames[<span class="sc">-</span>index,]   <span class="co"># test data</span></span></code></pre></div>
+</div>
+<div id="ames-housing-dataset-7" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Ames Housing Dataset<a href="review-of-cv.html#ames-housing-dataset-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="review-of-cv.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up the recipe</span></span>
+<span id="cb120-2"><a href="review-of-cv.html#cb120-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-3"><a href="review-of-cv.html#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;recipes&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:stringr&#39;:
+## 
+##     fixed</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     step</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="review-of-cv.html#cb124-1" aria-hidden="true" tabindex="-1"></a>ames_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames_train)   <span class="co"># sets up the type and role of variables</span></span>
+<span id="cb124-2"><a href="review-of-cv.html#cb124-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-3"><a href="review-of-cv.html#cb124-3" aria-hidden="true" tabindex="-1"></a>ames_recipe<span class="sc">$</span>var_info</span></code></pre></div>
+<pre><code>## # A tibble: 20 × 4
+##    variable      type      role      source  
+##    &lt;chr&gt;         &lt;list&gt;    &lt;chr&gt;     &lt;chr&gt;   
+##  1 Gr_Liv_Area   &lt;chr [2]&gt; predictor original
+##  2 Garage_Type   &lt;chr [3]&gt; predictor original
+##  3 Garage_Cars   &lt;chr [2]&gt; predictor original
+##  4 Garage_Area   &lt;chr [2]&gt; predictor original
+##  5 Street        &lt;chr [3]&gt; predictor original
+##  6 Utilities     &lt;chr [3]&gt; predictor original
+##  7 Pool_Area     &lt;chr [2]&gt; predictor original
+##  8 Neighborhood  &lt;chr [3]&gt; predictor original
+##  9 Screen_Porch  &lt;chr [2]&gt; predictor original
+## 10 Overall_Qual  &lt;chr [3]&gt; predictor original
+## 11 Lot_Area      &lt;chr [2]&gt; predictor original
+## 12 Lot_Frontage  &lt;chr [2]&gt; predictor original
+## 13 MS_SubClass   &lt;chr [3]&gt; predictor original
+## 14 Misc_Val      &lt;chr [2]&gt; predictor original
+## 15 Open_Porch_SF &lt;chr [2]&gt; predictor original
+## 16 TotRms_AbvGrd &lt;chr [2]&gt; predictor original
+## 17 First_Flr_SF  &lt;chr [2]&gt; predictor original
+## 18 Second_Flr_SF &lt;chr [2]&gt; predictor original
+## 19 Year_Built    &lt;chr [2]&gt; predictor original
+## 20 Sale_Price    &lt;chr [2]&gt; outcome   original</code></pre>
+</div>
+<div id="zero-variance-zv-andor-near-zero-variance-nzv-variables" class="section level2 hasAnchor" number="6.9">
+<h2><span class="header-section-number">6.9</span> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables<a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A rule of thumb for detecting near-zero variance features is:</p>
+<ul>
+<li><p>The fraction of unique values over the sample size is low (say <span class="math inline">\(\le 10\%\)</span>).</p></li>
+<li><p>The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large (say <span class="math inline">\(\ge 20\%\)</span>).</p></li>
+</ul>
+</div>
+<div id="zero-variance-zv-andor-near-zero-variance-nzv-variables-1" class="section level2 hasAnchor" number="6.10">
+<h2><span class="header-section-number">6.10</span> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables<a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="review-of-cv.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># investigate zv/nzv predictors </span></span>
+<span id="cb126-2"><a href="review-of-cv.html#cb126-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-3"><a href="review-of-cv.html#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(ames_train, <span class="at">saveMetrics =</span> <span class="cn">TRUE</span>)   <span class="co"># check which predictors are zv/nzv</span></span></code></pre></div>
+<pre><code>##                freqRatio percentUnique zeroVar   nzv
+## Sale_Price      1.250000    61.8122977   FALSE FALSE
+## Gr_Liv_Area     1.666667    68.7702265   FALSE FALSE
+## Garage_Type     2.312102     1.1326861   FALSE FALSE
+## Garage_Cars     1.922619     0.8090615   FALSE FALSE
+## Garage_Area     2.105263    44.0129450   FALSE FALSE
+## Street        153.500000     0.3236246   FALSE  TRUE
+## Utilities     617.000000     0.3236246   FALSE  TRUE
+## Pool_Area     614.000000     0.8090615   FALSE  TRUE
+## Neighborhood    1.655172     4.2071197   FALSE FALSE
+## Screen_Porch  140.250000     6.9579288   FALSE  TRUE
+## Overall_Qual    1.176871     1.6181230   FALSE FALSE
+## Lot_Area        1.100000    82.0388350   FALSE FALSE
+## Lot_Frontage    1.485294    15.0485437   FALSE FALSE
+## MS_SubClass     1.892562     2.4271845   FALSE FALSE
+## Misc_Val      149.000000     2.2653722   FALSE  TRUE
+## Open_Porch_SF  20.142857    22.6537217   FALSE FALSE
+## TotRms_AbvGrd   1.212329     1.7799353   FALSE FALSE
+## First_Flr_SF    2.333333    70.8737864   FALSE FALSE
+## Second_Flr_SF  90.750000    34.4660194   FALSE FALSE
+## Year_Built      1.214286    15.8576052   FALSE FALSE</code></pre>
+</div>
+<div id="zero-variance-zv-andor-near-zero-variance-nzv-variables-2" class="section level2 hasAnchor" number="6.11">
+<h2><span class="header-section-number">6.11</span> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables<a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="review-of-cv.html#cb128-1" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span> </span>
+<span id="cb128-2"><a href="review-of-cv.html#cb128-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val)    <span class="co"># filter out zv/nzv predictors</span></span></code></pre></div>
+</div>
+<div id="imputing-missing-entries" class="section level2 hasAnchor" number="6.12">
+<h2><span class="header-section-number">6.12</span> Imputing Missing Entries<a href="review-of-cv.html#imputing-missing-entries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Possible imputation techniques:</p>
+<ul>
+<li><p><code>step_impute_median</code></p></li>
+<li><p><code>step_impute_mean</code></p></li>
+<li><p><code>step_impute_knn</code></p></li>
+<li><p><code>step_impute_mode</code></p></li>
+</ul>
+</div>
+<div id="imputing-missing-entries-1" class="section level2 smaller hasAnchor" number="6.13">
+<h2><span class="header-section-number">6.13</span> Imputing Missing Entries<a href="review-of-cv.html#imputing-missing-entries-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="review-of-cv.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ames_train)   <span class="co"># check which predictors have missing entries</span></span></code></pre></div>
+<pre><code>##    Sale_Price      Gr_Liv_Area                Garage_Type   Garage_Cars   
+##  Min.   : 39300   Min.   : 334   Attchd             :363   Min.   :0.000  
+##  1st Qu.:129100   1st Qu.:1114   Basment            :  6   1st Qu.:1.000  
+##  Median :160000   Median :1446   BuiltIn            : 41   Median :2.000  
+##  Mean   :180748   Mean   :1489   CarPort            :  5   Mean   :1.746  
+##  3rd Qu.:213408   3rd Qu.:1742   Detchd             :157   3rd Qu.:2.000  
+##  Max.   :745000   Max.   :4476   More_Than_Two_Types:  6   Max.   :4.000  
+##                   NA&#39;s   :77     No_Garage          : 40                  
+##   Garage_Area      Street     Utilities     Pool_Area      
+##  Min.   :   0.0   Grvl:  4   AllPub:617   Min.   :  0.000  
+##  1st Qu.: 320.5   Pave:614   NoSeWa:  0   1st Qu.:  0.000  
+##  Median : 482.0              NoSewr:  1   Median :  0.000  
+##  Mean   : 473.4                           Mean   :  2.659  
+##  3rd Qu.: 587.5                           3rd Qu.:  0.000  
+##  Max.   :1348.0                           Max.   :576.000  
+##                                                            
+##              Neighborhood  Screen_Porch           Overall_Qual    Lot_Area    
+##  North_Ames        : 96   Min.   :  0.00   Average      :173   Min.   : 1491  
+##  College_Creek     : 58   1st Qu.:  0.00   Above_Average:147   1st Qu.: 7572  
+##  Old_Town          : 54   Median :  0.00   Good         :121   Median : 9582  
+##  Sawyer            : 39   Mean   : 17.42   Very_Good    : 72   Mean   : 9830  
+##  Northridge_Heights: 38   3rd Qu.:  0.00   Below_Average: 61   3rd Qu.:11500  
+##  Edwards           : 36   Max.   :410.00   Excellent    : 25   Max.   :50102  
+##  (Other)           :297                    (Other)      : 19                  
+##   Lot_Frontage                                 MS_SubClass     Misc_Val      
+##  Min.   :  0.0   One_Story_1946_and_Newer_All_Styles :229   Min.   :   0.00  
+##  1st Qu.: 44.0   Two_Story_1946_and_Newer            :121   1st Qu.:   0.00  
+##  Median : 64.0   One_and_Half_Story_Finished_All_Ages: 59   Median :   0.00  
+##  Mean   : 58.4   One_Story_PUD_1946_and_Newer        : 37   Mean   :  43.73  
+##  3rd Qu.: 79.0   Duplex_All_Styles_and_Ages          : 33   3rd Qu.:   0.00  
+##  Max.   :182.0   Two_Story_1945_and_Older            : 27   Max.   :8300.00  
+##                  (Other)                             :112                    
+##  Open_Porch_SF    TotRms_AbvGrd     First_Flr_SF  Second_Flr_SF   
+##  Min.   :  0.00   Min.   : 2.000   Min.   : 334   Min.   :   0.0  
+##  1st Qu.:  0.00   1st Qu.: 5.000   1st Qu.: 875   1st Qu.:   0.0  
+##  Median : 24.50   Median : 6.000   Median :1072   Median :   0.0  
+##  Mean   : 47.29   Mean   : 6.422   Mean   :1159   Mean   : 320.1  
+##  3rd Qu.: 69.00   3rd Qu.: 7.000   3rd Qu.:1395   3rd Qu.: 683.8  
+##  Max.   :742.00   Max.   :12.000   Max.   :2674   Max.   :2065.0  
+##                                                                   
+##    Year_Built  
+##  Min.   :1875  
+##  1st Qu.:1954  
+##  Median :1972  
+##  Mean   :1971  
+##  3rd Qu.:2000  
+##  Max.   :2009  
+## </code></pre>
+</div>
+<div id="imputing-missing-entries-2" class="section level2 hasAnchor" number="6.14">
+<h2><span class="header-section-number">6.14</span> Imputing Missing Entries<a href="review-of-cv.html#imputing-missing-entries-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="review-of-cv.html#cb131-1" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span> </span>
+<span id="cb131-2"><a href="review-of-cv.html#cb131-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span>      <span class="co"># filter out zv/nzv predictors</span></span>
+<span id="cb131-3"><a href="review-of-cv.html#cb131-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area)       <span class="co"># impute missing entries</span></span></code></pre></div>
+</div>
+<div id="label-encoding-ordinal-categorical-variables" class="section level2 hasAnchor" number="6.15">
+<h2><span class="header-section-number">6.15</span> Label Encoding Ordinal Categorical Variables<a href="review-of-cv.html#label-encoding-ordinal-categorical-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Label encoding is a pure numeric conversion of the levels of a categorical variable. If a categorical variable is a factor and it has pre-specified levels then the numeric conversion will be in level order. If no levels are specified, the encoding will be based on alphabetical order.</p>
+<p>We should be careful with label encoding unordered categorical features because most models will treat them as ordered numeric features</p>
+<!-- ## Label Encoding Ordinal Categorical Variables -->
+<!-- ```{r} -->
+<!-- # investigate predictors with possible ordering (label encoding) -->
+<!-- ames_train %>% count(MS_SubClass) -->
+<!-- ``` -->
+</div>
+<div id="label-encoding-ordinal-categorical-variables-1" class="section level2 hasAnchor" number="6.16">
+<h2><span class="header-section-number">6.16</span> Label Encoding Ordinal Categorical Variables<a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="review-of-cv.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># investigate predictors with possible ordering (label encoding)</span></span>
+<span id="cb132-2"><a href="review-of-cv.html#cb132-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-3"><a href="review-of-cv.html#cb132-3" aria-hidden="true" tabindex="-1"></a>ames_train <span class="sc">%&gt;%</span> <span class="fu">count</span>(Overall_Qual)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 2
+##    Overall_Qual       n
+##    &lt;fct&gt;          &lt;int&gt;
+##  1 Very_Poor          1
+##  2 Poor               2
+##  3 Fair               7
+##  4 Below_Average     61
+##  5 Average          173
+##  6 Above_Average    147
+##  7 Good             121
+##  8 Very_Good         72
+##  9 Excellent         25
+## 10 Very_Excellent     9</code></pre>
+</div>
+<div id="label-encoding-ordinal-categorical-variables-2" class="section level2 hasAnchor" number="6.17">
+<h2><span class="header-section-number">6.17</span> Label Encoding Ordinal Categorical Variables<a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="review-of-cv.html#cb134-1" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span> </span>
+<span id="cb134-2"><a href="review-of-cv.html#cb134-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span>    <span class="co"># filter out zv/nzv predictors</span></span>
+<span id="cb134-3"><a href="review-of-cv.html#cb134-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area) <span class="sc">%&gt;%</span>      <span class="co"># impute missing entries</span></span>
+<span id="cb134-4"><a href="review-of-cv.html#cb134-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(Overall_Qual)        <span class="co"># numeric conversion of levels of the predictors</span></span></code></pre></div>
+</div>
+<div id="standardizing-centering-and-scaling-numeric-predictors" class="section level2 hasAnchor" number="6.18">
+<h2><span class="header-section-number">6.18</span> Standardizing (centering and scaling) Numeric Predictors<a href="review-of-cv.html#standardizing-centering-and-scaling-numeric-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Standardizing features includes <strong>centering</strong> and <strong>scaling</strong> so that numeric variables have zero mean and unit variance, which provides a common comparable unit of measure across all the variables.</p>
+<p>Before centering and scaling, it is better to remove zv/nzv variables, and perform necessary imputation and label encoding.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="review-of-cv.html#cb135-1" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span> </span>
+<span id="cb135-2"><a href="review-of-cv.html#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span>      <span class="co"># filter out zv/nzv predictors</span></span>
+<span id="cb135-3"><a href="review-of-cv.html#cb135-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area) <span class="sc">%&gt;%</span>       <span class="co"># impute missing entries</span></span>
+<span id="cb135-4"><a href="review-of-cv.html#cb135-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">%&gt;%</span>       <span class="co"># numeric conversion of levels of the predictors</span></span>
+<span id="cb135-5"><a href="review-of-cv.html#cb135-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>      <span class="co"># center (subtract mean) all numeric predictors</span></span>
+<span id="cb135-6"><a href="review-of-cv.html#cb135-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())           <span class="co"># scale (divide by standard deviation) all numeric predictors</span></span></code></pre></div>
+</div>
+<div id="lumping-predictors" class="section level2 hasAnchor" number="6.19">
+<h2><span class="header-section-number">6.19</span> Lumping Predictors<a href="review-of-cv.html#lumping-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sometimes features (numerical or categorical) will contain levels that have very few observations (decided by a threshold). It can be beneficial to collapse, or “lump” these into a lesser number of categories.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="review-of-cv.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lumping categorical predictors if need be</span></span>
+<span id="cb136-2"><a href="review-of-cv.html#cb136-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-3"><a href="review-of-cv.html#cb136-3" aria-hidden="true" tabindex="-1"></a>ames_train <span class="sc">%&gt;%</span> <span class="fu">count</span>(Neighborhood) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n)   <span class="co"># check frequency of categories</span></span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="review-of-cv.html#cb137-1" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span> </span>
+<span id="cb137-2"><a href="review-of-cv.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span>  <span class="co"># filter out zv/nzv predictors</span></span>
+<span id="cb137-3"><a href="review-of-cv.html#cb137-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area) <span class="sc">%&gt;%</span>                                   <span class="co"># impute missing entries</span></span>
+<span id="cb137-4"><a href="review-of-cv.html#cb137-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">%&gt;%</span>                                      <span class="co"># numeric conversion of levels of the predictors</span></span>
+<span id="cb137-5"><a href="review-of-cv.html#cb137-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                     <span class="co"># center (subtract mean) all numeric predictors</span></span>
+<span id="cb137-6"><a href="review-of-cv.html#cb137-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># scale (divide by standard deviation) all numeric predictors</span></span>
+<span id="cb137-7"><a href="review-of-cv.html#cb137-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">&quot;other&quot;</span>)         <span class="co"># lumping required predictors</span></span></code></pre></div>
+</div>
+<div id="one-hotdummy-encoding-categorical-predictors" class="section level2 hasAnchor" number="6.20">
+<h2><span class="header-section-number">6.20</span> One-hot/dummy Encoding Categorical Predictors<a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-92"></span>
+<img src="EFT/ohd.jpg" alt="Adapted from Hands-on Machine Learning with R, Bradley Boehmke &amp; Brandon Greenwell" width="50%" />
+<p class="caption">
+Figure 6.1: Adapted from Hands-on Machine Learning with R, Bradley Boehmke &amp; Brandon Greenwell
+</p>
+</div>
+</div>
+<div id="one-hotdummy-encoding-categorical-predictors-1" class="section level2 hasAnchor" number="6.21">
+<h2><span class="header-section-number">6.21</span> One-hot/dummy Encoding Categorical Predictors<a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="review-of-cv.html#cb138-1" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span> </span>
+<span id="cb138-2"><a href="review-of-cv.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span>  <span class="co"># filter out zv/nzv predictors</span></span>
+<span id="cb138-3"><a href="review-of-cv.html#cb138-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area) <span class="sc">%&gt;%</span>                                   <span class="co"># impute missing entries</span></span>
+<span id="cb138-4"><a href="review-of-cv.html#cb138-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">%&gt;%</span>                                      <span class="co"># numeric conversion of levels of the predictors</span></span>
+<span id="cb138-5"><a href="review-of-cv.html#cb138-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                     <span class="co"># center (subtract mean) all numeric predictors</span></span>
+<span id="cb138-6"><a href="review-of-cv.html#cb138-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span>                      <span class="co"># scale (divide by standard deviation) all numeric predictors</span></span>
+<span id="cb138-7"><a href="review-of-cv.html#cb138-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">&quot;other&quot;</span>) <span class="sc">%&gt;%</span>     <span class="co"># lumping required predictors</span></span>
+<span id="cb138-8"><a href="review-of-cv.html#cb138-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>)                           <span class="co"># one-hot/dummy encode nominal categorical predictors</span></span></code></pre></div>
+</div>
+<div id="preprocessing-steps" class="section level2 hasAnchor" number="6.22">
+<h2><span class="header-section-number">6.22</span> Preprocessing Steps<a href="review-of-cv.html#preprocessing-steps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A suggested order of potential steps that should work for most problems:</p>
+<ol style="list-style-type: decimal">
+<li><p>Filter out zero or near-zero variance features.</p></li>
+<li><p>Perform imputation if required.</p></li>
+<li><p>Label encode ordinal categorical features.</p></li>
+<li><p>Normalize/Standardize (center and scale) numeric features.</p></li>
+<li><p>Lump certain features if required.</p></li>
+<li><p>One-hot or dummy encode categorical features.</p></li>
+</ol>
+</div>
+<div id="preprocessing-with-recipes-package" class="section level2 hasAnchor" number="6.23">
+<h2><span class="header-section-number">6.23</span> Preprocessing With <code>recipes</code> Package<a href="review-of-cv.html#preprocessing-with-recipes-package" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are three main steps in creating and applying feature engineering with <code>recipes</code>:</p>
+<ul>
+<li><p><strong>recipe:</strong> where you define your feature engineering steps to create your blueprint.</p></li>
+<li><p><strong>prepare:</strong> estimate feature engineering parameters based on training data.</p></li>
+<li><p><strong>bake:</strong> apply the blueprint to new data.</p></li>
+</ul>
+</div>
+<div id="preprocessing-with-recipes-package-1" class="section level2 hasAnchor" number="6.24">
+<h2><span class="header-section-number">6.24</span> Preprocessing With <code>recipes</code> Package<a href="review-of-cv.html#preprocessing-with-recipes-package-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="review-of-cv.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># finally, after all preprocessing steps have been decided set up the overall blueprint</span></span>
+<span id="cb139-2"><a href="review-of-cv.html#cb139-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-3"><a href="review-of-cv.html#cb139-3" aria-hidden="true" tabindex="-1"></a>ames_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> ames_train)</span>
+<span id="cb139-4"><a href="review-of-cv.html#cb139-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-5"><a href="review-of-cv.html#cb139-5" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> ames_recipe <span class="sc">%&gt;%</span>    </span>
+<span id="cb139-6"><a href="review-of-cv.html#cb139-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) <span class="sc">%&gt;%</span> </span>
+<span id="cb139-7"><a href="review-of-cv.html#cb139-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_mean</span>(Gr_Liv_Area) <span class="sc">%&gt;%</span></span>
+<span id="cb139-8"><a href="review-of-cv.html#cb139-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(Overall_Qual) <span class="sc">%&gt;%</span></span>
+<span id="cb139-9"><a href="review-of-cv.html#cb139-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb139-10"><a href="review-of-cv.html#cb139-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb139-11"><a href="review-of-cv.html#cb139-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_other</span>(Neighborhood, <span class="at">threshold =</span> <span class="fl">0.01</span>, <span class="at">other =</span> <span class="st">&quot;other&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb139-12"><a href="review-of-cv.html#cb139-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="at">one_hot =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb139-13"><a href="review-of-cv.html#cb139-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-14"><a href="review-of-cv.html#cb139-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-15"><a href="review-of-cv.html#cb139-15" aria-hidden="true" tabindex="-1"></a>prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(blueprint, <span class="at">data =</span> ames_train)    <span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb139-16"><a href="review-of-cv.html#cb139-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-17"><a href="review-of-cv.html#cb139-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-18"><a href="review-of-cv.html#cb139-18" aria-hidden="true" tabindex="-1"></a>baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(prepare, <span class="at">new_data =</span> ames_train)   <span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb139-19"><a href="review-of-cv.html#cb139-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-20"><a href="review-of-cv.html#cb139-20" aria-hidden="true" tabindex="-1"></a>baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(prepare, <span class="at">new_data =</span> ames_test)    <span class="co"># apply the blueprint to test data for future use</span></span></code></pre></div>
+</div>
+<div id="training-model" class="section level2 smaller hasAnchor" number="6.25">
+<h2><span class="header-section-number">6.25</span> Training Model<a href="review-of-cv.html#training-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>A KNN model</strong></li>
+</ul>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="review-of-cv.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform CV to tune K</span></span>
+<span id="cb140-2"><a href="review-of-cv.html#cb140-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-3"><a href="review-of-cv.html#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)</span>
+<span id="cb140-4"><a href="review-of-cv.html#cb140-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-5"><a href="review-of-cv.html#cb140-5" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)   <span class="co"># 5-fold CV (no repeats)</span></span>
+<span id="cb140-6"><a href="review-of-cv.html#cb140-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-7"><a href="review-of-cv.html#cb140-7" aria-hidden="true" tabindex="-1"></a>k_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">k =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>))</span>
+<span id="cb140-8"><a href="review-of-cv.html#cb140-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-9"><a href="review-of-cv.html#cb140-9" aria-hidden="true" tabindex="-1"></a>knn_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(blueprint,</span>
+<span id="cb140-10"><a href="review-of-cv.html#cb140-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> ames_train, </span>
+<span id="cb140-11"><a href="review-of-cv.html#cb140-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>,</span>
+<span id="cb140-12"><a href="review-of-cv.html#cb140-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">trControl =</span> cv_specs,</span>
+<span id="cb140-13"><a href="review-of-cv.html#cb140-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tuneGrid =</span> k_grid,</span>
+<span id="cb140-14"><a href="review-of-cv.html#cb140-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span>)</span>
+<span id="cb140-15"><a href="review-of-cv.html#cb140-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-16"><a href="review-of-cv.html#cb140-16" aria-hidden="true" tabindex="-1"></a>knn_fit</span></code></pre></div>
+<pre><code>## k-Nearest Neighbors 
+## 
+## 618 samples
+##  19 predictor
+## 
+## Recipe steps: nzv, impute_mean, integer, center, scale, other, dummy 
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 494, 494, 495, 494, 495 
+## Resampling results across tuning parameters:
+## 
+##   k  RMSE      Rsquared   MAE     
+##   1  42573.14  0.7499158  27889.19
+##   3  35686.37  0.8233707  23448.95
+##   5  33973.09  0.8432532  22186.60
+##   7  34439.17  0.8446435  22479.38
+##   9  35202.64  0.8399091  22419.31
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was k = 5.</code></pre>
+</div>
+<div id="training-model-1" class="section level2 smaller hasAnchor" number="6.26">
+<h2><span class="header-section-number">6.26</span> Training Model<a href="review-of-cv.html#training-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>A KNN model</strong></li>
+</ul>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="review-of-cv.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(knn_fit)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-96-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="training-model-2" class="section level2 smaller hasAnchor" number="6.27">
+<h2><span class="header-section-number">6.27</span> Training Model<a href="review-of-cv.html#training-model-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>A linear regression model</strong></li>
+</ul>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="review-of-cv.html#cb143-1" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(blueprint,</span>
+<span id="cb143-2"><a href="review-of-cv.html#cb143-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> ames_train, </span>
+<span id="cb143-3"><a href="review-of-cv.html#cb143-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb143-4"><a href="review-of-cv.html#cb143-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">trControl =</span> cv_specs,</span>
+<span id="cb143-5"><a href="review-of-cv.html#cb143-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in predict.lm(modelFit, newdata): prediction from a rank-deficient fit
+## may be misleading
+
+## Warning in predict.lm(modelFit, newdata): prediction from a rank-deficient fit
+## may be misleading
+
+## Warning in predict.lm(modelFit, newdata): prediction from a rank-deficient fit
+## may be misleading
+
+## Warning in predict.lm(modelFit, newdata): prediction from a rank-deficient fit
+## may be misleading
+
+## Warning in predict.lm(modelFit, newdata): prediction from a rank-deficient fit
+## may be misleading</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="review-of-cv.html#cb145-1" aria-hidden="true" tabindex="-1"></a>lm_fit</span></code></pre></div>
+<pre><code>## Linear Regression 
+## 
+## 618 samples
+##  19 predictor
+## 
+## Recipe steps: nzv, impute_mean, integer, center, scale, other, dummy 
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 495, 494, 495, 494, 494 
+## Resampling results:
+## 
+##   RMSE      Rsquared   MAE     
+##   32755.85  0.8502331  22609.88
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+</div>
+<div id="final-model-and-test-set-error" class="section level2 hasAnchor" number="6.28">
+<h2><span class="header-section-number">6.28</span> Final Model and Test Set Error<a href="review-of-cv.html#final-model-and-test-set-error" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="review-of-cv.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># refit the final/optimal model using ALL modified training data, and obtain estimate of prediction error from modified test data</span></span>
+<span id="cb147-2"><a href="review-of-cv.html#cb147-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-3"><a href="review-of-cv.html#cb147-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sale_Price <span class="sc">~</span> ., <span class="at">data =</span> baked_train)    <span class="co"># build final model </span></span>
+<span id="cb147-4"><a href="review-of-cv.html#cb147-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-5"><a href="review-of-cv.html#cb147-5" aria-hidden="true" tabindex="-1"></a>final_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_model, <span class="at">newdata =</span> baked_test)   <span class="co"># obtain predictions on test data</span></span></code></pre></div>
+<pre><code>## Warning in predict.lm(final_model, newdata = baked_test): prediction from a
+## rank-deficient fit may be misleading</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="review-of-cv.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((baked_test<span class="sc">$</span>Sale_Price <span class="sc">-</span> final_preds)<span class="sc">^</span><span class="dv">2</span>))    <span class="co"># calculate test set RMSE</span></span></code></pre></div>
+<pre><code>## [1] 47839.78</code></pre>
+</div>
+<div id="variable-importance-1" class="section level2 hasAnchor" number="6.29">
+<h2><span class="header-section-number">6.29</span> Variable Importance<a href="review-of-cv.html#variable-importance-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="review-of-cv.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variable importance</span></span>
+<span id="cb151-2"><a href="review-of-cv.html#cb151-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-3"><a href="review-of-cv.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb151-4"><a href="review-of-cv.html#cb151-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-5"><a href="review-of-cv.html#cb151-5" aria-hidden="true" tabindex="-1"></a><span class="fu">vip</span>(<span class="at">object =</span> lm_fit,         <span class="co"># CV object </span></span>
+<span id="cb151-6"><a href="review-of-cv.html#cb151-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_features =</span> <span class="dv">20</span>,   <span class="co"># maximum number of predictors to show importance for</span></span>
+<span id="cb151-7"><a href="review-of-cv.html#cb151-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;model&quot;</span>)            <span class="co"># model-specific VI scores</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-99-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="your-turn-6" class="section level2 smaller hasAnchor" number="6.30">
+<h2><span class="header-section-number">6.30</span> <span style="color:blue">Your Turn!!!</span><a href="review-of-cv.html#your-turn-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will work with the <code>attrition</code> data from the <code>modeldata</code> package. The task is to predict <code>Attrition</code> (Yes/No) using the rest of the variables in the data (predictors/features).</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="review-of-cv.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modeldata)   <span class="co"># load package</span></span>
+<span id="cb152-2"><a href="review-of-cv.html#cb152-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-3"><a href="review-of-cv.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(attrition)    <span class="co"># load dataset</span></span></code></pre></div>
+<ul>
+<li><p><strong>Step 1</strong>: Investigate the dataset</p>
+<ul>
+<li><p>What are the types of features? - categorical or numeric</p></li>
+<li><p>If categorical, are they ordinal or nominal? If ordinal, are their levels in appropriate order? You can use the <code>levels</code> function to check the ordering.</p></li>
+<li><p>Are there any features with missing entries?</p></li>
+<li><p>Are there any zv/nzv features?</p></li>
+</ul></li>
+<li><p><strong>Step 2</strong>: Split the data into training and test sets (70-30 split)</p></li>
+<li><p><strong>Step 3</strong>: Perform required data preprocessing and create the blueprint. If using <code>step_dummy()</code>, set <code>one_hot = FALSE</code>.</p></li>
+<li><p><strong>Step 4</strong>: Implement 5-fold CV (no repeats) to compare the performance of the following models. Use <code>metric = "Accuracy"</code>.</p>
+<ul>
+<li><p>a logistic regression model (<code>method = "glm"</code> and <code>family = "binomial"</code>)</p></li>
+<li><p>a KNN classifier with the optimal <code>K</code> chosen by CV (<code>method = "knn"</code>). Use a grid of <code>K</code> values <span class="math inline">\(1, 2, \ldots, 10\)</span>.</p></li>
+</ul></li>
+</ul>
+<p>What is the optimal <code>K</code> chosen? How do the models compare in terms of the CV accuracies?</p>
+<ul>
+<li><strong>Step 5</strong>: Build your final optimal model. Obtain probability and class label predictions for the test set (use threshold of 0.5). Create the corresponding confusion matrix and report the test set accuracy. Also, create the ROC curve for the optimal model and report the AUC.</li>
+</ul>
+</div>
+<div id="your-turn-step-1" class="section level2 smaller hasAnchor" number="6.31">
+<h2><span class="header-section-number">6.31</span> <span style="color:blue">Your Turn!!!</span> Step 1<a href="review-of-cv.html#your-turn-step-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="review-of-cv.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(attrition)   <span class="co"># types of variables</span></span></code></pre></div>
+<pre><code>## Rows: 1,470
+## Columns: 31
+## $ Age                      &lt;int&gt; 41, 49, 37, 33, 27, 32, 59, 30, 38, 36, 35, 2…
+## $ Attrition                &lt;fct&gt; Yes, No, Yes, No, No, No, No, No, No, No, No,…
+## $ BusinessTravel           &lt;fct&gt; Travel_Rarely, Travel_Frequently, Travel_Rare…
+## $ DailyRate                &lt;int&gt; 1102, 279, 1373, 1392, 591, 1005, 1324, 1358,…
+## $ Department               &lt;fct&gt; Sales, Research_Development, Research_Develop…
+## $ DistanceFromHome         &lt;int&gt; 1, 8, 2, 3, 2, 2, 3, 24, 23, 27, 16, 15, 26, …
+## $ Education                &lt;ord&gt; College, Below_College, College, Master, Belo…
+## $ EducationField           &lt;fct&gt; Life_Sciences, Life_Sciences, Other, Life_Sci…
+## $ EnvironmentSatisfaction  &lt;ord&gt; Medium, High, Very_High, Very_High, Low, Very…
+## $ Gender                   &lt;fct&gt; Female, Male, Male, Female, Male, Male, Femal…
+## $ HourlyRate               &lt;int&gt; 94, 61, 92, 56, 40, 79, 81, 67, 44, 94, 84, 4…
+## $ JobInvolvement           &lt;ord&gt; High, Medium, Medium, High, High, High, Very_…
+## $ JobLevel                 &lt;int&gt; 2, 2, 1, 1, 1, 1, 1, 1, 3, 2, 1, 2, 1, 1, 1, …
+## $ JobRole                  &lt;fct&gt; Sales_Executive, Research_Scientist, Laborato…
+## $ JobSatisfaction          &lt;ord&gt; Very_High, Medium, High, High, Medium, Very_H…
+## $ MaritalStatus            &lt;fct&gt; Single, Married, Single, Married, Married, Si…
+## $ MonthlyIncome            &lt;int&gt; 5993, 5130, 2090, 2909, 3468, 3068, 2670, 269…
+## $ MonthlyRate              &lt;int&gt; 19479, 24907, 2396, 23159, 16632, 11864, 9964…
+## $ NumCompaniesWorked       &lt;int&gt; 8, 1, 6, 1, 9, 0, 4, 1, 0, 6, 0, 0, 1, 0, 5, …
+## $ OverTime                 &lt;fct&gt; Yes, No, Yes, Yes, No, No, Yes, No, No, No, N…
+## $ PercentSalaryHike        &lt;int&gt; 11, 23, 15, 11, 12, 13, 20, 22, 21, 13, 13, 1…
+## $ PerformanceRating        &lt;ord&gt; Excellent, Outstanding, Excellent, Excellent,…
+## $ RelationshipSatisfaction &lt;ord&gt; Low, Very_High, Medium, High, Very_High, High…
+## $ StockOptionLevel         &lt;int&gt; 0, 1, 0, 0, 1, 0, 3, 1, 0, 2, 1, 0, 1, 1, 0, …
+## $ TotalWorkingYears        &lt;int&gt; 8, 10, 7, 8, 6, 8, 12, 1, 10, 17, 6, 10, 5, 3…
+## $ TrainingTimesLastYear    &lt;int&gt; 0, 3, 3, 3, 3, 2, 3, 2, 2, 3, 5, 3, 1, 2, 4, …
+## $ WorkLifeBalance          &lt;ord&gt; Bad, Better, Better, Better, Better, Good, Go…
+## $ YearsAtCompany           &lt;int&gt; 6, 10, 0, 8, 2, 7, 1, 1, 9, 7, 5, 9, 5, 2, 4,…
+## $ YearsInCurrentRole       &lt;int&gt; 4, 7, 0, 7, 2, 7, 0, 0, 7, 7, 4, 5, 2, 2, 2, …
+## $ YearsSinceLastPromotion  &lt;int&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, 1, 0, …
+## $ YearsWithCurrManager     &lt;int&gt; 5, 7, 0, 0, 2, 6, 0, 0, 8, 7, 3, 8, 3, 2, 3, …</code></pre>
+<p>Numerical variables are represented as <code>&lt;int&gt;</code>, categorical variables are represented as either <code>&lt;ord&gt;</code> or <code>&lt;fct&gt;</code>.</p>
+</div>
+<div id="your-turn-step-1-1" class="section level2 smaller hasAnchor" number="6.32">
+<h2><span class="header-section-number">6.32</span> <span style="color:blue">Your Turn!!!</span> Step 1<a href="review-of-cv.html#your-turn-step-1-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="review-of-cv.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># checking the levels of ordinal variables </span></span>
+<span id="cb155-2"><a href="review-of-cv.html#cb155-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-3"><a href="review-of-cv.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>BusinessTravel)</span></code></pre></div>
+<pre><code>## [1] &quot;Non-Travel&quot;        &quot;Travel_Frequently&quot; &quot;Travel_Rarely&quot;</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="review-of-cv.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>Education)</span></code></pre></div>
+<pre><code>## [1] &quot;Below_College&quot; &quot;College&quot;       &quot;Bachelor&quot;      &quot;Master&quot;       
+## [5] &quot;Doctor&quot;</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="review-of-cv.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>EnvironmentSatisfaction)</span></code></pre></div>
+<pre><code>## [1] &quot;Low&quot;       &quot;Medium&quot;    &quot;High&quot;      &quot;Very_High&quot;</code></pre>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="review-of-cv.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>JobInvolvement)</span></code></pre></div>
+<pre><code>## [1] &quot;Low&quot;       &quot;Medium&quot;    &quot;High&quot;      &quot;Very_High&quot;</code></pre>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="review-of-cv.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>JobSatisfaction)</span></code></pre></div>
+<pre><code>## [1] &quot;Low&quot;       &quot;Medium&quot;    &quot;High&quot;      &quot;Very_High&quot;</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="review-of-cv.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>PerformanceRating)</span></code></pre></div>
+<pre><code>## [1] &quot;Low&quot;         &quot;Good&quot;        &quot;Excellent&quot;   &quot;Outstanding&quot;</code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="review-of-cv.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>RelationshipSatisfaction)</span></code></pre></div>
+<pre><code>## [1] &quot;Low&quot;       &quot;Medium&quot;    &quot;High&quot;      &quot;Very_High&quot;</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="review-of-cv.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>WorkLifeBalance)</span></code></pre></div>
+<pre><code>## [1] &quot;Bad&quot;    &quot;Good&quot;   &quot;Better&quot; &quot;Best&quot;</code></pre>
+</div>
+<div id="your-turn-step-1-2" class="section level2 hasAnchor" number="6.33">
+<h2><span class="header-section-number">6.33</span> <span style="color:blue">Your Turn!!!</span> Step 1<a href="review-of-cv.html#your-turn-step-1-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="review-of-cv.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reorder levels of &#39;BusinessTravel&#39; </span></span>
+<span id="cb171-2"><a href="review-of-cv.html#cb171-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-3"><a href="review-of-cv.html#cb171-3" aria-hidden="true" tabindex="-1"></a>attrition<span class="sc">$</span>BusinessTravel <span class="ot">&lt;-</span> <span class="fu">factor</span>(attrition<span class="sc">$</span>BusinessTravel, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Non-Travel&quot;</span>, <span class="st">&quot;Travel_Rarely&quot;</span>, <span class="st">&quot;Travel_Frequently&quot;</span>))</span>
+<span id="cb171-4"><a href="review-of-cv.html#cb171-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-5"><a href="review-of-cv.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(attrition<span class="sc">$</span>BusinessTravel)</span></code></pre></div>
+<pre><code>## [1] &quot;Non-Travel&quot;        &quot;Travel_Rarely&quot;     &quot;Travel_Frequently&quot;</code></pre>
+</div>
+<div id="your-turn-step-1-3" class="section level2 hasAnchor" number="6.34">
+<h2><span class="header-section-number">6.34</span> <span style="color:blue">Your Turn!!!</span> Step 1<a href="review-of-cv.html#your-turn-step-1-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="review-of-cv.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(attrition))  <span class="co"># check for missing entries</span></span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="your-turn-step-1-4" class="section level2 smaller hasAnchor" number="6.35">
+<h2><span class="header-section-number">6.35</span> <span style="color:blue">Your Turn!!!</span> Step 1<a href="review-of-cv.html#your-turn-step-1-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="review-of-cv.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(attrition, <span class="at">saveMetrics =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##                          freqRatio percentUnique zeroVar   nzv
+## Age                       1.012987     2.9251701   FALSE FALSE
+## Attrition                 5.202532     0.1360544   FALSE FALSE
+## BusinessTravel            3.765343     0.2040816   FALSE FALSE
+## DailyRate                 1.200000    60.2721088   FALSE FALSE
+## Department                2.154709     0.2040816   FALSE FALSE
+## DistanceFromHome          1.014423     1.9727891   FALSE FALSE
+## Education                 1.437186     0.3401361   FALSE FALSE
+## EducationField            1.306034     0.4081633   FALSE FALSE
+## EnvironmentSatisfaction   1.015695     0.2721088   FALSE FALSE
+## Gender                    1.500000     0.1360544   FALSE FALSE
+## HourlyRate                1.035714     4.8299320   FALSE FALSE
+## JobInvolvement            2.314667     0.2721088   FALSE FALSE
+## JobLevel                  1.016854     0.3401361   FALSE FALSE
+## JobRole                   1.116438     0.6122449   FALSE FALSE
+## JobSatisfaction           1.038462     0.2721088   FALSE FALSE
+## MaritalStatus             1.431915     0.2040816   FALSE FALSE
+## MonthlyIncome             1.333333    91.7687075   FALSE FALSE
+## MonthlyRate               1.000000    97.0748299   FALSE FALSE
+## NumCompaniesWorked        2.644670     0.6802721   FALSE FALSE
+## OverTime                  2.533654     0.1360544   FALSE FALSE
+## PercentSalaryHike         1.004785     1.0204082   FALSE FALSE
+## PerformanceRating         5.504425     0.1360544   FALSE FALSE
+## RelationshipSatisfaction  1.062500     0.2721088   FALSE FALSE
+## StockOptionLevel          1.058725     0.2721088   FALSE FALSE
+## TotalWorkingYears         1.616000     2.7210884   FALSE FALSE
+## TrainingTimesLastYear     1.114053     0.4761905   FALSE FALSE
+## WorkLifeBalance           2.595930     0.2721088   FALSE FALSE
+## YearsAtCompany            1.146199     2.5170068   FALSE FALSE
+## YearsInCurrentRole        1.524590     1.2925170   FALSE FALSE
+## YearsSinceLastPromotion   1.627451     1.0884354   FALSE FALSE
+## YearsWithCurrManager      1.307985     1.2244898   FALSE FALSE</code></pre>
+</div>
+<div id="your-turn-step-2" class="section level2 hasAnchor" number="6.36">
+<h2><span class="header-section-number">6.36</span> <span style="color:blue">Your Turn!!!</span> Step 2<a href="review-of-cv.html#your-turn-step-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="review-of-cv.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># split data</span></span>
+<span id="cb177-2"><a href="review-of-cv.html#cb177-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-3"><a href="review-of-cv.html#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)</span>
+<span id="cb177-4"><a href="review-of-cv.html#cb177-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-5"><a href="review-of-cv.html#cb177-5" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(attrition<span class="sc">$</span>Attrition, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb177-6"><a href="review-of-cv.html#cb177-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-7"><a href="review-of-cv.html#cb177-7" aria-hidden="true" tabindex="-1"></a>attrition_train <span class="ot">&lt;-</span> attrition[train_index, ]</span>
+<span id="cb177-8"><a href="review-of-cv.html#cb177-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-9"><a href="review-of-cv.html#cb177-9" aria-hidden="true" tabindex="-1"></a>attrition_test <span class="ot">&lt;-</span> attrition[<span class="sc">-</span>train_index, ]</span></code></pre></div>
+</div>
+<div id="your-turn-step-3" class="section level2 hasAnchor" number="6.37">
+<h2><span class="header-section-number">6.37</span> <span style="color:blue">Your Turn!!!</span> Step 3<a href="review-of-cv.html#your-turn-step-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="review-of-cv.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create recipe, blueprint, prepare, and bake</span></span>
+<span id="cb178-2"><a href="review-of-cv.html#cb178-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-3"><a href="review-of-cv.html#cb178-3" aria-hidden="true" tabindex="-1"></a>attrition_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(<span class="at">formula =</span> Attrition <span class="sc">~</span> ., <span class="at">data =</span> attrition_train)   <span class="co"># sets up the type and role of variables</span></span>
+<span id="cb178-4"><a href="review-of-cv.html#cb178-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-5"><a href="review-of-cv.html#cb178-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-6"><a href="review-of-cv.html#cb178-6" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> attrition_recipe <span class="sc">%&gt;%</span></span>
+<span id="cb178-7"><a href="review-of-cv.html#cb178-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_integer</span>(BusinessTravel, Education, EnvironmentSatisfaction, JobInvolvement, </span>
+<span id="cb178-8"><a href="review-of-cv.html#cb178-8" aria-hidden="true" tabindex="-1"></a>               JobSatisfaction, PerformanceRating, RelationshipSatisfaction, </span>
+<span id="cb178-9"><a href="review-of-cv.html#cb178-9" aria-hidden="true" tabindex="-1"></a>               WorkLifeBalance) <span class="sc">%&gt;%</span></span>
+<span id="cb178-10"><a href="review-of-cv.html#cb178-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb178-11"><a href="review-of-cv.html#cb178-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb178-12"><a href="review-of-cv.html#cb178-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>(), <span class="at">one_hot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb178-13"><a href="review-of-cv.html#cb178-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-14"><a href="review-of-cv.html#cb178-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-15"><a href="review-of-cv.html#cb178-15" aria-hidden="true" tabindex="-1"></a>prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(blueprint, <span class="at">data =</span> attrition_train)    <span class="co"># estimate feature engineering parameters based on training data</span></span>
+<span id="cb178-16"><a href="review-of-cv.html#cb178-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-17"><a href="review-of-cv.html#cb178-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-18"><a href="review-of-cv.html#cb178-18" aria-hidden="true" tabindex="-1"></a>baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(prepare, <span class="at">new_data =</span> attrition_train)   <span class="co"># apply the blueprint to training data for building final/optimal model</span></span>
+<span id="cb178-19"><a href="review-of-cv.html#cb178-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-20"><a href="review-of-cv.html#cb178-20" aria-hidden="true" tabindex="-1"></a>baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(prepare, <span class="at">new_data =</span> attrition_test)    <span class="co"># apply the blueprint to test data for future use</span></span></code></pre></div>
+</div>
+<div id="your-turn-step-4" class="section level2 smaller hasAnchor" number="6.38">
+<h2><span class="header-section-number">6.38</span> <span style="color:blue">Your Turn!!!</span> Step 4<a href="review-of-cv.html#your-turn-step-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="review-of-cv.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform CV </span></span>
+<span id="cb179-2"><a href="review-of-cv.html#cb179-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-3"><a href="review-of-cv.html#cb179-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)</span>
+<span id="cb179-4"><a href="review-of-cv.html#cb179-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-5"><a href="review-of-cv.html#cb179-5" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)   <span class="co"># 5-fold CV (no repeats)</span></span>
+<span id="cb179-6"><a href="review-of-cv.html#cb179-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-7"><a href="review-of-cv.html#cb179-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-8"><a href="review-of-cv.html#cb179-8" aria-hidden="true" tabindex="-1"></a><span class="co"># CV with logistic regression</span></span>
+<span id="cb179-9"><a href="review-of-cv.html#cb179-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-10"><a href="review-of-cv.html#cb179-10" aria-hidden="true" tabindex="-1"></a>logistic_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(blueprint,</span>
+<span id="cb179-11"><a href="review-of-cv.html#cb179-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> attrition_train, </span>
+<span id="cb179-12"><a href="review-of-cv.html#cb179-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>,</span>
+<span id="cb179-13"><a href="review-of-cv.html#cb179-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>,</span>
+<span id="cb179-14"><a href="review-of-cv.html#cb179-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">trControl =</span> cv_specs,</span>
+<span id="cb179-15"><a href="review-of-cv.html#cb179-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span>
+<span id="cb179-16"><a href="review-of-cv.html#cb179-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-17"><a href="review-of-cv.html#cb179-17" aria-hidden="true" tabindex="-1"></a>logistic_fit</span></code></pre></div>
+<pre><code>## Generalized Linear Model 
+## 
+## 1030 samples
+##   30 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## Recipe steps: integer, center, scale, dummy 
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 824, 823, 825, 824, 824 
+## Resampling results:
+## 
+##   Accuracy  Kappa    
+##   0.870915  0.4528554</code></pre>
+</div>
+<div id="your-turn-step-4-1" class="section level2 smaller hasAnchor" number="6.39">
+<h2><span class="header-section-number">6.39</span> <span style="color:blue">Your Turn!!!</span> Step 4<a href="review-of-cv.html#your-turn-step-4-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="review-of-cv.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CV with KNN</span></span>
+<span id="cb181-2"><a href="review-of-cv.html#cb181-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-3"><a href="review-of-cv.html#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">013123</span>)</span>
+<span id="cb181-4"><a href="review-of-cv.html#cb181-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-5"><a href="review-of-cv.html#cb181-5" aria-hidden="true" tabindex="-1"></a>k_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">k =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">1</span>))</span>
+<span id="cb181-6"><a href="review-of-cv.html#cb181-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-7"><a href="review-of-cv.html#cb181-7" aria-hidden="true" tabindex="-1"></a>knn_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(blueprint,</span>
+<span id="cb181-8"><a href="review-of-cv.html#cb181-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> attrition_train, </span>
+<span id="cb181-9"><a href="review-of-cv.html#cb181-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>,</span>
+<span id="cb181-10"><a href="review-of-cv.html#cb181-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">trControl =</span> cv_specs,</span>
+<span id="cb181-11"><a href="review-of-cv.html#cb181-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tuneGrid =</span> k_grid,</span>
+<span id="cb181-12"><a href="review-of-cv.html#cb181-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span>
+<span id="cb181-13"><a href="review-of-cv.html#cb181-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-14"><a href="review-of-cv.html#cb181-14" aria-hidden="true" tabindex="-1"></a>knn_fit</span></code></pre></div>
+<pre><code>## k-Nearest Neighbors 
+## 
+## 1030 samples
+##   30 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## Recipe steps: integer, center, scale, dummy 
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 824, 823, 825, 824, 824 
+## Resampling results across tuning parameters:
+## 
+##   k   Accuracy   Kappa     
+##    1  0.7835261  0.13378621
+##    2  0.7873814  0.14344232
+##    3  0.8398231  0.20441187
+##    4  0.8310899  0.17242779
+##    5  0.8504841  0.17107000
+##    6  0.8446258  0.15021424
+##    7  0.8465958  0.13835761
+##    8  0.8485517  0.13591269
+##    9  0.8427169  0.07579273
+##   10  0.8456343  0.08956634
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was k = 5.</code></pre>
+</div>
+<div id="your-turn-step-4-2" class="section level2 hasAnchor" number="6.40">
+<h2><span class="header-section-number">6.40</span> <span style="color:blue">Your Turn!!!</span> Step 4<a href="review-of-cv.html#your-turn-step-4-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="review-of-cv.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(knn_fit)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-110-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="your-turn-step-5" class="section level2 hasAnchor" number="6.41">
+<h2><span class="header-section-number">6.41</span> <span style="color:blue">Your Turn!!!</span> Step 5<a href="review-of-cv.html#your-turn-step-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="review-of-cv.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build final optimal model and obtain predictions on test set</span></span>
+<span id="cb184-2"><a href="review-of-cv.html#cb184-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-3"><a href="review-of-cv.html#cb184-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(Attrition <span class="sc">~</span> ., <span class="at">data =</span> baked_train, <span class="at">family =</span> binomial)    <span class="co"># build final model </span></span>
+<span id="cb184-4"><a href="review-of-cv.html#cb184-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-5"><a href="review-of-cv.html#cb184-5" aria-hidden="true" tabindex="-1"></a>final_model_prob_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> final_model, <span class="at">newdata =</span> baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)   <span class="co"># obtain probability predictions on test data</span></span>
+<span id="cb184-6"><a href="review-of-cv.html#cb184-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-7"><a href="review-of-cv.html#cb184-7" aria-hidden="true" tabindex="-1"></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb184-8"><a href="review-of-cv.html#cb184-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-9"><a href="review-of-cv.html#cb184-9" aria-hidden="true" tabindex="-1"></a>final_model_class_preds <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(final_model_prob_preds <span class="sc">&gt;</span> threshold, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)) </span></code></pre></div>
+</div>
+<div id="your-turn-step-5-1" class="section level2 smaller hasAnchor" number="6.42">
+<h2><span class="header-section-number">6.42</span> <span style="color:blue">Your Turn!!!</span> Step 5<a href="review-of-cv.html#your-turn-step-5-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="review-of-cv.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create confusion matrix</span></span>
+<span id="cb185-2"><a href="review-of-cv.html#cb185-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb185-3"><a href="review-of-cv.html#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">relevel</span>(final_model_class_preds, <span class="at">ref =</span> <span class="st">&quot;Yes&quot;</span>), </span>
+<span id="cb185-4"><a href="review-of-cv.html#cb185-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">reference =</span> <span class="fu">relevel</span>(baked_test<span class="sc">$</span>Attrition, <span class="at">ref =</span> <span class="st">&quot;Yes&quot;</span>)) </span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction Yes  No
+##        Yes  28  14
+##        No   43 355
+##                                           
+##                Accuracy : 0.8705          
+##                  95% CI : (0.8354, 0.9004)
+##     No Information Rate : 0.8386          
+##     P-Value [Acc &gt; NIR] : 0.0372769       
+##                                           
+##                   Kappa : 0.4268          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.0002083       
+##                                           
+##             Sensitivity : 0.39437         
+##             Specificity : 0.96206         
+##          Pos Pred Value : 0.66667         
+##          Neg Pred Value : 0.89196         
+##              Prevalence : 0.16136         
+##          Detection Rate : 0.06364         
+##    Detection Prevalence : 0.09545         
+##       Balanced Accuracy : 0.67821         
+##                                           
+##        &#39;Positive&#39; Class : Yes             
+## </code></pre>
+</div>
+<div id="your-turn-step-5-2" class="section level2 smaller hasAnchor" number="6.43">
+<h2><span class="header-section-number">6.43</span> <span style="color:blue">Your Turn!!!</span> Step 5<a href="review-of-cv.html#your-turn-step-5-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="review-of-cv.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create ROC cuvre and compute AUC</span></span>
+<span id="cb187-2"><a href="review-of-cv.html#cb187-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-3"><a href="review-of-cv.html#cb187-3" aria-hidden="true" tabindex="-1"></a>roc_object <span class="ot">&lt;-</span> <span class="fu">roc</span>(<span class="at">response =</span> baked_test<span class="sc">$</span>Attrition, <span class="at">predictor =</span> final_model_prob_preds)</span></code></pre></div>
+<pre><code>## Setting levels: control = No, case = Yes</code></pre>
+<pre><code>## Setting direction: controls &lt; cases</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="review-of-cv.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_object, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-113-1.png" width="768" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="review-of-cv.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(roc_object)</span></code></pre></div>
+<pre><code>## Area under the curve: 0.8361</code></pre>
+<!-- ## $k$-Fold CV for Classification Problems -->
+<!-- * Similar to $k$-fold CV (or LOOCV) for regression problems except -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/e5.4.PNG") -->
+<!-- ``` -->
+<!-- or -->
+<!-- $$CV_{(k)}=\displaystyle \sum_{i=1}^k \dfrac{n_i}{n} Err_{i}$$ -->
+<!-- ## $k$-Fold CV for Classification Problems -->
+<!-- **Figure 2.13 in Chapter 2** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/5.7.PNG") -->
+<!-- ``` -->
+<!-- ## $k$-Fold CV for Classification Problems -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/5.8.PNG") -->
+<!-- ``` -->
+<!-- ## CV: Right and Wrong Way -->
+<!-- Consider a simple classifier applied to some two-class data: -->
+<!-- 1. Starting with 5000 predictors and 50 data points, find the 100 predictors having the largest correlation with the class labels. -->
+<!-- 2. We then apply a classifier, say logistic regression, using only these 100 predictors. -->
+<!-- How do we estimate the test set performance of this -->
+<!-- classifier? -->
+<!-- How can we apply CV for such a problem? -->
+<!-- ## CV: Right and Wrong Way -->
+<!-- <span style="color:red">**Wrong Way: Apply CV in step 2.**</span> -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/SL_C5_2.PNG") -->
+<!-- ``` -->
+<!-- ## CV: Right and Wrong Way -->
+<!-- <span style="color:blue">**Right Way: Apply CV in steps 1 and 2.**</span> -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/SL_C5_3.PNG") -->
+<!-- ``` -->
+<!-- ## The Bootstrap -->
+<!-- * Another widely used and powerful resampling method. -->
+<!-- * Used to quantify uncertainty associated with an estimator or machine learning technique. -->
+<!-- * For example, estimate standard errors or obtain confidence intervals for coefficients. -->
+<!-- * Can be applied to a wide range of statistical methods. -->
+<!-- ## Bootstrap: History -->
+<!-- * Derives from the phrase **to pull oneself up by one's bootstraps**, widely thought to be based on one of the eighteenth century fables "The Surprising Adventures of Baron Munchausen" by Rudolph Erich Raspe: -->
+<!-- *The Baron had fallen to the bottom of a deep lake. Just -->
+<!-- when it looked like all was lost, he thought to pick himself up by his own bootstraps.* -->
+<!-- * It is not the same as the term "bootstrap" used in -->
+<!-- computer science meaning to "boot" a computer from a set -->
+<!-- of core instructions, though the derivation is -->
+<!-- * Introduced by Bradley Efron (Stanford University) in his 1979 paper "Bootstrap methods: Another look at the jackknife". -->
+<!-- [Interview with Brad Efron](https://www.youtube.com/watch?v=H2tOhMaXWvI) -->
+<!-- ## Bootstrap: Toy Example -->
+<!-- * Suppose that we wish to invest a fixed sum of money in -->
+<!-- two financial assets that yield returns of $X$ and $Y$ , -->
+<!-- respectively, where $X$ and $Y$ are random quantities. -->
+<!-- * Invest a fraction $\alpha$ in $X$, remaining $1-\alpha$ in $Y$. -->
+<!-- * Objective: To choose $\alpha$ to minimize the total risk, or variance, of our investment. -->
+<!-- $$\text{Minimize} \ \ Var\left(\alpha X + (1-\alpha) Y\right) \ \ \text{w.r.t} \ \ \alpha$$ -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e5.6.PNG") -->
+<!-- ``` -->
+<!-- where $\sigma^2_X=Var(X)$, $\sigma^2_Y=Var(Y)$, and $\sigma_{XY}=Cov(X,Y)$. -->
+<!-- ## Bootstrap: Toy Example -->
+<!-- But $\sigma^2_X$, $\sigma^2_Y$, and $\sigma_{XY}$ are unknown (in reality). -->
+<!-- Estimate $\hat{\sigma}^2_X$, $\hat{\sigma}^2_Y$, and $\hat{\sigma}_{XY}$ from available data. Then, -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e5.7.PNG") -->
+<!-- ``` -->
+<!-- ## Bootstrap: Toy Example -->
+<!-- Simulation: $\sigma^2_X=1$, $\sigma^2_Y=1.25$, and $\sigma_{XY}=0.5$ ($\alpha=?$) -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/5.9.PNG") -->
+<!-- ``` -->
+<!-- $\hat{\alpha}_1=0.576$, $\hat{\alpha}_2=0.532$, $\hat{\alpha}_3=0.657$, $\hat{\alpha}_4=0.651$ -->
+<!-- ## Bootstrap: Toy Example -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/e5.75.png") -->
+<!-- ``` -->
+<!-- ## Bootstrap: Toy Example -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/5.10.PNG") -->
+<!-- ``` -->
+<!-- ## Bootstrap: Real World -->
+<!-- * In real world, we only have a single dataset. Bootstrap mimics the toy example. -->
+<!-- * Repeatedly (say $B$ times) sample distinct datasets from the original sample (available data) **with replacement**. -->
+<!-- * Each dataset is called **Bootstrap dataset**. -->
+<!-- ## Bootstrap: Real World -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/5.11.PNG") -->
+<!-- ``` -->
+<!-- ## Bootstrap: Real World -->
+<!-- Bootstrap estimate of standard error -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/e5.8.PNG") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/5.10.PNG") -->
+<!-- ``` -->
+<!-- ## Bootstrap: Summary -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/SL_C5_4.png") -->
+<!-- ``` -->
+<!-- ## Bootstrap: Uses -->
+<!-- * Primarily used to obtain standard errors of estimates. -->
+<!-- * Also, calculate **bootstrap percentile confidence intervals**. -->
+<!-- * Can be used to estimate prediction error, but CV is simpler and attractive for this purpose. -->
+<!-- ## Week 4 Review -->
+<!-- ## Week 4 Review -->
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="k-nearest-neighbors-classifier.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/abhicc/208notes/edit/master/05-Slides5.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/abhicc/208notes/blob/master/05-Slides5.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

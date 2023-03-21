@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 What is Machine Learning? | 208 Course Notes</title>
-  <meta name="description" content="Chapter 2 What is Machine Learning? | 208 Course Notes" />
+  <title>Chapter 3 Supervised Learning: Assessing Model Accuracy | 208 Course Notes</title>
+  <meta name="description" content="Chapter 3 Supervised Learning: Assessing Model Accuracy | 208 Course Notes" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 What is Machine Learning? | 208 Course Notes" />
+  <meta property="og:title" content="Chapter 3 Supervised Learning: Assessing Model Accuracy | 208 Course Notes" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 What is Machine Learning? | 208 Course Notes" />
+  <meta name="twitter:title" content="Chapter 3 Supervised Learning: Assessing Model Accuracy | 208 Course Notes" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="supervised-learning-assessing-model-accuracy.html"/>
+<link rel="prev" href="what-is-machine-learning.html"/>
+<link rel="next" href="multiple-linear-regression-mlr.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -334,319 +334,499 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="what-is-machine-learning" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> What is Machine Learning?<a href="what-is-machine-learning.html#what-is-machine-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="supervised-learning-assessing-model-accuracy" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Supervised Learning: Assessing Model Accuracy<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Why are we going to study so many different ML techniques?</p>
+<p><strong>There is no free lunch in statistics</strong>: No one method dominates all others over all possible datasets.</p>
+<div id="supervised-learning-assessing-model-accuracy-1" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Supervised Learning: Assessing Model Accuracy<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we have labeled training data <span class="math inline">\((x_1,y_1), (x_2, y_2), \ldots, (x_n,y_n)\)</span>, i.e, <span class="math inline">\(n\)</span> training data points/observations.</p>
+<p>We fit/train a model <span class="math inline">\(\hat{y}=\hat{f}(x)\)</span> (or, a classifier <span class="math inline">\(\hat{y}=\hat{C}(x)\)</span>) on the training data and obtain estimates <span class="math inline">\(\hat{f}(x_1), \hat{f}(x_2), \ldots, \hat{f}(x_n)\)</span> (or, <span class="math inline">\(\hat{C}(x_1), \hat{C}(x_2), \ldots, \hat{C}(x_n)\)</span>).</p>
+<p>We could then compute the</p>
 <ul>
-<li><p>Machine Learning is the study of tools/techniques for understanding complex datasets.</p></li>
-<li><p>The name machine learning was coined in 1959 by Arthur Samuel.</p>
-<ul>
-<li>“Field of study that gives computers the ability to learn without being explicitly programmed.”</li>
-</ul></li>
+<li><strong>Regression</strong></li>
 </ul>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.4.0      ✔ purrr   1.0.0 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2 
-## ── Conflicts ───────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="what-is-machine-learning-1" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> What is Machine Learning?<a href="what-is-machine-learning.html#what-is-machine-learning-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Tom M. Mitchell (1998) defined algorithms studied in the machine learning field as</p>
-<p>“A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E.”</p>
-<!-- ## But, Textbook is Not About Machine Learning??!!! -->
-<!-- Statisticians focus on the statistical aspect of problems. -->
-<!-- ```{r , echo=FALSE,  fig.align='center', fig.cap="Authors of ISL", out.width = '70%'} -->
-<!-- knitr::include_graphics("EFT/Authors.jpg") -->
+<p><span class="math display">\[\text{Training MSE}=\text{Average}_{Training} \left(y-\hat{f}(x)\right)^2 = \frac{1}{n} \displaystyle \sum_{i=1}^{n} \left(y_i-\hat{f}(x_i)\right)^2\]</span></p>
+<ul>
+<li><strong>Classification</strong></li>
+</ul>
+<p><span class="math display">\[\text{Training Error Rate}=\text{Average}_{Training} \ \left[I \left(y\ne\hat{C}(x)\right) \right]= \frac{1}{n} \displaystyle \sum_{i=1}^{n} \ I\left(y_i \ne \hat{C}(x_i)\right)\]</span></p>
+</div>
+<div id="supervised-learning-assessing-model-accuracy-2" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Supervised Learning: Assessing Model Accuracy<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>But in general, we are not interested in how the method works on the training data. We want to measure the accuracy of the method on previously unseen test data.</p>
+<p>Suppose, if possible, we have fresh test data, <span class="math inline">\((x_1^{test},y_1^{test}), (x_2^{test},y_2^{test}), \ldots, (x_m^{test},y_m^{test})\)</span>. Then we can compute,</p>
+<ul>
+<li><strong>Regression</strong></li>
+</ul>
+<p><span class="math display">\[\text{Test MSE}=\text{Average}_{Test} \left(y-\hat{f}(x)\right)^2 = \frac{1}{m} \displaystyle \sum_{i=1}^{m} \left(y_i^{test}-\hat{f}(x_i^{test})\right)^2\]</span></p>
+<ul>
+<li><strong>Classification</strong></li>
+</ul>
+<p><span class="math display">\[\text{Test Error Rate}=\text{Average}_{Test} \ \left[I \left(y\ne\hat{C}(x)\right) \right]= \frac{1}{m} \displaystyle \sum_{i=1}^{m} \ I\left(y_i^{test} \ne \hat{C}(x_i^{test})\right)\]</span></p>
+</div>
+<div id="supervised-learning-assessing-model-accuracy-3" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Supervised Learning: Assessing Model Accuracy<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the following slides, we look at three different examples with simulated toy datasets. We work within the regression setting (but the ideas also extend to the classification setting) and three different <span class="math inline">\(\hat{f}(.)\)</span>’s.</p>
+<ul>
+<li>Linear Regression (Orange)</li>
+<li>Smoothing Spline 1 (Blue)</li>
+<li>More flexible Smoothing Spline 2 (Green)</li>
+</ul>
+<p>The “true” function (simulated) is <span class="math inline">\(f(.)\)</span> (black).</p>
+</div>
+<div id="supervised-learning-assessing-model-accuracy-4" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Supervised Learning: Assessing Model Accuracy<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Simulated toy dataset</strong></p>
+<p><img src="EFT/2.9.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="supervised-learning-assessing-model-accuracy-5" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Supervised Learning: Assessing Model Accuracy<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Simulated toy dataset</strong></p>
+<p><img src="EFT/2.10.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="supervised-learning-assessing-model-accuracy-6" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Supervised Learning: Assessing Model Accuracy<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Simulated toy dataset</strong></p>
+<p><img src="EFT/2.11.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="supervised-learning-bias-variance-trade-off" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Supervised Learning: Bias-Variance Trade-off<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Why is the Test MSE U-shaped?</p>
+<p>Suppose we have fit a model <span class="math inline">\(\hat{f}(x)\)</span> to some training data. Let the “true” model be <span class="math inline">\(Y=f(x)+\epsilon\)</span>. Let <span class="math inline">\((x_0, y_0)\)</span> be a test observation.</p>
+<p>We have,</p>
+<p><span class="math display">\[\underbrace{E\left(y_0-\hat{f}(x_0)\right)^2}_{total \ error}=\underbrace{Var\left(\hat{f}(x_0)\right)}_{source \ 3} + \underbrace{\left[Bias\left(\hat{f}(x_0)\right)\right]^2}_{source \ 2}+\underbrace{Var(\epsilon)}_{source \ 1}\]</span></p>
+<p>where <span class="math inline">\(Bias\left(\hat{f}(x_0)\right)=E\left(\hat{f}(x_0)\right)-f(x_0)\)</span></p>
+</div>
+<div id="supervised-learning-bias-variance-trade-off-1" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Supervised Learning: Bias-Variance Trade-off<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>source 1: how <span class="math inline">\(y\)</span> differs from “true” <span class="math inline">\(f(x)\)</span></p></li>
+<li><p>source 2: how <span class="math inline">\(\hat{f}(x)\)</span> (when fitted to the test data) differs from <span class="math inline">\(f(x)\)</span></p></li>
+<li><p>source 3: how <span class="math inline">\(\hat{f}(x)\)</span> varies among different randomly selected possible training data</p></li>
+</ul>
+</div>
+<div id="supervised-learning-bias-variance-trade-off-2" class="section level2 hasAnchor" number="3.9">
+<h2><span class="header-section-number">3.9</span> Supervised Learning: Bias-Variance Trade-off<a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/2.12.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="question-5" class="section level2 hasAnchor" number="3.10">
+<h2><span class="header-section-number">3.10</span> <span style="color:blue">Question!!!</span><a href="supervised-learning-assessing-model-accuracy.html#question-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As the flexibility of a model <span class="math inline">\(\hat{f}(\mathbf{X})\)</span> increases,</p>
+<ul>
+<li><p>its variance <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (increases/decreases)</p></li>
+<li><p>its bias <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (increases/decreases)</p></li>
+<li><p>its training MSE <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (increases/decreases)</p></li>
+<li><p>its test MSE <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (increases/decreases/U-shaped)</p></li>
+</ul>
+<!-- ## Supervised Learning: Classification -->
+<!-- Here the response $Y$ is qualitative (categorical). -->
+<!-- The objectives are -->
+<!-- * Build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$ that assigns a class label to a future unlabeled observation. -->
+<!-- * Assess the performance $\hat{C}(\mathbf{X})$. -->
+<!-- * Understand relationship between $\mathbf{X}$ and $Y$. -->
+<!-- ## Supervised Learning: Classification Error Rates -->
+<!-- Suppose we have training data $(x_1,y_1), (x_2, y_2), \ldots, (x_n,y_n)$. We fit a classifier $\hat{y}=\hat{C}(x)$. Similar to regression settings, we have -->
+<!-- $$\text{Training Error Rate}=\text{Average}_{Training} \ \left[I \left(y\ne\hat{C}(x)\right) \right]= \frac{1}{n} \displaystyle \sum_{i=1}^{n} \ I\left(y_i \ne \hat{C}(x_i)\right)$$ -->
+<!-- Suppose, if possible, we have fresh test data, $(x_1^{test},y_1^{test}), (x_2^{test},y_2^{test}), \ldots, (x_m^{test},y_m^{test})$. Then, -->
+<!-- $$\text{Test Error Rate}=\text{Average}_{Test} \ \left[I \left(y\ne\hat{C}(x)\right) \right]= \frac{1}{m} \displaystyle \sum_{i=1}^{m} \ I\left(y_i^{test} \ne \hat{C}(x_i^{test})\right)$$ -->
+<!-- ## Supervised Learning: Bayes Classifier -->
+<!-- Suppose we have training data $(x_1,y_1), (x_2, y_2), \ldots, (x_n,y_n)$ and there are $K$ possible classes numbered $1,2, \ldots, K$. -->
+<!-- Define, **conditional class probabilities** -->
+<!-- $$p_k(x)=P(Y=k | X=x), \ \ \ k=1,2,\ldots,K$$ -->
+<!-- For a test data point $(x_0,y_0)$, the Bayes classifier is -->
+<!-- $$\hat{y}=\hat{C}(x_0)=j \ \ \text{if} \ \ p_j(x_0)=\text{max}\{p_1(x_0), p_2(x_0), \ldots, p_K(x_0)\}$$ -->
+<!-- The Bayes classifier has smallest possible test error rate, called **Bayes error rate**. -->
+<!-- ## Supervised Learning: Bayes Classifier -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/2.13.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression -->
+<!-- * Supervised Learning -->
+<!-- * Regression problem -->
+<!-- * Parametric Approach (assumes a linear relationship between response and features) -->
+<!-- * Simple approach, building block to more sophisticated statistical learning approaches. -->
+<!-- ## Linear Regression -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/2.1.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression -->
+<!-- Questions we might ask: -->
+<!-- * Is there a relationship between advertising budget and -->
+<!-- sales? -->
+<!-- * How strong is the relationship between advertising budget -->
+<!-- and sales? -->
+<!-- * Which media contribute to sales? -->
+<!-- * How accurately can we predict future sales? -->
+<!-- * Is the relationship linear? -->
+<!-- * Is there synergy among the advertising media? -->
+</div>
+<div id="simple-linear-regression-slr" class="section level2 hasAnchor" number="3.11">
+<h2><span class="header-section-number">3.11</span> Simple Linear Regression (SLR)<a href="supervised-learning-assessing-model-accuracy.html#simple-linear-regression-slr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Response <span class="math inline">\(Y\)</span> and a single predictor variable <span class="math inline">\(X\)</span>. We assume</p>
+<p><span class="math display">\[Y=f(\mathbf{X}) + \epsilon=\beta_0 + \beta_1 X+ \epsilon\]</span></p>
+<p>Parameters/Coefficients: <span class="math inline">\(\beta_0\)</span> (intercept) and <span class="math inline">\(\beta_1\)</span> (slope)</p>
+<p>Training data: <span class="math inline">\((x_1,y_1), (x_2, y_2), \ldots, (x_n,y_n)\)</span></p>
+<p>We use training data to find <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> such that</p>
+<p><span class="math display">\[\hat{y}=\hat{\beta}_0 + \hat{\beta}_1 \ x\]</span></p>
+</div>
+<div id="question-6" class="section level2 hasAnchor" number="3.12">
+<h2><span class="header-section-number">3.12</span> <span style="color:blue">Question!!!</span><a href="supervised-learning-assessing-model-accuracy.html#question-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Linear regression is</p>
+<ul>
+<li><p><span class="math inline">\(\underline{\hspace{5cm}}\)</span> (supervised/unsupervised)</p></li>
+<li><p><span class="math inline">\(\underline{\hspace{5cm}}\)</span> (regression/classification)</p></li>
+<li><p><span class="math inline">\(\underline{\hspace{5cm}}\)</span> (parametric/non-parametric)</p></li>
+</ul>
+</div>
+<div id="slr-estimating-parameters" class="section level2 hasAnchor" number="3.13">
+<h2><span class="header-section-number">3.13</span> SLR: Estimating Parameters<a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Training data: <span class="math inline">\((x_1,y_1), (x_2, y_2), \ldots, (x_n,y_n)\)</span></p>
+<p>Observed response: <span class="math inline">\(y_i\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span></p>
+<p>Predicted response: <span class="math inline">\(\hat{y}_i\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span></p>
+<p>Residual: <span class="math inline">\(e_i=y_i - \hat{y}_i\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span></p>
+<p>Residual Sum of Squares (RSS): <span class="math inline">\(RSS =e^2_1+e^2_2+\ldots+e^2_n\)</span></p>
+<p>Problem: Find <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> which minimizes <span class="math inline">\(RSS\)</span></p>
+<!-- ## SLR: Estimating Parameters -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/3.1.png") -->
 <!-- ``` -->
 </div>
-<div id="question" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> <span style="color:blue">Question!!!</span><a href="what-is-machine-learning.html#question" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Suppose your email program watches which emails you do or do not mark as spam, and based on that learns how to better filter spam. According to Tom Mitchell’s definition, what is the task T, experience E, and performance measure P in this setting?</p>
-<ul>
-<li>The number (or fraction) of emails correctly classified as spam/ham.</li>
-<li>Classifying emails as spam or ham (not spam)</li>
-<li>Watching you label emails as spam or ham.</li>
-</ul>
-</div>
-<div id="statistical-learning-vs-machine-learning-vs-data-science" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Statistical Learning vs Machine Learning vs Data Science<a href="what-is-machine-learning.html#statistical-learning-vs-machine-learning-vs-data-science" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li>Machine learning arose as a subfield of Artificial Intelligence.</li>
-<li>Statistical learning arose as a subfield of Statistics.</li>
-<li>There is much overlap, a great deal of “cross-fertilization”.</li>
-<li>“Data Science” - Reflects the fact that both statistical and machine learning are about data.</li>
-<li>“Machine learning” or “Data Science” are “fancier” terms.</li>
-</ul>
-</div>
-<div id="notations" class="section level2 hasAnchor" number="2.4">
-<h2><span class="header-section-number">2.4</span> Notations<a href="what-is-machine-learning.html#notations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li><p>Matrices - Bold, Upper-case <span class="math inline">\(\mathbf{X}\)</span></p></li>
-<li><p>Vectors - Bold, Lower-case <span class="math inline">\(\mathbf{x}\)</span></p></li>
-<li><p>Scalars - Normal, Lower-case <span class="math inline">\(x\)</span></p></li>
-<li><p>Random Variables - Normal, Upper-case <span class="math inline">\(X\)</span></p></li>
-<li><p>No. of data points/observations - <span class="math inline">\(n\)</span></p></li>
-<li><p>No. of variables - <span class="math inline">\(p\)</span></p></li>
-</ul>
-</div>
-<div id="notations-1" class="section level2 hasAnchor" number="2.5">
-<h2><span class="header-section-number">2.5</span> Notations<a href="what-is-machine-learning.html#notations-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
-<img src="EFT/DataMatrix1.png" alt="A matrix of dimension n x p" width="40%" />
+<div id="slr-estimating-parameters-1" class="section level2 hasAnchor" number="3.14">
+<h2><span class="header-section-number">3.14</span> SLR: Estimating Parameters<a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
+<img src="EFT/3.2.png" alt="Three-dimensional plot of RSS" width="60%" />
 <p class="caption">
-Figure 2.1: A matrix of dimension n x p
-</p>
-</div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
-<img src="EFT/Vector.png" alt="A n-dimensional vector" width="15%" />
-<p class="caption">
-Figure 2.2: A n-dimensional vector
-</p>
-</div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
-<img src="EFT/DataMatrix2.png" alt="Matrix" width="40%" />
-<p class="caption">
-Figure 2.3: Matrix
+Figure 3.1: Three-dimensional plot of RSS
 </p>
 </div>
 </div>
-<div id="question-1" class="section level2 hasAnchor" number="2.6">
-<h2><span class="header-section-number">2.6</span> <span style="color:blue">Question!!!</span><a href="what-is-machine-learning.html#question-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Suppose you are given the following feature matrix.</p>
-<p><span class="math display">\[
-\mathbf{X}=\begin{pmatrix}
-8.5 &amp; 11.2 &amp; 7.0 &amp; 9.3 \\
-8.0 &amp; 11.5 &amp; 13.1 &amp; 7.4 \\
-6.4 &amp; 9.6 &amp; 7.0 &amp; 6.8 \\
-9.5 &amp; -3.2 &amp; 14.4 &amp; 1.6
-\end{pmatrix}
-\]</span></p>
-<ul>
-<li><p>What are the corresponding values of <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>?</p></li>
-<li><p>What will be the dimension of the corresponding response vector <span class="math inline">\(\mathbf{y}\)</span>?</p></li>
-<li><p>What is the value of the 3rd feature for the 2nd observation?</p></li>
-</ul>
+<div id="slr-estimating-parameters-2" class="section level2 hasAnchor" number="3.15">
+<h2><span class="header-section-number">3.15</span> SLR: Estimating Parameters<a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>least squares</strong> regression coefficient estimates are</p>
+<p><span class="math display">\[\hat{\beta}_1=\dfrac{\displaystyle\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})}{\displaystyle\sum_{i=1}^n (x_i-\bar{x})^2}\]</span></p>
+<p><span class="math display">\[\hat{\beta}_0=\bar{y}- \hat{\beta}_1 \ \bar{x}\]</span>
+where <span class="math inline">\(\bar{y}=\dfrac{1}{n} \displaystyle\sum_{i=1}^n y_i\)</span> and <span class="math inline">\(\bar{x}=\dfrac{1}{n} \displaystyle\sum_{i=1}^n x_i\)</span>.</p>
 </div>
-<div id="question-2" class="section level2 hasAnchor" number="2.7">
-<h2><span class="header-section-number">2.7</span> <span style="color:blue">Question!!!</span><a href="what-is-machine-learning.html#question-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Suppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients.</p>
-<ul>
-<li><p>What are the values of <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> in this dataset?</p></li>
-<li><p>What are the inputs/features?</p></li>
-</ul>
+<div id="ames-housing-dataset" class="section level2 hasAnchor" number="3.16">
+<h2><span class="header-section-number">3.16</span> Ames Housing Dataset<a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Contains data on 881 properties in Ames, IA.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="supervised-learning-assessing-model-accuracy.html#cb2-1" aria-hidden="true" tabindex="-1"></a>ames <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;AmesHousing.rds&quot;</span>)   <span class="co"># read in the dataset after specifying directory</span></span></code></pre></div>
 </div>
-<div id="supervised-vs-unsupervised" class="section level2 hasAnchor" number="2.8">
-<h2><span class="header-section-number">2.8</span> Supervised vs Unsupervised<a href="what-is-machine-learning.html#supervised-vs-unsupervised" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
-<img src="EFT/SupUnsup.png" alt="Machine Learning Tasks" width="100%" />
-<p class="caption">
-Figure 2.4: Machine Learning Tasks
-</p>
-</div>
-</div>
-<div id="supervised-learning" class="section level2 hasAnchor" number="2.9">
-<h2><span class="header-section-number">2.9</span> Supervised Learning<a href="what-is-machine-learning.html#supervised-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ames-housing-dataset-1" class="section level2 smaller hasAnchor" number="3.17">
+<h2><span class="header-section-number">3.17</span> Ames Housing dataset<a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Variable descriptions:</p>
 <ul>
-<li><p>Labeled <strong>training data</strong></p></li>
-<li><p>Inputs/Features/Regressors/Covariates/Independent Variables</p></li>
+<li><code>Sale_Price</code>: Property sale price in USD</li>
+<li><code>Gr_Liv_Area</code>: Above grade (ground) living area square feet</li>
+<li><code>Garage_Type</code>: Garage location</li>
+<li><code>Garage_Cars</code>: Size of garage in car capacity</li>
+<li><code>Garage_Area</code>: Size of garage in square feet</li>
+<li><code>Street</code>: Type of road access to property</li>
+<li><code>Utilities</code>: Type of utilities available</li>
+<li><code>Pool_Area</code>: Pool area in square feet</li>
+<li><code>Neighborhood</code>: Physical locations within Ames city limits</li>
+<li><code>Screen_Porch</code>: Screen porch area in square feet</li>
+<li><code>Overall_Qual</code>: Rates the overall material and finish of the house</li>
+<li><code>Lot_Area</code>: Lot size in square feet</li>
+<li><code>Lot_Frontage</code>: Linear feet of street connected to property</li>
+<li><code>MS_SubClass</code>: Identifies the type of dwelling involved in the sale.</li>
+<li><code>Misc_Val</code>: Dollar value of miscellaneous feature</li>
+<li><code>Open_Porch_SF</code>: Open porch area in square feet</li>
+<li><code>TotRms_AbvGrd</code>: Total rooms above grade (does not include bathrooms)</li>
+<li><code>First_Flr_SF</code>: First Floor square feet</li>
+<li><code>Second_Flr_SF</code>: Second floor square feet</li>
+<li><code>Year_Built</code>: Original construction date</li>
 </ul>
-<p><img src="EFT/DataMatrix1.png" width="40%" style="display: block; margin: auto;" /></p>
-<ul>
-<li>Response/Target/Dependent Variable</li>
-</ul>
-<p><img src="EFT/Vector.png" width="20%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="supervised-learning-1" class="section level2 hasAnchor" number="2.10">
-<h2><span class="header-section-number">2.10</span> Supervised Learning<a href="what-is-machine-learning.html#supervised-learning-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The objective is to learn the overall pattern of the relationship between the inputs (<span class="math inline">\(\mathbf{X}\)</span>) and response (<span class="math inline">\(\mathbf{y}\)</span>) in order to</p>
-<ul>
-<li>Investigate the relationship between inputs and response.</li>
-<li>Predict for potential unseen <strong>test</strong> cases.</li>
-<li>Assess the quality of predictions.</li>
-</ul>
-<p>Supervised Learning problems can be categorized into</p>
-<ul>
-<li><strong>Regression</strong> problems (response is quantitative, continuous)</li>
-<li><strong>Classification</strong> problems (response is qualitative, categorical)</li>
-</ul>
-</div>
-<div id="unsupervised-learning" class="section level2 hasAnchor" number="2.11">
-<h2><span class="header-section-number">2.11</span> Unsupervised Learning<a href="what-is-machine-learning.html#unsupervised-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li>No outcome variable, just <span class="math inline">\(\mathbf{X}\)</span>.</li>
-<li>Understand structure within data.
-<ul>
-<li>find similar groups of observations based on features (<strong>clustering</strong>)</li>
-<li>find a smaller subset of features with the most variation (<strong>dimensionality reduction</strong>)</li>
-</ul></li>
-<li>No gold-standard.</li>
-<li>Easier to collect unlabeled data.</li>
-<li>Useful pre-processing step for supervised learning.</li>
-</ul>
-<!-- ## Supervised Learning -->
-<!-- *Advertising* dataset -->
+<!-- ## Simple Linear Regression (SLR)  -->
+<!-- **FootHeight dataset** -->
+<!-- Data recorded from crime scenes on the footprint (in cms) and height (in inches) for 20 randomly selected people who were identified as criminals. -->
 <!-- ```{r, echo=FALSE} -->
 <!-- Advertising=read.csv("Advertising.csv") -->
 <!-- Advertising$X=NULL -->
-<!-- names(Advertising)=c("TV","Radio","Newspaper","Sales") -->
-<!-- head(Advertising,15) -->
+<!-- names(Advertising)=c("TV","Radio", "Newspaper","Sales") -->
+<!-- head(Advertising[,c(1,4)],15) -->
 <!-- ``` -->
-<!-- * Inputs - *TV*, *Radio*, *Newspaper* -->
-<!-- * Response - *Sales* -->
-<!-- ## Supervised Learning -->
-<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
-<!-- knitr::include_graphics("EFT/2.1.png") -->
-<!-- ``` -->
-<!-- Shown are *Sales* vs *TV*, *Radio* and *Newspaper*, with a blue straight line fit separately to each. Can we predict *Sales* using these three? -->
-<!-- We could use a model -->
-<!-- $$\text{Sales} \approx f(TV,Radio,Newspaper)$$ -->
-</div>
-<div id="question-3" class="section level2 hasAnchor" number="2.12">
-<h2><span class="header-section-number">2.12</span> <span style="color:blue">Question!!!</span><a href="what-is-machine-learning.html#question-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Some of the problems below are best addressed using a supervised learning algorithm, while others with an unsupervised learning algorithm. In each case, identify whether the problem belongs to the supervised or unsupervised learning paradigm. (Assume some appropriate dataset is available for your algorithm to “learn” from.)</p>
-<ul>
-<li><p>Examine the statistics of two football teams, and predict which team will win tomorrow’s match (given historical data of teams’ wins/losses to learn from).</p></li>
-<li><p>Given genetic (DNA) data from a person, predict the odds of the person developing diabetes over the next 10 years.</p></li>
-<li><p>Take a collection of 1000 essays written on the US economy, and find a way to automatically group these essays into a small number of groups of essays that are somehow “similar” or “related”.</p></li>
-<li><p>Examine a large collection of emails that are known to be spam, to discover if there are sub-types of spam email.</p></li>
-<li><p>Suppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients.</p></li>
-<li><p>Examine data on the income and years of education of adults in a neighborhood and build a model to predict the income from years of education.</p></li>
-</ul>
-</div>
-<div id="supervised-learning-2" class="section level2 hasAnchor" number="2.13">
-<h2><span class="header-section-number">2.13</span> Supervised Learning<a href="what-is-machine-learning.html#supervised-learning-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>More mathematically, the “true”/population model can be represented by</p>
-<p><span class="math display">\[Y=f(\mathbf{X}) + \epsilon\]</span></p>
-<p>where <span class="math inline">\(\epsilon\)</span> is a <strong>random</strong> error term (includes measurement error, other discrepancies) independent of <span class="math inline">\(\mathbf{X}\)</span> and has mean zero.</p>
-</div>
-<div id="supervised-learning-3" class="section level2 hasAnchor" number="2.14">
-<h2><span class="header-section-number">2.14</span> Supervised Learning<a href="what-is-machine-learning.html#supervised-learning-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The primary objective is to:</p>
-<ul>
-<li><strong>Regression</strong>: response <span class="math inline">\(Y\)</span> is quantitative</li>
-</ul>
-<p>Build a model <span class="math inline">\(\hat{Y} = \hat{f}(\mathbf{X})\)</span></p>
-<ul>
-<li><strong>Classification</strong>: response <span class="math inline">\(Y\)</span> is qualitative</li>
-</ul>
-<p>Build a classifier <span class="math inline">\(\hat{Y}=\hat{C}(\mathbf{X})\)</span></p>
-</div>
-<div id="supervised-learning-4" class="section level2 hasAnchor" number="2.15">
-<h2><span class="header-section-number">2.15</span> Supervised Learning<a href="what-is-machine-learning.html#supervised-learning-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Income dataset</strong></p>
-<p><img src="EFT/2.2.png" width="100%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="supervised-learning-5" class="section level2 hasAnchor" number="2.16">
-<h2><span class="header-section-number">2.16</span> Supervised Learning<a href="what-is-machine-learning.html#supervised-learning-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Income dataset</strong></p>
-<p><img src="EFT/2.3.png" width="85%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="supervised-learning-why-estimate-fmathbfx" class="section level2 hasAnchor" number="2.17">
-<h2><span class="header-section-number">2.17</span> Supervised Learning: Why Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?<a href="what-is-machine-learning.html#supervised-learning-why-estimate-fmathbfx" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We wish to know about <span class="math inline">\(f(\mathbf{X})\)</span> for two reasons:</p>
-<ul>
-<li>Prediction at new unseen data points <span class="math inline">\(x_0\)</span></li>
-</ul>
-<p><span class="math display">\[\hat{y}_0=\hat{f}(x_0) \ \ \ \text{or} \ \ \ \hat{y}_0=\hat{C}(x_0)\]</span></p>
-<ul>
-<li><p>Inference: Understand the relationship between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(Y\)</span>.</p></li>
-<li><p>An ML algorithm that is developed mainly for predictive purposes is often termed as a <strong>Black Box</strong> algorithm.</p></li>
-</ul>
-</div>
-<div id="supervised-learning-prediction-and-inference" class="section level2 hasAnchor" number="2.18">
-<h2><span class="header-section-number">2.18</span> Supervised Learning: Prediction and Inference<a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Income dataset</strong></p>
-<p><img src="EFT/2.2.png" width="100%" style="display: block; margin: auto;" /></p>
-<!-- ## Supervised Learning: Inference -->
-<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
-<!-- knitr::include_graphics("EFT/2.1.png") -->
+<!-- ## Simple Linear Regression (SLR)  -->
+<!-- **FootHeight dataset** -->
+<!-- ```{r} -->
+<!-- library(tidyverse)   # load the tidyverse package -->
+<!-- fh <- read_csv("FootHeight.csv")   # read in the dataset after specifying directory -->
+<!-- head(fh, 10)   # prints the first 10 observations -->
 <!-- ``` -->
 </div>
-<div id="supervised-learning-prediction-and-inference-1" class="section level2 hasAnchor" number="2.19">
-<h2><span class="header-section-number">2.19</span> Supervised Learning: Prediction and Inference<a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Income dataset</strong></p>
-<p><img src="EFT/2.4.png" width="85%" style="display: block; margin: auto;" /></p>
-<!-- ## Supervised Learning: What is a Good Choice of $\hat{f}(\mathbf{X})$? -->
+<div id="slr-estimating-parameters-3" class="section level2 hasAnchor" number="3.18">
+<h2><span class="header-section-number">3.18</span> SLR: Estimating Parameters<a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="supervised-learning-assessing-model-accuracy.html#cb3-1" aria-hidden="true" tabindex="-1"></a>slrfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames)   <span class="co"># fit the SLR model</span></span>
+<span id="cb3-2"><a href="supervised-learning-assessing-model-accuracy.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(slrfit)   <span class="co"># produce result summaries of the SLR model</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Sale_Price ~ Gr_Liv_Area, data = ames)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -496577  -33108   -3216   22644  321629 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 10546.305   6678.534   1.579    0.115    
+## Gr_Liv_Area   114.504      4.221  27.127   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 60480 on 766 degrees of freedom
+##   (113 observations deleted due to missingness)
+## Multiple R-squared:   0.49,  Adjusted R-squared:  0.4893 
+## F-statistic: 735.9 on 1 and 766 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="slr-model" class="section level2 hasAnchor" number="3.19">
+<h2><span class="header-section-number">3.19</span> SLR: Model<a href="supervised-learning-assessing-model-accuracy.html#slr-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<p>We have, <span class="math inline">\(\hat{\beta}_0=10546.305\)</span> and <span class="math inline">\(\hat{\beta}_1=114.504\)</span>.</p>
+<p>The <strong>least squares regression model</strong> is</p>
+<p><span class="math display">\[\widehat{\text{Sale_Price}} = 10546.305 + 114.504 \times \text{Gr_Liv_Area}\]</span></p>
+</div>
+<div id="slr-model-1" class="section level2 hasAnchor" number="3.20">
+<h2><span class="header-section-number">3.20</span> SLR: Model<a href="supervised-learning-assessing-model-accuracy.html#slr-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="supervised-learning-assessing-model-accuracy.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ames, <span class="fu">aes</span>(<span class="at">x =</span> Gr_Liv_Area, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="supervised-learning-assessing-model-accuracy.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>   <span class="co"># create scatterplot</span></span>
+<span id="cb5-3"><a href="supervised-learning-assessing-model-accuracy.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)   <span class="co"># add the SLR line</span></span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 113 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 113 rows containing missing values (`geom_point()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-22-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="slr-prediction" class="section level2 hasAnchor" number="3.21">
+<h2><span class="header-section-number">3.21</span> SLR: Prediction<a href="supervised-learning-assessing-model-accuracy.html#slr-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<p>For a house with <code>Gr_Liv_Area</code> equaling 1000 square feet, we have</p>
+<p><span class="math display">\[\widehat{\text{Sale_Price}} = 10546.305 + 114.504 \times \text{Gr_Liv_Area} = 10546.305 + 114.504 \times 1003 \approx 125393.8 \ \text{USD}\]</span></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="supervised-learning-assessing-model-accuracy.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(slrfit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Gr_Liv_Area =</span> <span class="dv">1003</span>))   <span class="co"># predict response for a given value of x</span></span></code></pre></div>
+<pre><code>##        1 
+## 125393.6</code></pre>
+<p>The observed sale price of a property with <code>Gr_Liv_Area</code> equaling 1000 square feet is 142500 USD. Then,</p>
+<p><span class="math inline">\(\text{residual} = \text{observed}-\text{predicted} \approx 142500 - 125393.6 \approx 17106.4\)</span></p>
+<p><strong>Note</strong>: We should not attempt to predict the response for a value of the predictor that lies outside the range of our data. This is called <strong>extrapolation</strong>, and the predictions tend to be unreliable.</p>
+</div>
+<div id="slr-interpreting-parameters" class="section level2 hasAnchor" number="3.22">
+<h2><span class="header-section-number">3.22</span> SLR: Interpreting Parameters<a href="supervised-learning-assessing-model-accuracy.html#slr-interpreting-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<ul>
+<li><p><span class="math inline">\(\hat{\beta}_0=10546.305\)</span>: When <code>Gr_Liv_Area</code> is 0 square feet, the predicted sale price is approximately 10546.305 USD.</p></li>
+<li><p><span class="math inline">\(\hat{\beta}_1=114.504\)</span>: For every 1 square foot increase in <code>Gr_Liv_Area</code>, <code>Sale_Price</code> is expected to increase by approximately 114.504 USD.</p></li>
+</ul>
+<!-- ## SLR: Assessing Accuracy of Parameter Estimates -->
+<!-- $$SE\left(\hat{\beta}_0\right)^2=\sigma^2\left(\frac{1}{n}+\frac{\bar{x}^2}{\sum_{i=1}^n (x_i-\bar{x})^2}\right)$$ -->
+<!-- $$SE\left(\hat{\beta}_1\right)^2=\dfrac{\sigma^2}{\sum_{i=1}^n (x_i-\bar{x})^2}$$ -->
+<!-- where $\sigma^2=Var(\epsilon)$ -->
+<!-- ## SLR: Assessing Accuracy of Parameter Estimates -->
+<!-- 95% approximate **confidence interval** for $\beta_1$ is -->
+<!-- $$\left[\hat{\beta}_1-2 \cdot SE\left(\hat{\beta}_1\right), \hat{\beta}_1+2 \cdot SE\left(\hat{\beta}_1\right)\right]$$ -->
+<!-- ```{r, echo=FALSE} -->
+<!-- confint(slrfit) -->
+<!-- ``` -->
+<!-- ## SLR: Assessing Accuracy of Parameter Estimates -->
+<!-- **Hypothesis Testing** -->
+<!-- Null hypothesis $H_0$: There is no relationship between $\mathbf{x}$ and $Y$. -->
+<!-- Alternative hypothesis $H_a$: There is some relationship between $\mathbf{x}$ and $Y$. -->
+<!-- $$H_0: \beta_1=0 \ \ \ \text{versus} \ \ \ H_0: \beta_1 \ne 0$$ -->
+<!-- We compute a $t$-statistic $$t=\dfrac{\hat{\beta}_1-0}{SE\left(\hat{\beta}_1\right)}$$ -->
+<!-- ## SLR: Assessing Accuracy of Parameter Estimates -->
+<!-- Assuming $H_0$ is true $\left(\beta_1=0\right)$, the above $t$-statistic follows a $t$ distribution with $n-2$ degrees of freedom. -->
+<!-- Assuming $H_0$ is true, we can compute the probability of observing any value as or more extreme than $|t|$, called the **p-value**. -->
+<!-- Small p-value implies there is an association/relationship between the predictor and the response. -->
+<!-- ## SLR: Assessing Accuracy of Parameter Estimates -->
+<!-- ```{r, echo=FALSE} -->
+<!-- summary(slrfit) -->
+<!-- ``` -->
+</div>
+<div id="slr-assessing-accuracy-of-model" class="section level2 hasAnchor" number="3.23">
+<h2><span class="header-section-number">3.23</span> SLR: Assessing Accuracy of Model<a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>Residual Standard Error (RSE)</strong></li>
+</ul>
+<p><span class="math display">\[RSE=\sqrt{\dfrac{RSS}{n-2}}\]</span></p>
+<p>RSE is considered as a measure of the <strong>lack of fit</strong> of the linear model to the data. It is the average amount that the response will deviate from the true regression line. It is measured in the units of the response variable.</p>
+<!-- ## SLR: Assessing Accuracy of Model -->
+<ul>
+<li><span class="math inline">\(R^2\)</span> <strong>statistic</strong></li>
+</ul>
+<p><span class="math display">\[R^2=\dfrac{TSS-RSS}{TSS}\]</span></p>
+<p>where <span class="math inline">\(TSS=\sum_{i=1}^n \left(y_i-\bar{y}\right)^2\)</span></p>
+<p><span class="math inline">\(R^2\)</span> measures the proportion of variability in the response that is explained by the linear regression model using the predictor variable.</p>
+<p><span class="math inline">\(R^2\)</span> is unitless, <span class="math inline">\(0 &lt; R^2 &lt; 1\)</span>, and is generally expressed as a percentage.</p>
+</div>
+<div id="slr-assessing-accuracy-of-model-1" class="section level2 hasAnchor" number="3.24">
+<h2><span class="header-section-number">3.24</span> SLR: Assessing Accuracy of Model<a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="supervised-learning-assessing-model-accuracy.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(slrfit)  <span class="co"># produce result summaries of the SLR model</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Sale_Price ~ Gr_Liv_Area, data = ames)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -496577  -33108   -3216   22644  321629 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 10546.305   6678.534   1.579    0.115    
+## Gr_Liv_Area   114.504      4.221  27.127   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 60480 on 766 degrees of freedom
+##   (113 observations deleted due to missingness)
+## Multiple R-squared:   0.49,  Adjusted R-squared:  0.4893 
+## F-statistic: 735.9 on 1 and 766 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="your-turn" class="section level2 hasAnchor" number="3.25">
+<h2><span class="header-section-number">3.25</span> <span style="color:blue">Your Turn!!!</span><a href="supervised-learning-assessing-model-accuracy.html#your-turn" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>Advertising.csv</strong> dataset contains data on the <strong>sales</strong> (in 1000 units) of a product in 200 different markets, along with advertising budgets (in $1000) for the product for three different media: <strong>TV</strong>, <strong>radio</strong>, and <strong>newspaper</strong>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Create an SLR model <code>slrfit1</code> with <strong>sales</strong> as response and <strong>TV</strong> as predictor. Display the least squares regression line on a scatterplot.</p></li>
+<li><p>Create another SLR model <code>slrfit2</code> with <strong>sales</strong> as response and <strong>radio</strong> as predictor. Predict the sales when the radio advertising budgets are $20,000 and $40,000.</p></li>
+<li><p>Between <code>slrfit1</code> and <code>slrfit2</code>, which model is better in terms of the variability explained within <strong>sales</strong>?</p></li>
+<li><p>Between TV and radio advertising budgets, which would result in a higher increase in sales for an additional $1000 investment?</p></li>
+</ol>
+</div>
+<div id="question-7" class="section level2 hasAnchor" number="3.26">
+<h2><span class="header-section-number">3.26</span> <span style="color:blue">Question!!!</span><a href="supervised-learning-assessing-model-accuracy.html#question-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider the population model <span class="math inline">\(Y = \beta_0 + \beta_1 X + \epsilon\)</span>. The estimated model is <span class="math inline">\(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\)</span>. Reflecting on the concepts from week 1, fill in the blanks below.</p>
+<ul>
+<li><p>If <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> were known (“truth” known), the discrepancy between response <span class="math inline">\(Y\)</span> and <span class="math inline">\(\beta_0 + \beta_1 X\)</span> is related to the <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (irreducible/reducible) error.</p></li>
+<li><p>The inaccuracy of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> as estimates of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> is related to the <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (irreducible/reducible) error.</p></li>
+</ul>
+</div>
+<div id="question-8" class="section level2 hasAnchor" number="3.27">
+<h2><span class="header-section-number">3.27</span> <span style="color:blue">Question!!!</span><a href="supervised-learning-assessing-model-accuracy.html#question-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The least squares approach</p>
+<ul>
+<li><p>minimizes the sum of squared predictor values.</p></li>
+<li><p>minimizes the sum of squared response values.</p></li>
+<li><p>minimizes the sum of squared residuals.</p></li>
+<li><p>maximizes the sum of squared residuals.</p></li>
+</ul>
+</div>
+<div id="question-9" class="section level2 hasAnchor" number="3.28">
+<h2><span class="header-section-number">3.28</span> <span style="color:blue">Question!!!</span><a href="supervised-learning-assessing-model-accuracy.html#question-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Geometrically, the residual for the <span class="math inline">\(i^{th}\)</span> observation in a regression model is the</p>
+<ul>
+<li><p>horizontal distance between the observed response and the vertical axis.</p></li>
+<li><p>distance of the predicted response from the horizontal axis.</p></li>
+<li><p>distance of the predicted response from the vertical axis.</p></li>
+<li><p>vertical distance between the observed response and predicted response.</p></li>
+</ul>
+</div>
+<div id="regression-conditional-averaging" class="section level2 hasAnchor" number="3.29">
+<h2><span class="header-section-number">3.29</span> Regression: Conditional Averaging<a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="supervised-learning-assessing-model-accuracy.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ames, <span class="fu">aes</span>(<span class="at">x =</span> Gr_Liv_Area, <span class="at">y =</span> Sale_Price)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="supervised-learning-assessing-model-accuracy.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>   <span class="co"># create scatterplot</span></span>
+<span id="cb13-3"><a href="supervised-learning-assessing-model-accuracy.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)   <span class="co"># add the SLR line</span></span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 113 rows containing non-finite values (`stat_smooth()`).</code></pre>
+<pre><code>## Warning: Removed 113 rows containing missing values (`geom_point()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
 <!-- knitr::include_graphics("EFT/SLfig.png") -->
 <!-- ``` -->
-<!-- What is a good value of $\hat{f}(\mathbf{X})$, say at $\mathbf{X}=x=4$? A possible value is -->
-<!-- $$\hat{f}(\mathbf{X})=E(Y|\mathbf{X}=4)$$ -->
-<!-- $E(Y|\mathbf{X}=4)$ means **expected value** (average) of $Y$ ate $\mathbf{X}=4$. -->
+<p>What is a good value of <span class="math inline">\(\hat{f}(x)\)</span>, say at <span class="math inline">\(x=1008\)</span>?</p>
 </div>
-<div id="supervised-learning-prediction" class="section level2 hasAnchor" number="2.20">
-<h2><span class="header-section-number">2.20</span> Supervised Learning: Prediction<a href="what-is-machine-learning.html#supervised-learning-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>When we estimate <span class="math inline">\(f(\mathbf{X})\)</span> using <span class="math inline">\(\hat{f}(\mathbf{X})\)</span>, then,</p>
-<p><span class="math display">\[E\left[Y-\hat{Y}\right]^2=E\left[f(\mathbf{X})+\epsilon - \hat{f}(\mathbf{X})\right]^2=\underbrace{\left[f(\mathbf{X})-\hat{f}(\mathbf{X})\right]^2}_{Reducible} + \underbrace{Var(\epsilon)}_{Irreducible}\]</span></p>
-<p><span class="math inline">\(E\left[Y-\hat{Y}\right]^2\)</span>: Expected (average) squared difference between predicted and actual (observed) response.</p>
-<p>We will focus on techniques for estimating <span class="math inline">\(f(\mathbf{X})\)</span> with the objective of minimizing the reducible error.</p>
+<div id="regression-conditional-averaging-1" class="section level2 hasAnchor" number="3.30">
+<h2><span class="header-section-number">3.30</span> Regression: Conditional Averaging<a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>What is a good value of <span class="math inline">\(\hat{f}(x)\)</span>, say at <span class="math inline">\(x=1008\)</span>? A possible value is</p>
+<p><span class="math display">\[\hat{f}(x)=E(Y|x=1008)\]</span></p>
+<p><span class="math inline">\(E(Y|x=1008)\)</span> means <strong>expected value</strong>, or, the <strong>average of the observed responses</strong> at <span class="math inline">\(x=1008\)</span>.</p>
+<p>But we may not observe responses for certain <span class="math inline">\(x\)</span> values.</p>
+<!-- ## K-Nearest Neighbors -->
+<!-- * Non-parametric approach -->
+<!-- * Can be used for both regression and classification problems -->
 </div>
-<div id="question-4" class="section level2 hasAnchor" number="2.21">
-<h2><span class="header-section-number">2.21</span> <span style="color:blue">Question!!!</span><a href="what-is-machine-learning.html#question-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Which of the following statements are true for the random error term <span class="math inline">\(\epsilon\)</span> in the expression <span class="math inline">\(Y=f(\mathbf{X})+\epsilon\)</span>?</p>
+<div id="k-nearest-neighbors-regression" class="section level2 hasAnchor" number="3.31">
+<h2><span class="header-section-number">3.31</span> K-Nearest Neighbors Regression<a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li><p><span class="math inline">\(\epsilon\)</span> depends on <span class="math inline">\(\mathbf{X}\)</span> and has mean zero.</p></li>
-<li><p><span class="math inline">\(Var(\epsilon)\)</span> is also known as the irreducible error.</p></li>
-<li><p><span class="math inline">\(\epsilon\)</span> is independent of <span class="math inline">\(\mathbf{X}\)</span> and has mean zero.</p></li>
-<li><p><span class="math inline">\(\epsilon\)</span> is some fixed but unknown function of <span class="math inline">\(\mathbf{X}\)</span>.</p></li>
+<li><p>Non-parametric approach</p></li>
+<li><p>Given a value for <span class="math inline">\(K\)</span> and a test data point <span class="math inline">\(x_0\)</span>,</p></li>
 </ul>
-</div>
-<div id="supervised-learning-how-do-we-estimate-fmathbfx" class="section level2 hasAnchor" number="2.22">
-<h2><span class="header-section-number">2.22</span> Supervised Learning: How Do We Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?<a href="what-is-machine-learning.html#supervised-learning-how-do-we-estimate-fmathbfx" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Broadly speaking, we have two approaches.</p>
+<p><span class="math display">\[\hat{f}(x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} y_i=\text{Average} \ \left(y_i \ \text{for all} \ i:\ x_i \in \mathcal{N}_0\right) \]</span></p>
+<p>where <span class="math inline">\(\mathcal{N}_0\)</span> is known as the <strong>neighborhood</strong> of <span class="math inline">\(x_0\)</span>.</p>
 <ul>
-<li>Parametric and Structured Methods
-<ul>
-<li>A functional form of <span class="math inline">\(f(\mathbf{X})\)</span> is assumed, such as <span class="math display">\[f(\mathbf{X})=\beta_0 + \beta_1 \mathbf{x}_1 + \beta_2 \mathbf{x}_2 + \ldots + \beta_p \mathbf{x}_p\]</span></li>
-<li>We estimate the parameters <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_p\)</span> by fitting the model to labeled training data.</li>
-</ul></li>
+<li>The method is based on the concept of closeness of <span class="math inline">\(x_i\)</span>’s from <span class="math inline">\(x_0\)</span> for inclusion in the neighborhood <span class="math inline">\(\mathcal{N}_0\)</span>. Usually, the <strong>Euclidean distance</strong> is used as a measure of closeness. The Euclidean distance between two <span class="math inline">\(p\)</span>-dimensional vectors <span class="math inline">\(\mathbf{a}=(a_1, a_2, \ldots, a_p)\)</span> and <span class="math inline">\(\mathbf{b}=(b_1, b_2, \ldots, b_p)\)</span> is</li>
 </ul>
+<p><span class="math display">\[||\mathbf{a}-\mathbf{b}||_2 = \sqrt{(a_1-b_1)^2 + (a_2-b_2)^2 + \ldots + (a_p-b_p)^2}\]</span></p>
 </div>
-<div id="supervised-learning-parametric-methods" class="section level2 hasAnchor" number="2.23">
-<h2><span class="header-section-number">2.23</span> Supervised Learning: Parametric Methods<a href="what-is-machine-learning.html#supervised-learning-parametric-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Income dataset</strong></p>
-<p><img src="EFT/2.2.png" width="100%" style="display: block; margin: auto;" /></p>
+<div id="k-nearest-neighbors-regression-fit" class="section level2 hasAnchor" number="3.32">
+<h2><span class="header-section-number">3.32</span> K-Nearest Neighbors Regression: Fit<a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-fit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="supervised-learning-assessing-model-accuracy.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)   <span class="co"># load the caret package</span></span>
+<span id="cb17-2"><a href="supervised-learning-assessing-model-accuracy.html#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="supervised-learning-assessing-model-accuracy.html#cb17-3" aria-hidden="true" tabindex="-1"></a>knnfit1 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames, <span class="at">k =</span> <span class="dv">1</span>)   <span class="co"># 1-nn regression</span></span>
+<span id="cb17-4"><a href="supervised-learning-assessing-model-accuracy.html#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="supervised-learning-assessing-model-accuracy.html#cb17-5" aria-hidden="true" tabindex="-1"></a>knnfit5 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area, <span class="at">data =</span> ames, <span class="at">k =</span> <span class="dv">5</span>)  <span class="co"># 5-nn regression</span></span></code></pre></div>
 </div>
-<div id="supervised-learning-parametric-methods-1" class="section level2 hasAnchor" number="2.24">
-<h2><span class="header-section-number">2.24</span> Supervised Learning: Parametric Methods<a href="what-is-machine-learning.html#supervised-learning-parametric-methods-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Income dataset</strong></p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig1"></span>
-<img src="EFT/2.3.png" alt="Linear Model Fit to Income Data" width="50%" /><img src="EFT/2.4.png" alt="Linear Model Fit to Income Data" width="50%" />
+<div id="k-nearest-neighbors-regression-prediction" class="section level2 hasAnchor" number="3.33">
+<h2><span class="header-section-number">3.33</span> K-Nearest Neighbors Regression: Prediction<a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="supervised-learning-assessing-model-accuracy.html#cb18-1" aria-hidden="true" tabindex="-1"></a>nearest_neighbors <span class="ot">&lt;-</span> ames <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="supervised-learning-assessing-model-accuracy.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sale_Price, Gr_Liv_Area) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="supervised-learning-assessing-model-accuracy.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">distance =</span> <span class="fu">sqrt</span>((<span class="dv">1008</span><span class="sc">-</span>Gr_Liv_Area)<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span>   <span class="co"># calculate distance</span></span>
+<span id="cb18-4"><a href="supervised-learning-assessing-model-accuracy.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(distance)   <span class="co"># sort by increasing distance</span></span>
+<span id="cb18-5"><a href="supervised-learning-assessing-model-accuracy.html#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="supervised-learning-assessing-model-accuracy.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(knnfit1, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Gr_Liv_Area =</span> <span class="dv">1008</span>))  <span class="co"># 1-nn prediction</span></span></code></pre></div>
+<pre><code>## [1] 135166.7</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="supervised-learning-assessing-model-accuracy.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(knnfit5, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Gr_Liv_Area =</span> <span class="dv">1008</span>))  <span class="co"># 5-nn prediction</span></span></code></pre></div>
+<pre><code>## [1] 118280</code></pre>
+</div>
+<div id="regression-methods-comparison" class="section level2 hasAnchor" number="3.34">
+<h2><span class="header-section-number">3.34</span> Regression Methods: Comparison<a href="supervised-learning-assessing-model-accuracy.html#regression-methods-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<pre><code>## Warning: Removed 113 rows containing missing values (`geom_point()`).</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-28"></span>
+<img src="bookdownproj_files/figure-html/unnamed-chunk-28-1.png" alt="dashed cyan: 1-nn fit, dotted red: 5-nn fit, blue: linear regression fit" width="768" />
 <p class="caption">
-Figure 2.5: Linear Model Fit to Income Data
+Figure 3.2: dashed cyan: 1-nn fit, dotted red: 5-nn fit, blue: linear regression fit
 </p>
 </div>
-<p><span class="math display">\[\text{Income} \approx \beta_0 + \beta_1 \times \text{Years of Education} + \beta_2 \times \text{Seniority}\]</span></p>
 </div>
-<div id="supervised-learning-non-parametric-methods" class="section level2 hasAnchor" number="2.25">
-<h2><span class="header-section-number">2.25</span> Supervised Learning: Non-parametric Methods<a href="what-is-machine-learning.html#supervised-learning-non-parametric-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Non-parametric approaches do not make any explicit assumptions about the functional form of <span class="math inline">\(f(\mathbf{X})\)</span>. A very large number of observations (compared to a parametric approach) is required to fit a model using the non-parametric approach.</p>
-<p><strong>Income dataset</strong></p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig2"></span>
-<img src="EFT/2.3.png" alt="Smooth Thin-plate Spline Fit to Income Data" width="50%" /><img src="EFT/2.5.png" alt="Smooth Thin-plate Spline Fit to Income Data" width="50%" />
-<p class="caption">
-Figure 2.6: Smooth Thin-plate Spline Fit to Income Data
-</p>
+<div id="your-turn-1" class="section level2 hasAnchor" number="3.35">
+<h2><span class="header-section-number">3.35</span> <span style="color:blue">Your Turn!!!</span><a href="supervised-learning-assessing-model-accuracy.html#your-turn-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For the <strong>Advertising.csv</strong> dataset, create a 10-nearest neighbors fit <strong>knnfit10</strong> with <strong>sales</strong> as response and <strong>TV</strong> as predictor. Obtain the predicted <strong>sales</strong> for <span class="math inline">\(\text{TV} = 225,000\)</span>.</p>
 </div>
-</div>
-<div id="supervised-learning-flexibility-of-models" class="section level2 hasAnchor" number="2.26">
-<h2><span class="header-section-number">2.26</span> Supervised Learning: Flexibility of Models<a href="what-is-machine-learning.html#supervised-learning-flexibility-of-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Flexibility refers to the smoothness of functions. (More theoretically, flexibility depends on the number of parameters of the function).</p>
-<p><img src="EFT/2.2.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>More flexible <span class="math inline">\(\implies\)</span> More complex <span class="math inline">\(\implies\)</span> Less Smooth <span class="math inline">\(\implies\)</span> Less Restrictive <span class="math inline">\(\implies\)</span> Less Interpretable</p>
-</div>
-<div id="supervised-learning-some-trade-offs" class="section level2 hasAnchor" number="2.27">
-<h2><span class="header-section-number">2.27</span> Supervised Learning: Some Trade-offs<a href="what-is-machine-learning.html#supervised-learning-some-trade-offs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="question-10" class="section level2 hasAnchor" number="3.36">
+<h2><span class="header-section-number">3.36</span> <span style="color:blue">Question!!!</span><a href="supervised-learning-assessing-model-accuracy.html#question-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As <span class="math inline">\(k\)</span> in KNN regression increases,</p>
 <ul>
-<li><p>Prediction Accuracy versus Interpretability</p></li>
-<li><p>Good Fit versus Over-fit or Under-fit</p></li>
+<li><p>the flexibility of the fit <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (increases/decreases)</p></li>
+<li><p>the bias of the fit <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (increases/decreases)</p></li>
+<li><p>the variance of the fit <span class="math inline">\(\underline{\hspace{5cm}}\)</span> (increases/decreases)</p></li>
 </ul>
-</div>
-<div id="supervised-learning-some-trade-offs-1" class="section level2 hasAnchor" number="2.28">
-<h2><span class="header-section-number">2.28</span> Supervised Learning: Some Trade-offs<a href="what-is-machine-learning.html#supervised-learning-some-trade-offs-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><img src="EFT/2.7.png" width="100%" style="display: block; margin: auto;" /></p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/SL1.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression vs K-Nearest Neighbors -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/3.17.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/3.18.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression vs K-Nearest Neighbors -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/3.19.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression vs K-Nearest Neighbors -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/3.20.png") -->
+<!-- ``` -->
+<!-- * Nearest neighbor averaging can be pretty good for small $p$, that is, $p \le 4$ and large $n$. -->
+<!-- * Performance of nearest neighbor deteriorates as $p$ increases - curse of dimensionality. -->
+<!-- ## Curse of Dimensionality -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/SL2.png") -->
+<!-- ``` -->
 
 </div>
 </div>
@@ -655,8 +835,8 @@ Figure 2.6: Smooth Thin-plate Spline Fit to Income Data
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="supervised-learning-assessing-model-accuracy.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="what-is-machine-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multiple-linear-regression-mlr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -687,7 +867,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/abhicc/208notes/edit/master/01-Slides1.Rmd",
+"link": "https://github.com/abhicc/208notes/edit/master/02-Slides2.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -695,7 +875,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/abhicc/208notes/blob/master/01-Slides1.Rmd",
+"link": "https://github.com/abhicc/208notes/blob/master/02-Slides2.Rmd",
 "text": null
 },
 "download": null,

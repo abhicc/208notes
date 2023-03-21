@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Multiple Linear Regression (MLR) | 208 Course Notes</title>
+  <meta name="description" content="Chapter 4 Multiple Linear Regression (MLR) | 208 Course Notes" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Multiple Linear Regression (MLR) | 208 Course Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Multiple Linear Regression (MLR) | 208 Course Notes" />
+  
+  
+  
+
+<meta name="author" content="Abhishek Chakraborty" />
+
+
+<meta name="date" content="2023-03-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="supervised-learning-assessing-model-accuracy.html"/>
+<link rel="next" href="k-nearest-neighbors-classifier.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">208 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html"><i class="fa fa-check"></i><b>2</b> What is Machine Learning?</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#what-is-machine-learning-1"><i class="fa fa-check"></i><b>2.1</b> What is Machine Learning?</a></li>
+<li class="chapter" data-level="2.2" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question"><i class="fa fa-check"></i><b>2.2</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.3" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#statistical-learning-vs-machine-learning-vs-data-science"><i class="fa fa-check"></i><b>2.3</b> Statistical Learning vs Machine Learning vs Data Science</a></li>
+<li class="chapter" data-level="2.4" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#notations"><i class="fa fa-check"></i><b>2.4</b> Notations</a></li>
+<li class="chapter" data-level="2.5" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#notations-1"><i class="fa fa-check"></i><b>2.5</b> Notations</a></li>
+<li class="chapter" data-level="2.6" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-1"><i class="fa fa-check"></i><b>2.6</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.7" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-2"><i class="fa fa-check"></i><b>2.7</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.8" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-vs-unsupervised"><i class="fa fa-check"></i><b>2.8</b> Supervised vs Unsupervised</a></li>
+<li class="chapter" data-level="2.9" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>2.9</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.10" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-1"><i class="fa fa-check"></i><b>2.10</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.11" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>2.11</b> Unsupervised Learning</a></li>
+<li class="chapter" data-level="2.12" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-3"><i class="fa fa-check"></i><b>2.12</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.13" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-2"><i class="fa fa-check"></i><b>2.13</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.14" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-3"><i class="fa fa-check"></i><b>2.14</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.15" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-4"><i class="fa fa-check"></i><b>2.15</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.16" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-5"><i class="fa fa-check"></i><b>2.16</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.17" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-why-estimate-fmathbfx"><i class="fa fa-check"></i><b>2.17</b> Supervised Learning: Why Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?</a></li>
+<li class="chapter" data-level="2.18" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference"><i class="fa fa-check"></i><b>2.18</b> Supervised Learning: Prediction and Inference</a></li>
+<li class="chapter" data-level="2.19" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference-1"><i class="fa fa-check"></i><b>2.19</b> Supervised Learning: Prediction and Inference</a></li>
+<li class="chapter" data-level="2.20" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction"><i class="fa fa-check"></i><b>2.20</b> Supervised Learning: Prediction</a></li>
+<li class="chapter" data-level="2.21" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-4"><i class="fa fa-check"></i><b>2.21</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.22" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-how-do-we-estimate-fmathbfx"><i class="fa fa-check"></i><b>2.22</b> Supervised Learning: How Do We Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?</a></li>
+<li class="chapter" data-level="2.23" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-parametric-methods"><i class="fa fa-check"></i><b>2.23</b> Supervised Learning: Parametric Methods</a></li>
+<li class="chapter" data-level="2.24" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-parametric-methods-1"><i class="fa fa-check"></i><b>2.24</b> Supervised Learning: Parametric Methods</a></li>
+<li class="chapter" data-level="2.25" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-non-parametric-methods"><i class="fa fa-check"></i><b>2.25</b> Supervised Learning: Non-parametric Methods</a></li>
+<li class="chapter" data-level="2.26" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-flexibility-of-models"><i class="fa fa-check"></i><b>2.26</b> Supervised Learning: Flexibility of Models</a></li>
+<li class="chapter" data-level="2.27" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-some-trade-offs"><i class="fa fa-check"></i><b>2.27</b> Supervised Learning: Some Trade-offs</a></li>
+<li class="chapter" data-level="2.28" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-some-trade-offs-1"><i class="fa fa-check"></i><b>2.28</b> Supervised Learning: Some Trade-offs</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html"><i class="fa fa-check"></i><b>3</b> Supervised Learning: Assessing Model Accuracy</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-1"><i class="fa fa-check"></i><b>3.1</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.2" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-2"><i class="fa fa-check"></i><b>3.2</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.3" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-3"><i class="fa fa-check"></i><b>3.3</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.4" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-4"><i class="fa fa-check"></i><b>3.4</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.5" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-5"><i class="fa fa-check"></i><b>3.5</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.6" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-6"><i class="fa fa-check"></i><b>3.6</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.7" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off"><i class="fa fa-check"></i><b>3.7</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.8" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-1"><i class="fa fa-check"></i><b>3.8</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.9" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-2"><i class="fa fa-check"></i><b>3.9</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.10" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-5"><i class="fa fa-check"></i><b>3.10</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.11" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#simple-linear-regression-slr"><i class="fa fa-check"></i><b>3.11</b> Simple Linear Regression (SLR)</a></li>
+<li class="chapter" data-level="3.12" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-6"><i class="fa fa-check"></i><b>3.12</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.13" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters"><i class="fa fa-check"></i><b>3.13</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.14" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-1"><i class="fa fa-check"></i><b>3.14</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.15" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-2"><i class="fa fa-check"></i><b>3.15</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.16" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset"><i class="fa fa-check"></i><b>3.16</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="3.17" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset-1"><i class="fa fa-check"></i><b>3.17</b> Ames Housing dataset</a></li>
+<li class="chapter" data-level="3.18" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-3"><i class="fa fa-check"></i><b>3.18</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.19" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-model"><i class="fa fa-check"></i><b>3.19</b> SLR: Model</a></li>
+<li class="chapter" data-level="3.20" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-model-1"><i class="fa fa-check"></i><b>3.20</b> SLR: Model</a></li>
+<li class="chapter" data-level="3.21" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-prediction"><i class="fa fa-check"></i><b>3.21</b> SLR: Prediction</a></li>
+<li class="chapter" data-level="3.22" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-interpreting-parameters"><i class="fa fa-check"></i><b>3.22</b> SLR: Interpreting Parameters</a></li>
+<li class="chapter" data-level="3.23" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model"><i class="fa fa-check"></i><b>3.23</b> SLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="3.24" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model-1"><i class="fa fa-check"></i><b>3.24</b> SLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="3.25" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#your-turn"><i class="fa fa-check"></i><b>3.25</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="3.26" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-7"><i class="fa fa-check"></i><b>3.26</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.27" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-8"><i class="fa fa-check"></i><b>3.27</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.28" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-9"><i class="fa fa-check"></i><b>3.28</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.29" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging"><i class="fa fa-check"></i><b>3.29</b> Regression: Conditional Averaging</a></li>
+<li class="chapter" data-level="3.30" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging-1"><i class="fa fa-check"></i><b>3.30</b> Regression: Conditional Averaging</a></li>
+<li class="chapter" data-level="3.31" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression"><i class="fa fa-check"></i><b>3.31</b> K-Nearest Neighbors Regression</a></li>
+<li class="chapter" data-level="3.32" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-fit"><i class="fa fa-check"></i><b>3.32</b> K-Nearest Neighbors Regression: Fit</a></li>
+<li class="chapter" data-level="3.33" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-prediction"><i class="fa fa-check"></i><b>3.33</b> K-Nearest Neighbors Regression: Prediction</a></li>
+<li class="chapter" data-level="3.34" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-methods-comparison"><i class="fa fa-check"></i><b>3.34</b> Regression Methods: Comparison</a></li>
+<li class="chapter" data-level="3.35" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#your-turn-1"><i class="fa fa-check"></i><b>3.35</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="3.36" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-10"><i class="fa fa-check"></i><b>3.36</b> <span style="color:blue">Question!!!</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html"><i class="fa fa-check"></i><b>4</b> Multiple Linear Regression (MLR)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters"><i class="fa fa-check"></i><b>4.1</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-1"><i class="fa fa-check"></i><b>4.2</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-2"><i class="fa fa-check"></i><b>4.3</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-interpreting-parameters"><i class="fa fa-check"></i><b>4.4</b> MLR: Interpreting Parameters</a></li>
+<li class="chapter" data-level="4.5" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-prediction"><i class="fa fa-check"></i><b>4.5</b> MLR: Prediction</a></li>
+<li class="chapter" data-level="4.6" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model"><i class="fa fa-check"></i><b>4.6</b> MLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="4.7" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#your-turn-2"><i class="fa fa-check"></i><b>4.7</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="4.8" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model-1"><i class="fa fa-check"></i><b>4.8</b> MLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="4.9" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#question-11"><i class="fa fa-check"></i><b>4.9</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="4.10" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors"><i class="fa fa-check"></i><b>4.10</b> K-Nearest Neighbors Regression (multiple predictors)</a></li>
+<li class="chapter" data-level="4.11" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors-1"><i class="fa fa-check"></i><b>4.11</b> K-Nearest Neighbors Regression (multiple predictors)</a></li>
+<li class="chapter" data-level="4.12" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#linear-regression-vs-k-nearest-neighbors"><i class="fa fa-check"></i><b>4.12</b> Linear Regression vs K-Nearest Neighbors</a></li>
+<li class="chapter" data-level="4.13" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems"><i class="fa fa-check"></i><b>4.13</b> Classification Problems</a></li>
+<li class="chapter" data-level="4.14" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems-example"><i class="fa fa-check"></i><b>4.14</b> Classification Problems: Example</a></li>
+<li class="chapter" data-level="4.15" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems-example-1"><i class="fa fa-check"></i><b>4.15</b> Classification Problems: Example</a></li>
+<li class="chapter" data-level="4.16" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#why-not-linear-regression"><i class="fa fa-check"></i><b>4.16</b> Why Not Linear Regression?</a></li>
+<li class="chapter" data-level="4.17" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#why-not-linear-regression-1"><i class="fa fa-check"></i><b>4.17</b> Why Not Linear Regression?</a></li>
+<li class="chapter" data-level="4.18" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression"><i class="fa fa-check"></i><b>4.18</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.19" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.19</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.20" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#your-turn-3"><i class="fa fa-check"></i><b>4.20</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="4.21" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-example"><i class="fa fa-check"></i><b>4.21</b> Logistic Regression: Example</a></li>
+<li class="chapter" data-level="4.22" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-estimating-parameters"><i class="fa fa-check"></i><b>4.22</b> Logistic Regression: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.23" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-individual-predictions"><i class="fa fa-check"></i><b>4.23</b> Logistic Regression: Individual Predictions</a></li>
+<li class="chapter" data-level="4.24" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions"><i class="fa fa-check"></i><b>4.24</b> Logistic Regression: Test Set Predictions</a></li>
+<li class="chapter" data-level="4.25" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions-1"><i class="fa fa-check"></i><b>4.25</b> Logistic Regression: Test Set Predictions</a></li>
+<li class="chapter" data-level="4.26" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-performance"><i class="fa fa-check"></i><b>4.26</b> Logistic Regression: Performance</a></li>
+<li class="chapter" data-level="4.27" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#confusion-matrix-terms"><i class="fa fa-check"></i><b>4.27</b> Confusion Matrix Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html"><i class="fa fa-check"></i><b>5</b> K-Nearest Neighbors Classifier</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-4"><i class="fa fa-check"></i><b>5.1</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="5.2" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-split-data"><i class="fa fa-check"></i><b>5.2</b> K-Nearest Neighbors Classifier: Split Data</a></li>
+<li class="chapter" data-level="5.3" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-build-model"><i class="fa fa-check"></i><b>5.3</b> K-Nearest Neighbors Classifier: Build Model</a></li>
+<li class="chapter" data-level="5.4" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-predictions"><i class="fa fa-check"></i><b>5.4</b> K-Nearest Neighbors Classifier: Predictions</a></li>
+<li class="chapter" data-level="5.5" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-performance"><i class="fa fa-check"></i><b>5.5</b> K-Nearest Neighbors Classifier: Performance</a></li>
+<li class="chapter" data-level="5.6" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#roc-curve-and-auc"><i class="fa fa-check"></i><b>5.6</b> ROC Curve and AUC</a></li>
+<li class="chapter" data-level="5.7" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#roc-curve-and-auc-1"><i class="fa fa-check"></i><b>5.7</b> ROC Curve and AUC</a></li>
+<li class="chapter" data-level="5.8" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#data-splitting"><i class="fa fa-check"></i><b>5.8</b> Data Splitting</a></li>
+<li class="chapter" data-level="5.9" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#resampling-methods"><i class="fa fa-check"></i><b>5.9</b> Resampling Methods</a></li>
+<li class="chapter" data-level="5.10" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#cross-validation-cv"><i class="fa fa-check"></i><b>5.10</b> Cross-Validation (CV)</a></li>
+<li class="chapter" data-level="5.11" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>5.11</b> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="5.12" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#leave-one-out-cross-validation-loocv-1"><i class="fa fa-check"></i><b>5.12</b> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="5.13" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>5.13</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
+<li class="chapter" data-level="5.14" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation"><i class="fa fa-check"></i><b>5.14</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.15" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-1"><i class="fa fa-check"></i><b>5.15</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.16" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-2"><i class="fa fa-check"></i><b>5.16</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.17" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-3"><i class="fa fa-check"></i><b>5.17</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.18" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-4"><i class="fa fa-check"></i><b>5.18</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.19" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-5"><i class="fa fa-check"></i><b>5.19</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.20" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-results"><i class="fa fa-check"></i><b>5.20</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Results</a></li>
+<li class="chapter" data-level="5.21" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#final-model-and-prediction-error-estimate"><i class="fa fa-check"></i><b>5.21</b> Final Model and Prediction Error Estimate</a></li>
+<li class="chapter" data-level="5.22" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#variable-importance"><i class="fa fa-check"></i><b>5.22</b> Variable Importance</a></li>
+<li class="chapter" data-level="5.23" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#bias-variance-trade-off-for-loocv-and-k-fold-cv"><i class="fa fa-check"></i><b>5.23</b> Bias-Variance Trade-off for LOOCV and <span class="math inline">\(k\)</span>-fold CV</a></li>
+<li class="chapter" data-level="5.24" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-5"><i class="fa fa-check"></i><b>5.24</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="5.25" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-split-data"><i class="fa fa-check"></i><b>5.25</b> <span style="color:blue">Your Turn!!!</span>: Split Data</a></li>
+<li class="chapter" data-level="5.26" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-perform-cv"><i class="fa fa-check"></i><b>5.26</b> <span style="color:blue">Your Turn!!!</span>: Perform CV</a></li>
+<li class="chapter" data-level="5.27" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-observe-cv-results"><i class="fa fa-check"></i><b>5.27</b> <span style="color:blue">Your Turn!!!</span>: Observe CV Results</a></li>
+<li class="chapter" data-level="5.28" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-final-model"><i class="fa fa-check"></i><b>5.28</b> <span style="color:blue">Your Turn!!!</span>: Final Model</a></li>
+<li class="chapter" data-level="5.29" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#mid-term-check"><i class="fa fa-check"></i><b>5.29</b> Mid-Term Check</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="review-of-cv.html"><a href="review-of-cv.html"><i class="fa fa-check"></i><b>6</b> Review of CV</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="review-of-cv.html"><a href="review-of-cv.html#data-leakage-a-serious-common-problem"><i class="fa fa-check"></i><b>6.1</b> Data Leakage (A Serious, Common Problem)</a></li>
+<li class="chapter" data-level="6.2" data-path="review-of-cv.html"><a href="review-of-cv.html#data-preprocessing-and-feature-enginnering"><i class="fa fa-check"></i><b>6.2</b> Data Preprocessing and Feature Enginnering</a></li>
+<li class="chapter" data-level="6.3" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-2"><i class="fa fa-check"></i><b>6.3</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.4" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-3"><i class="fa fa-check"></i><b>6.4</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.5" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-4"><i class="fa fa-check"></i><b>6.5</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.6" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-5"><i class="fa fa-check"></i><b>6.6</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.7" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-6"><i class="fa fa-check"></i><b>6.7</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.8" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-7"><i class="fa fa-check"></i><b>6.8</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.9" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables"><i class="fa fa-check"></i><b>6.9</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.10" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-1"><i class="fa fa-check"></i><b>6.10</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.11" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-2"><i class="fa fa-check"></i><b>6.11</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.12" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries"><i class="fa fa-check"></i><b>6.12</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.13" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries-1"><i class="fa fa-check"></i><b>6.13</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.14" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries-2"><i class="fa fa-check"></i><b>6.14</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.15" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables"><i class="fa fa-check"></i><b>6.15</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.16" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-1"><i class="fa fa-check"></i><b>6.16</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.17" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-2"><i class="fa fa-check"></i><b>6.17</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.18" data-path="review-of-cv.html"><a href="review-of-cv.html#standardizing-centering-and-scaling-numeric-predictors"><i class="fa fa-check"></i><b>6.18</b> Standardizing (centering and scaling) Numeric Predictors</a></li>
+<li class="chapter" data-level="6.19" data-path="review-of-cv.html"><a href="review-of-cv.html#lumping-predictors"><i class="fa fa-check"></i><b>6.19</b> Lumping Predictors</a></li>
+<li class="chapter" data-level="6.20" data-path="review-of-cv.html"><a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors"><i class="fa fa-check"></i><b>6.20</b> One-hot/dummy Encoding Categorical Predictors</a></li>
+<li class="chapter" data-level="6.21" data-path="review-of-cv.html"><a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors-1"><i class="fa fa-check"></i><b>6.21</b> One-hot/dummy Encoding Categorical Predictors</a></li>
+<li class="chapter" data-level="6.22" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-steps"><i class="fa fa-check"></i><b>6.22</b> Preprocessing Steps</a></li>
+<li class="chapter" data-level="6.23" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-with-recipes-package"><i class="fa fa-check"></i><b>6.23</b> Preprocessing With <code>recipes</code> Package</a></li>
+<li class="chapter" data-level="6.24" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-with-recipes-package-1"><i class="fa fa-check"></i><b>6.24</b> Preprocessing With <code>recipes</code> Package</a></li>
+<li class="chapter" data-level="6.25" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model"><i class="fa fa-check"></i><b>6.25</b> Training Model</a></li>
+<li class="chapter" data-level="6.26" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model-1"><i class="fa fa-check"></i><b>6.26</b> Training Model</a></li>
+<li class="chapter" data-level="6.27" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model-2"><i class="fa fa-check"></i><b>6.27</b> Training Model</a></li>
+<li class="chapter" data-level="6.28" data-path="review-of-cv.html"><a href="review-of-cv.html#final-model-and-test-set-error"><i class="fa fa-check"></i><b>6.28</b> Final Model and Test Set Error</a></li>
+<li class="chapter" data-level="6.29" data-path="review-of-cv.html"><a href="review-of-cv.html#variable-importance-1"><i class="fa fa-check"></i><b>6.29</b> Variable Importance</a></li>
+<li class="chapter" data-level="6.30" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-6"><i class="fa fa-check"></i><b>6.30</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="6.31" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1"><i class="fa fa-check"></i><b>6.31</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.32" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-1"><i class="fa fa-check"></i><b>6.32</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.33" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-2"><i class="fa fa-check"></i><b>6.33</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.34" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-3"><i class="fa fa-check"></i><b>6.34</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.35" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-4"><i class="fa fa-check"></i><b>6.35</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.36" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-2"><i class="fa fa-check"></i><b>6.36</b> <span style="color:blue">Your Turn!!!</span> Step 2</a></li>
+<li class="chapter" data-level="6.37" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-3"><i class="fa fa-check"></i><b>6.37</b> <span style="color:blue">Your Turn!!!</span> Step 3</a></li>
+<li class="chapter" data-level="6.38" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4"><i class="fa fa-check"></i><b>6.38</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.39" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4-1"><i class="fa fa-check"></i><b>6.39</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.40" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4-2"><i class="fa fa-check"></i><b>6.40</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.41" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5"><i class="fa fa-check"></i><b>6.41</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+<li class="chapter" data-level="6.42" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5-1"><i class="fa fa-check"></i><b>6.42</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+<li class="chapter" data-level="6.43" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5-2"><i class="fa fa-check"></i><b>6.43</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">208 Course Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-linear-regression-mlr" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Multiple Linear Regression (MLR)<a href="multiple-linear-regression-mlr.html#multiple-linear-regression-mlr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Response <span class="math inline">\(Y\)</span> and more than one predictor variable. We assume</p>
+<p><span class="math display">\[Y=f(\mathbf{X}) + \epsilon=\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon\]</span></p>
+<p><span class="math inline">\(\beta_j\)</span> quantifies the association between the <span class="math inline">\(j^{th}\)</span> predictor and the response.</p>
+<div id="mlr-estimating-parameters" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> MLR: Estimating Parameters<a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We use training data to find <span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1, \ldots, \hat{\beta}_p\)</span> such that</p>
+<p><span class="math display">\[\hat{y}=\hat{\beta}_0 + \hat{\beta}_1 \ x_1 + \ldots + \hat{\beta}_p \ x_p\]</span>
+Observed response: <span class="math inline">\(y_i\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span></p>
+<p>Predicted response: <span class="math inline">\(\hat{y}_i\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span></p>
+<p>Residual: <span class="math inline">\(e_i=y_i - \hat{y}_i\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span></p>
+<p>Residual Sum of Squares (RSS): <span class="math inline">\(RSS =e^2_1+e^2_2+\ldots+e^2_n\)</span></p>
+<p>Problem: Find <span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1, \ldots, \hat{\beta}_p\)</span> which minimizes <span class="math inline">\(RSS\)</span></p>
+</div>
+<div id="mlr-estimating-parameters-1" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> MLR: Estimating Parameters<a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/3.4.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="mlr-estimating-parameters-2" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> MLR: Estimating Parameters<a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="multiple-linear-regression-mlr.html#cb23-1" aria-hidden="true" tabindex="-1"></a>ames <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;AmesHousing.rds&quot;</span>)   <span class="co"># read in the dataset after specifying directory</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="multiple-linear-regression-mlr.html#cb24-1" aria-hidden="true" tabindex="-1"></a>mlrfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> Year_Built, <span class="at">data =</span> ames)   <span class="co"># fit the MLR model</span></span>
+<span id="cb24-2"><a href="multiple-linear-regression-mlr.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlrfit)   <span class="co"># produce result summaries of the MLR model</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Sale_Price ~ Gr_Liv_Area + Year_Built, data = ames)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -469355  -29029    -590   18691  301689 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -2.242e+06  1.234e+05  -18.17   &lt;2e-16 ***
+## Gr_Liv_Area  9.781e+01  3.641e+00   26.87   &lt;2e-16 ***
+## Year_Built   1.155e+03  6.322e+01   18.27   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 50500 on 765 degrees of freedom
+##   (113 observations deleted due to missingness)
+## Multiple R-squared:  0.6449, Adjusted R-squared:  0.644 
+## F-statistic: 694.7 on 2 and 765 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="mlr-interpreting-parameters" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> MLR: Interpreting Parameters<a href="multiple-linear-regression-mlr.html#mlr-interpreting-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<ul>
+<li><p><span class="math inline">\(\hat{\beta}_0=-2.242e+06\)</span>: With <code>Gr_Liv_Area</code> equaling 0 square feet, and <code>Year_Built</code> equaling 0, the predicted <code>Sale_Price</code> is approximately -2.242e+06 USD. The interpretation is not meaningful in this context.</p></li>
+<li><p><span class="math inline">\(\hat{\beta}_1=9.781e+01\)</span>: With <code>Year_Built</code> remaining fixed, an additional 1 square foot of <code>Gr_Liv_Area</code> leads to an increase in <code>Sale_Price</code> by approximately 98 USD.</p></li>
+<li><p><span class="math inline">\(\hat{\beta}_2=1.155e+03\)</span>: With <code>Gr_Liv_Area</code> remaining fixed, an additional 1 year on <code>Year_Built</code> leads to an increase in <code>Sale_Price</code> by approximately 1155 USD.</p></li>
+</ul>
+</div>
+<div id="mlr-prediction" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> MLR: Prediction<a href="multiple-linear-regression-mlr.html#mlr-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<p>Prediction of <code>Sale_Price</code> when <code>Gr_Liv_Area</code> is 1000 SF for a house built in 1990.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="multiple-linear-regression-mlr.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(mlrfit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Gr_Liv_Area =</span> <span class="dv">1000</span>, <span class="at">Year_Built =</span> <span class="dv">1990</span>))   <span class="co"># obtain prediction</span></span></code></pre></div>
+<pre><code>##        1 
+## 154506.3</code></pre>
+</div>
+<div id="mlr-assessing-accuracy-of-model" class="section level2 smaller hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> MLR: Assessing Accuracy of Model<a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Residual Standard Error</li>
+</ul>
+<p><span class="math display">\[RSE=\sqrt{\dfrac{RSS}{n-p-1}}\]</span></p>
+<!-- ```{r} -->
+<!-- rss <- sum(mlrfit$residuals^2)   # obtain RSS -->
+<!-- rss -->
+<!-- rse <- sqrt(rss/(200 - 2 - 1))   # obtain RSE -->
+<!-- rse -->
+<!-- ``` -->
+<ul>
+<li><span class="math inline">\(R^2\)</span> statistic</li>
+</ul>
+<p><span class="math display">\[R^2=\dfrac{TSS-RSS}{TSS} = 1 - \dfrac{RSS}{TSS}\]</span></p>
+<ul>
+<li>Adjusted <span class="math inline">\(R^2\)</span> statistic</li>
+</ul>
+<p><span class="math display">\[\text{Adjusted} \ R^2 = 1 - \dfrac{RSS/(n-p-1)}{TSS/(n-1)}\]</span></p>
+</div>
+<div id="your-turn-2" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> <span style="color:blue">Your Turn!!!</span><a href="multiple-linear-regression-mlr.html#your-turn-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With the <strong>Advertising</strong> dataset, create two additional models with <strong>sales</strong> as response:</p>
+<ul>
+<li><p><code>mlrfit1</code>: MLR model with <strong>TV</strong> and <strong>radio</strong> as predictors</p></li>
+<li><p><code>mlrfit2</code>: MLR model with <strong>TV</strong>, <strong>radio</strong>, and <strong>newspaper</strong> as predictors</p></li>
+</ul>
+<p>For each model, note <span class="math inline">\(p\)</span> (the number of predictors), <span class="math inline">\(R^2\)</span>, <span class="math inline">\(\text{Adjusted} \ R^2\)</span>, <span class="math inline">\(RSS\)</span>, and <span class="math inline">\(RSE\)</span>.</p>
+</div>
+<div id="mlr-assessing-accuracy-of-model-1" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> MLR: Assessing Accuracy of Model<a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="multiple-linear-regression-mlr.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(advertising)   <span class="co"># obtain correlation matrix</span></span></code></pre></div>
+<pre><code>##                   TV      radio  newspaper     sales
+## TV        1.00000000 0.05480866 0.05664787 0.7822244
+## radio     0.05480866 1.00000000 0.35410375 0.5762226
+## newspaper 0.05664787 0.35410375 1.00000000 0.2282990
+## sales     0.78222442 0.57622257 0.22829903 1.0000000</code></pre>
+</div>
+<div id="question-11" class="section level2 hasAnchor" number="4.9">
+<h2><span class="header-section-number">4.9</span> <span style="color:blue">Question!!!</span><a href="multiple-linear-regression-mlr.html#question-11" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As we add variables to the linear regression model, (Select all that apply)</p>
+<ul>
+<li><p>the RSE always decreases.</p></li>
+<li><p>the RSS always decreases.</p></li>
+<li><p>the <span class="math inline">\(R^2\)</span> always increases.</p></li>
+<li><p>the <span class="math inline">\(\text{Adjusted} \ R^2\)</span> always increases.</p></li>
+<li><p>the number of parameters always increases.</p></li>
+</ul>
+</div>
+<div id="k-nearest-neighbors-regression-multiple-predictors" class="section level2 hasAnchor" number="4.10">
+<h2><span class="header-section-number">4.10</span> K-Nearest Neighbors Regression (multiple predictors)<a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>It is important to <strong>scale (subtract mean and divide by standard deviation)</strong> the predictors when considering KNN regression so that the Euclidean distance is not dominated by a few of them with large values.</p>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="multiple-linear-regression-mlr.html#cb30-1" aria-hidden="true" tabindex="-1"></a>ames_scaled <span class="ot">&lt;-</span> ames <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="multiple-linear-regression-mlr.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Sale_Price, Gr_Liv_Area, Year_Built) <span class="sc">%&gt;%</span>    <span class="co"># select required variables</span></span>
+<span id="cb30-3"><a href="multiple-linear-regression-mlr.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gr_Liv_Area_scaled =</span> <span class="fu">scale</span>(Gr_Liv_Area),</span>
+<span id="cb30-4"><a href="multiple-linear-regression-mlr.html#cb30-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year_Built_scaled =</span> <span class="fu">scale</span>(Year_Built))   <span class="co"># scale predictors</span></span>
+<span id="cb30-5"><a href="multiple-linear-regression-mlr.html#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="multiple-linear-regression-mlr.html#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ames_scaled)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 5
+##   Sale_Price Gr_Liv_Area Year_Built Gr_Liv_Area_scaled[,1] Year_Built_scaled[,1]
+##        &lt;int&gt;       &lt;int&gt;      &lt;int&gt;                  &lt;dbl&gt;                 &lt;dbl&gt;
+## 1     244000        2110       1968                  1.19                -0.102 
+## 2     213500        1338       2001                 -0.304                0.985 
+## 3     185000        1187       1992                 -0.596                0.688 
+## 4     394432        1856       2010                  0.697                1.28  
+## 5     190000        1844       1977                  0.674                0.194 
+## 6     149000          NA       1970                 NA                   -0.0359</code></pre>
+</div>
+<div id="k-nearest-neighbors-regression-multiple-predictors-1" class="section level2 hasAnchor" number="4.11">
+<h2><span class="header-section-number">4.11</span> K-Nearest Neighbors Regression (multiple predictors)<a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ames Housing dataset</strong></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="multiple-linear-regression-mlr.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)   <span class="co"># load library</span></span>
+<span id="cb32-2"><a href="multiple-linear-regression-mlr.html#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="multiple-linear-regression-mlr.html#cb32-3" aria-hidden="true" tabindex="-1"></a>knnfit10 <span class="ot">&lt;-</span> <span class="fu">knnreg</span>(Sale_Price <span class="sc">~</span> Gr_Liv_Area_scaled <span class="sc">+</span> Year_Built_scaled, <span class="at">data =</span> ames_scaled, <span class="at">k =</span> <span class="dv">10</span>)   <span class="co"># 10-nn regression</span></span></code></pre></div>
+<p>It is also important to apply scaling to test data points before prediction. Suppose, you want predictions for <code>Gr_Liv_Area</code> = 1000 SF, and <code>Year_Built</code> = 1990, then</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="multiple-linear-regression-mlr.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain 10-nn prediction</span></span>
+<span id="cb33-2"><a href="multiple-linear-regression-mlr.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(knnfit10, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Gr_Liv_Area_scaled =</span> (<span class="dv">1000</span> <span class="sc">-</span> <span class="fu">mean</span>(ames<span class="sc">$</span>Gr_Liv_Area, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span><span class="fu">sd</span>(ames<span class="sc">$</span>Gr_Liv_Area, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb33-3"><a href="multiple-linear-regression-mlr.html#cb33-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">Year_Built_scaled =</span> (<span class="dv">1990</span> <span class="sc">-</span> <span class="fu">mean</span>(ames<span class="sc">$</span>Year_Built))<span class="sc">/</span><span class="fu">sd</span>(ames<span class="sc">$</span>Year_Built)))</span></code></pre></div>
+<pre><code>## [1] 148850</code></pre>
+</div>
+<div id="linear-regression-vs-k-nearest-neighbors" class="section level2 hasAnchor" number="4.12">
+<h2><span class="header-section-number">4.12</span> Linear Regression vs K-Nearest Neighbors<a href="multiple-linear-regression-mlr.html#linear-regression-vs-k-nearest-neighbors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/3.20.png") -->
+<!-- ``` -->
+<ul>
+<li><p>Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric.</p></li>
+<li><p>Linear regression works for regression problems (<span class="math inline">\(Y\)</span> numerical), KNN can be used for both regression and classification (<span class="math inline">\(Y\)</span> qualitative).</p></li>
+<li><p>Linear regression is interpretable, KNN is not.</p></li>
+<li><p>Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well. Using Euclidean distance with KNN does not allow for qualitative predictors.</p></li>
+<li><p>In terms of prediction, KNN can be pretty good for small <span class="math inline">\(p\)</span>, that is, <span class="math inline">\(p \le 4\)</span> and large <span class="math inline">\(n\)</span>. Performance of KNN deteriorates as <span class="math inline">\(p\)</span> increases - curse of dimensionality.</p></li>
+</ul>
+<!-- ## Curse of Dimensionality -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/SL2.png") -->
+<!-- ``` -->
+<!-- ## MLR: Interpreting Parameters -->
+<!-- But predictors usually change together !!! -->
+<!-- * Example 1: $Y$= total amount of change in your pocket; -->
+<!-- $X_1$ = # of coins; $X_2$ = # of pennies, nickels and dimes. By itself, regression coefficient of $Y$ on $X_2$ will be > 0. But how about with $X_1$ in model? -->
+<!-- * Example 2: $Y$ = number of tackles by a football player in a season; $W$ and $H$ are his weight and height. Fitted regression model is $\hat{y} = \hat{\beta}_0 + 0.50 \ W - 0.10 \ H$. How do we interpret $\hat{\beta}_2< 0$? -->
+<!-- ## MLR: Interpreting Parameters -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/t3.4.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/t3.5.png") -->
+<!-- ``` -->
+<!-- Correlations amongst predictors cause -->
+<!-- * Unusually large variance of regression coefficients -->
+<!-- * Interpretations are hazardous -->
+<!-- ## MLR: Important Questions -->
+<!-- 1. Is at least one of the predictors useful in predicting the response? -->
+<!-- 2. Do all the predictors help to explain the response, or is only a subset of the predictors useful? -->
+<!-- 3. How well does the model fit the data? (Assessing accuracy of the model) -->
+<!-- ## MLR: Is at least one of the predictors useful? -->
+<!-- $$H_0: \beta_1=\ldots=\beta_p=0 \ \ \ \text{versus} \ \ \ H_a: \text{at least one} \ \beta_j \ \text{is non-zero}$$ -->
+<!-- We compute the $F$-statistic, -->
+<!-- $$F=\dfrac{(TSS-RSS)/p}{RSS/(n-p-1)}$$ -->
+<!-- ## MLR: Is at least one of the predictors useful? -->
+<!-- ```{r, echo=FALSE} -->
+<!-- summary(mlrfit) -->
+<!-- ``` -->
+<!-- ## MLR: Deciding on the Important Variables -->
+<!-- **Variable Selection** is the task of determining which predictors are associated with the response, in order to fit a single model involving only those predictors. -->
+<!-- Some approaches: -->
+<!-- * All subsets/Best subsets regression. (Crude) -->
+<!-- * Using statistics such as Mallow's $C_p$, AIC, BIC, Adjusted $R^2$. (Chapter 6) -->
+<!-- * Automated approaches: Forward Selection, Backward Selection. (Chapter 6) -->
+<!-- ## MLR: Assessing Accuracy of Model -->
+<!-- ```{r, echo=FALSE} -->
+<!-- summary(mlrfit) -->
+<!-- ``` -->
+<!-- ## MLR: Assessing Accuracy of Model -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/t3.4.png") -->
+<!-- ``` -->
+<!-- <center> -->
+<!-- | Predictor(s) |  $R^2$ | $RSE$ | -->
+<!-- |-----------|----------|----------- -->
+<!-- | TV | 0.6119 |  3.259  | -->
+<!-- | TV+Radio | 0.8972 |  1.681 | -->
+<!-- | TV+Radio+Newspaper | 0.8972 |  1.686 | -->
+<!-- </center> -->
+<!-- \ -->
+<!-- ## Linear Regression: Qualitative Predictors -->
+<!-- * In practice, we will have predictors that are qualitative. -->
+<!-- * These are also called **categorical predictors** or **factor variables**. -->
+<!-- * The possible categories of a qualitative predictor are called **levels**. -->
+<!-- ## Linear Regression: Qualitative Predictors -->
+<!-- **Credit dataset** -->
+<!-- ```{r} -->
+<!-- credit <- read_csv("Credit.csv")   # read in the dataset -->
+<!-- str(credit)   # structure of variables -->
+<!-- ``` -->
+<!-- ## Linear Regression: Qualitative Predictors -->
+<!-- **Credit dataset** -->
+<!-- Variables must be converted to factor variables. -->
+<!-- ```{r} -->
+<!-- # convert character to factor variables -->
+<!-- credit <- credit %>% mutate(Gender = as.factor(Gender), -->
+<!--                             Student = as.factor(Student), -->
+<!--                             Married = as.factor(Married), -->
+<!--                             Ethnicity = as.factor(Ethnicity)) -->
+<!-- str(credit) -->
+<!-- ``` -->
+<!-- ## Linear Regression: Qualitative Predictors {.smaller} -->
+<!-- **Credit dataset** -->
+<!-- ```{r} -->
+<!-- table(credit$Gender)   # frequency table of Gender -->
+<!-- table(credit$Student)   # frequency table of Student -->
+<!-- table(credit$Married)   # frequency table of Married -->
+<!-- table(credit$Ethnicity)   # frequency table of Ethnicity -->
+<!-- ``` -->
+<!-- ## Linear Regression: Qualitative Predictors -->
+<!-- **Dummy variable** -->
+<!-- * R creates a **dummy/indicator variable** for each factor variable. -->
+<!-- * **Nunber of dummy variables = Number of levels - 1** -->
+<!-- ```{r} -->
+<!-- contrasts(credit$Gender)   # identify dummy variable -->
+<!-- ``` -->
+<!-- <center> -->
+<!-- $x_i=\begin{cases} -->
+<!-- 1; & \text{if} \  i^{th} \ \text{person is male} \\ -->
+<!-- 0; & \text{if} \  i^{th} \ \text{person is female} -->
+<!-- \end{cases}$ -->
+<!-- </center> -->
+<!-- \ -->
+<!-- ## Linear Regression: Qualitative Predictors -->
+<!-- **Dummy variable** -->
+<!-- The regression model, -->
+<!-- <center> -->
+<!-- $y_i=\beta_0+\beta_1 \ x_i + \epsilon_i = \begin{cases} -->
+<!-- \beta_0+\beta_1+ \epsilon_i; & \text{if} \  i^{th} \ \text{person is male} \\ -->
+<!-- \beta_0+\epsilon_i; & \text{if} \  i^{th} \ \text{person is female} -->
+<!-- \end{cases}$ -->
+<!-- <center> -->
+<!-- ## Linear Regression: Qualitative Predictors -->
+<!-- ```{r} -->
+<!-- qfit <- lm(Balance ~ Gender, data = credit)   # fit linear model with qualitative predictor -->
+<!-- summary(qfit)   # obtain summary -->
+<!-- ``` -->
+<!-- * $\beta_0$: average credit card balance among males -->
+<!-- * $\beta_0+\beta_1$: average credit card balance among females -->
+<!-- * $\beta_1$: difference in average credit card balance between females and males -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/t3.7.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression: Qualitative Predictors -->
+<!-- **Credit dataset** -->
+<!-- The resulting regression model, -->
+<!-- <center> -->
+<!-- $\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 \ x_i = \begin{cases} -->
+<!-- \hat{\beta}_0+\hat{\beta}_1; & \text{if} \  i^{th} \ \text{person is male} \\ -->
+<!-- \hat{\beta}_0; & \text{if} \  i^{th} \ \text{person is female} -->
+<!-- \end{cases}$ -->
+<!-- <center> -->
+<!-- Thus, -->
+<!-- * $\hat{\beta}_0=\$ 529.54$: Estimated credit card balance for females -->
+<!-- * $\hat{\beta}_1=\$ 19.73$: Estimated difference in credit card balance between genders -->
+<!-- * $\hat{\beta}_0+\hat{\beta}_1=\$ (529.54 - 19.73)$: Estimated credit card balance for males -->
+<!-- ## Qualitative Predictors: Coding Schemes -->
+<!-- * Option 1: -->
+<!-- <center> -->
+<!-- $x_i=\begin{cases} -->
+<!-- 1; & \text{if} \  i^{th} \ \text{person is male} \\ -->
+<!-- 0; & \text{if} \  i^{th} \ \text{person is female} -->
+<!-- \end{cases}$ -->
+<!-- </center> -->
+<!-- \ -->
+<!-- * Option 2: -->
+<!-- <center> -->
+<!-- $x_i=\begin{cases} -->
+<!-- 1; & \text{if} \  i^{th} \ \text{person is female} \\ -->
+<!-- -1; & \text{if} \  i^{th} \ \text{person is male} -->
+<!-- \end{cases}$ -->
+<!-- </center> -->
+<!-- \ -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- Create an SLR model between **Balance** and **Ethnicity** from the **Credit** dataset.  -->
+<!-- * How many dummy variables would be created for **Ethnicity**? -->
+<!-- * What is the baseline for the **Ethnicity** variable? -->
+<!-- * Interpret the regression coefficients obtained. -->
+<!-- We create two dummy variables, -->
+<!-- <center> -->
+<!-- $x_{i1}=\begin{cases} -->
+<!-- 1; & \text{if} \  i^{th} \ \text{person is Asian} \\ -->
+<!-- 0; & \text{if} \  i^{th} \ \text{person is not Asian} -->
+<!-- \end{cases}$ -->
+<!-- </center> -->
+<!-- \ -->
+<!-- <center> -->
+<!-- $x_{i2}=\begin{cases} -->
+<!-- 1; & \text{if} \  i^{th} \ \text{person is Caucasian} \\ -->
+<!-- 0; & \text{if} \  i^{th} \ \text{person is not Caucasian} -->
+<!-- \end{cases}$ -->
+<!-- </center> -->
+<!-- \ -->
+<!-- **No. of dummy variables=No. of levels -1** -->
+<!-- ## Qualitative Predictors: More than Two Levels -->
+<!-- The resulting regression model, -->
+<!-- <center> -->
+<!-- $y_i=\beta_0+\beta_1 \ x_{i1} + \beta_1 \ x_{i2} + \epsilon_i = \begin{cases} -->
+<!-- \beta_0+\beta_1+ \epsilon_i; & \text{if} \  i^{th} \ \text{person is Asian} \\ -->
+<!-- \beta_0+\beta_2+\epsilon_i; & \text{if} \  i^{th} \ \text{person is Caucasian} \\ -->
+<!-- \beta_0+\epsilon_i; & \text{if} \  i^{th} \ \text{person is AA} -->
+<!-- \end{cases}$ -->
+<!-- <center> -->
+<!-- ## Qualitative Predictors: More than Two Levels -->
+<!-- **Interpretations** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/t3.8.png") -->
+<!-- ``` -->
+<!-- * $\hat{\beta}_0=\$ 531$: Estimated credit card balance for AA -->
+<!-- * $\hat{\beta}_1= - \$ 18.69$: Estimated difference in credit card balance between Asians and AAs -->
+<!-- * $\hat{\beta}_2= - \$ 12.50$: Estimated difference in credit card balance between Caucasians and AAs -->
+<!-- * $\hat{\beta}_0+\hat{\beta}_1=\$ (531 - 18.69)$: Estimated credit card balance for Asians -->
+<!-- * $\hat{\beta}_0+\hat{\beta}_2=\$ (531 - 12.50)$: Estimated credit card balance for Caucasians -->
+<!-- ## Extensions of the Linear Model -->
+<!-- The standard linear regression model makes two highly restrictive assumptions. -->
+<!-- * **Additive**: Changes in response caused by changes in $j^{th}$ predictor is independent of values of other predictors -->
+<!-- * **Linear**: Change in response for unit increase in $j^{th}$ predictor is constant, regardless of the value of $j^{th}$ predictor -->
+<!-- ## Extensions of the Linear Model: Interactions -->
+<!-- **Interaction** or **synergy** effect (Advertising dataset) -->
+<!-- Instead of using, -->
+<!-- $$\text{Sales}=\beta_0+\beta_1 \cdot \text{TV}+\beta_2 \cdot \text{Radio} + \epsilon$$ -->
+<!-- we use, -->
+<!-- $$\text{Sales} =\beta_0+\beta_1 \cdot \text{TV}+\beta_2 \cdot \text{Radio} + \beta_3 \cdot \text{TV} \cdot \text{Radio} + \epsilon$$ -->
+<!-- $$\implies \text{Sales} = \beta_0+\left(\beta_1 + \beta_3 \cdot \text{Radio}\right) \cdot \text{TV}+\beta_2 \cdot \text{Radio} + \epsilon$$ -->
+<!-- Effect of $\text{TV}$ on $\text{Sales}$: $\beta_1 + \beta_3 \cdot \text{Radio}$ -->
+<!-- ## Extensions of the Linear Model: Interactions -->
+<!-- **Advertising dataset** -->
+<!-- ```{r} -->
+<!-- ifit <- lm(sales ~ TV*radio, data = ad)   # fit linear model with interactions -->
+<!-- summary(ifit)   # obtain summary -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/t3.9.png") -->
+<!-- ``` -->
+<!-- <center> -->
+<!-- | Predictor(s) |  $R^2$ | $RSE$ | -->
+<!-- |-----------|----------|----------- -->
+<!-- | TV+Radio | 0.8972 |  1.681 | -->
+<!-- | TV+Radio+TV*Radio | 0.9678 |  0.9435 | -->
+<!-- </center> -->
+<!-- \ -->
+<!-- \ -->
+<!-- ## Extensions of the Linear Model: Interactions -->
+<!-- **Advertising dataset** -->
+<!-- Increase $\text{TV}$ by \$1000 $\implies \text{Sales}$ change by $\left(\hat{\beta}_1 + \hat{\beta}_3 \cdot \text{Radio}\right) \times 1000=19+1.1\times \text{Radio}$ units -->
+<!-- Increase $\text{Radio}$ by \$1000 $\implies \text{Sales}$ change by $\left(\hat{\beta}_2 + \hat{\beta}_3 \cdot \text{TV}\right) \times 1000=29+1.1\times \text{TV}$ units -->
+<!-- ## Extensions of the Linear Model: Interactions -->
+<!-- Sometimes, an interaction term has a significant effect on the response, but the associated **main effects** do not. -->
+<!-- **Hierarchy Principle** -->
+<!-- If we include an interaction in a model, we should also include the main effects, even if the p-values associated with their coefficients are not significant. -->
+<!-- ## Interactions Between Quantitative and Qualitative Predictors -->
+<!-- **Credit dataset** -->
+<!-- Suppose response: $\text{balance}$ and predictors: $\text{income}$ and $\text{student}$ -->
+<!-- Without interaction term, -->
+<!-- <center> -->
+<!-- $y_i=\beta_0+\beta_1 \cdot x_{i1} + \beta_2 \cdot x_{i2} + \epsilon_i = \begin{cases} -->
+<!--  \left(\beta_0+\beta_2\right) + \beta_1 \cdot x_{i1} + \epsilon_i; & \text{if student} \\ -->
+<!-- \beta_0 + \beta_1 \cdot x_{i1} + \epsilon; & \text{if not student} -->
+<!-- \end{cases}$ -->
+<!-- </center> -->
+<!-- \ -->
+<!-- With interaction term, -->
+<!-- <center> -->
+<!-- $y_i=\beta_0+\beta_1 \cdot x_{i1} + \beta_2 \cdot x_{i2} + \beta_3 \cdot x_{i1} \cdot x_{i2} + \epsilon_i \\ -->
+<!-- = \begin{cases} -->
+<!--  \left(\beta_0+\beta_2\right) + \left(\beta_1 + \beta_3\right) \cdot x_{i1} + \epsilon_i; & \text{if} \  i^{th} \ \text{person is a student} \\ -->
+<!-- \beta_0 + \beta_1 \ x_{i1} + \epsilon; & \text{if} \  i^{th} \ \text{person is not a student} -->
+<!-- \end{cases}$ -->
+<!-- <center> -->
+<!-- ## Interactions Between Quantitative and Qualitative Predictors -->
+<!-- **Credit dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/3.7.png") -->
+<!-- ``` -->
+<!-- ## Extensions of the Linear Model: Polynomial Regression -->
+<!-- **Auto dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/3.8.png") -->
+<!-- ``` -->
+<!-- ## Extensions of the Linear Model: Polynomial Regression -->
+<!-- * **Linear**: $$\text{mpg}=\beta_0+\beta_1 \cdot \text{horsepower} + \epsilon$$ -->
+<!-- * **Quadratic**: $$\text{mpg}=\beta_0+\beta_1 \cdot \text{horsepower} + \beta_2 \cdot \text{horsepower}^2 + \epsilon$$ -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/t3.10.png") -->
+<!-- ``` -->
+<!-- ## Week 2 Review -->
+<!-- ## Week 2 Review -->
+<!-- ## K-Nearest Neighbors -->
+<!-- * Non-parametric approach -->
+<!-- * Can be used for both regression and classification problems -->
+<!-- ## K-Nearest Neighbors Regression -->
+<!-- Given a value for $K$ and a test data point $x_0$, -->
+<!-- $$\hat{f}(x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} y_i=\text{Average} \ \left(y_i \ \text{for all} \ i:\ x_i \in \mathcal{N}_0\right) $$ -->
+<!-- where $\mathcal{N}_0$ is known as the **neighborhood** of $x_0$. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/SL1.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression vs K-Nearest Neighbors -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/3.17.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/3.18.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression vs K-Nearest Neighbors -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/3.19.png") -->
+<!-- ``` -->
+<!-- ## Linear Regression vs K-Nearest Neighbors -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/3.20.png") -->
+<!-- ``` -->
+<!-- * Nearest neighbor averaging can be pretty good for small $p$, that is, $p \le 4$ and large $n$. -->
+<!-- * Performance of nearest neighbor deteriorates as $p$ increases - curse of dimensionality. -->
+<!-- ## Curse of Dimensionality -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/SL2.png") -->
+<!-- ``` -->
+</div>
+<div id="classification-problems" class="section level2 hasAnchor" number="4.13">
+<h2><span class="header-section-number">4.13</span> Classification Problems<a href="multiple-linear-regression-mlr.html#classification-problems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Response <span class="math inline">\(Y\)</span> is qualitative (categorical).</p></li>
+<li><p>The objective is to build a classifier <span class="math inline">\(\hat{Y}=\hat{C}(\mathbf{X})\)</span> that assigns a class label to a future unlabeled (unseen) observation and understand the relationship between the predictors and response.</p></li>
+<li><p>There can be two types of predictions based on the research problem.</p>
+<ul>
+<li><p>Class probabilities</p></li>
+<li><p>Class labels</p></li>
+</ul></li>
+</ul>
+<!-- Often we are more interested in estimating the probabilities than actual class labels. -->
+</div>
+<div id="classification-problems-example" class="section level2 hasAnchor" number="4.14">
+<h2><span class="header-section-number">4.14</span> Classification Problems: Example<a href="multiple-linear-regression-mlr.html#classification-problems-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- ## Logistic Regression -->
+<!-- * Supervised learning -->
+<!-- * Classification (even though the term contains "Regression") -->
+<!-- * Parametric approach -->
+<p><strong>Default dataset</strong></p>
+<pre><code>##   default student   balance    income
+## 1      No      No  729.5265 44361.625
+## 2      No     Yes  817.1804 12106.135
+## 3      No      No 1073.5492 31767.139
+## 4      No      No  529.2506 35704.494
+## 5      No      No  785.6559 38463.496
+## 6      No     Yes  919.5885  7491.559</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="multiple-linear-regression-mlr.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Default<span class="sc">$</span>default)</span></code></pre></div>
+<pre><code>## 
+##   No  Yes 
+## 9667  333</code></pre>
+</div>
+<div id="classification-problems-example-1" class="section level2 hasAnchor" number="4.15">
+<h2><span class="header-section-number">4.15</span> Classification Problems: Example<a href="multiple-linear-regression-mlr.html#classification-problems-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For some algorithms, we might need to convert the categorical response to numeric values.</p>
+<p><strong>Default dataset</strong></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="multiple-linear-regression-mlr.html#cb38-1" aria-hidden="true" tabindex="-1"></a>Default<span class="sc">$</span>default_id <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Default<span class="sc">$</span>default <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)   <span class="co"># create 0/1 variable</span></span>
+<span id="cb38-2"><a href="multiple-linear-regression-mlr.html#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="multiple-linear-regression-mlr.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Default, <span class="dv">10</span>)   <span class="co"># print first ten observations</span></span></code></pre></div>
+<pre><code>##    default student   balance    income default_id
+## 1       No      No  729.5265 44361.625          0
+## 2       No     Yes  817.1804 12106.135          0
+## 3       No      No 1073.5492 31767.139          0
+## 4       No      No  529.2506 35704.494          0
+## 5       No      No  785.6559 38463.496          0
+## 6       No     Yes  919.5885  7491.559          0
+## 7       No      No  825.5133 24905.227          0
+## 8       No     Yes  808.6675 17600.451          0
+## 9       No      No 1161.0579 37468.529          0
+## 10      No      No    0.0000 29275.268          0</code></pre>
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- Create an SLR model with **default** as the response and **balance** as the predictor. -->
+<!-- Is there anything ususual with this model? -->
+</div>
+<div id="why-not-linear-regression" class="section level2 smaller hasAnchor" number="4.16">
+<h2><span class="header-section-number">4.16</span> Why Not Linear Regression?<a href="multiple-linear-regression-mlr.html#why-not-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Default dataset</strong></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="multiple-linear-regression-mlr.html#cb40-1" aria-hidden="true" tabindex="-1"></a>slrfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(default_id <span class="sc">~</span> balance, <span class="at">data =</span> Default)   <span class="co"># fit SLR</span></span>
+<span id="cb40-2"><a href="multiple-linear-regression-mlr.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(slrfit<span class="sc">$</span>fitted.values)   <span class="co"># summary of y_hats</span></span></code></pre></div>
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -0.07519 -0.01263  0.03178  0.03330  0.07628  0.26953</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Linear regression does not model probabilities well. Linear regression might produce probabilities less than zero or bigger than one.</p>
+</div>
+<div id="why-not-linear-regression-1" class="section level2 hasAnchor" number="4.17">
+<h2><span class="header-section-number">4.17</span> Why Not Linear Regression?<a href="multiple-linear-regression-mlr.html#why-not-linear-regression-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we have a response <span class="math inline">\(Y\)</span>,</p>
+<center>
+<span class="math inline">\(Y=\begin{cases} 1; &amp; \text{if stroke} \\ 2; &amp; \text{if drug overdose} \\ 3; &amp; \text{if epileptic seizure} \end{cases}\)</span>
+</center>
+<p><br />
+</p>
+<p>Linear regression suggests an ordering, and in fact implies that the difference between stroke and drug overdose is the same as between drug overdose and epileptic seizure.</p>
+<!-- ## Logistic Regression -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/4.1.png") -->
+<!-- ``` -->
+<!-- Consider, response -->
+<!-- <center> -->
+<!-- $Y=\begin{cases} -->
+<!-- 1; & \text{default = "Yes"} \\ -->
+<!-- 0; & \text{default = "No"} -->
+<!-- \end{cases}$ -->
+<!-- </center> -->
+<!-- \ -->
+<!-- ```{r, message=FALSE} -->
+<!-- contrasts(Default$default) -->
+<!-- ``` -->
+</div>
+<div id="logistic-regression" class="section level2 hasAnchor" number="4.18">
+<h2><span class="header-section-number">4.18</span> Logistic Regression<a href="multiple-linear-regression-mlr.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider a one-dimensional two-class problem.</p>
+<ul>
+<li><p>Transform the linear model <span class="math inline">\(\beta_0 + \beta_1 \ X\)</span> so that the output is a probability.</p></li>
+<li><p>Use <strong>logistic</strong> or <strong>sigmoid</strong> function <span class="math display">\[g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}\]</span></p></li>
+<li><p>Suppose <span class="math inline">\(p(X)=P(Y=1|X)\)</span>. Then, <span class="math display">\[p(X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}\]</span></p></li>
+<li><p><span class="math inline">\(e \approx 2.71828\)</span> is a mathematical constant (Euler’s number).</p></li>
+</ul>
+</div>
+<div id="logistic-regression-1" class="section level2 hasAnchor" number="4.19">
+<h2><span class="header-section-number">4.19</span> Logistic Regression<a href="multiple-linear-regression-mlr.html#logistic-regression-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Default dataset</strong></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-43-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="your-turn-3" class="section level2 hasAnchor" number="4.20">
+<h2><span class="header-section-number">4.20</span> <span style="color:blue">Your Turn!!!</span><a href="multiple-linear-regression-mlr.html#your-turn-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider <span class="math inline">\(p(X)=P(Y=1|X) = \dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}\)</span>. Find</p>
+<ul>
+<li><p><span class="math inline">\(1-p(X)\)</span></p></li>
+<li><p><span class="math inline">\(\ln \left(\dfrac{p(X)}{1-p(X)}\right)\)</span></p></li>
+</ul>
+<!-- ## Logistic Regression: Interpretations -->
+<!-- We can show, -->
+<!-- $$\ln \left(\dfrac{p(X)}{1-p(X)}\right)=\beta_0 + \beta_1 \ X$$ -->
+<!-- The monotone transformation above is called the **log odds** or **logit** transformation of $p(X)$. -->
+<!-- $\beta_1$ represents the change in log odds for a unit increase in $X$. -->
+</div>
+<div id="logistic-regression-example" class="section level2 hasAnchor" number="4.21">
+<h2><span class="header-section-number">4.21</span> Logistic Regression: Example<a href="multiple-linear-regression-mlr.html#logistic-regression-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Attrition dataset</strong></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="multiple-linear-regression-mlr.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modeldata)   <span class="co"># load library</span></span>
+<span id="cb43-2"><a href="multiple-linear-regression-mlr.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="multiple-linear-regression-mlr.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;attrition&quot;</span>)   <span class="co"># load dataset</span></span></code></pre></div>
+<p>We will consider <code>Attrition</code> as the response variable.</p>
+<p>To mimic real-world ML practices, we will split the dataset into a tranining and test set. We will build our model on the training set and evaluate its performance on the test set.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="multiple-linear-regression-mlr.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">011723</span>)  <span class="co"># fix the random number generator for reproducibility</span></span>
+<span id="cb44-2"><a href="multiple-linear-regression-mlr.html#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="multiple-linear-regression-mlr.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)  <span class="co"># load library</span></span>
+<span id="cb44-4"><a href="multiple-linear-regression-mlr.html#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="multiple-linear-regression-mlr.html#cb44-5" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> attrition<span class="sc">$</span>Attrition, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>) <span class="co"># split available data into 80% training and 20% test datasets</span></span>
+<span id="cb44-6"><a href="multiple-linear-regression-mlr.html#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="multiple-linear-regression-mlr.html#cb44-7" aria-hidden="true" tabindex="-1"></a>attrition_train <span class="ot">&lt;-</span> attrition[train_index,]   <span class="co"># training data, use this dataset to build model</span></span>
+<span id="cb44-8"><a href="multiple-linear-regression-mlr.html#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="multiple-linear-regression-mlr.html#cb44-9" aria-hidden="true" tabindex="-1"></a>attrition_test <span class="ot">&lt;-</span> attrition[<span class="sc">-</span>train_index,]   <span class="co"># test data, use this dataset to evaluate model&#39;s performance</span></span></code></pre></div>
+</div>
+<div id="logistic-regression-estimating-parameters" class="section level2 hasAnchor" number="4.22">
+<h2><span class="header-section-number">4.22</span> Logistic Regression: Estimating Parameters<a href="multiple-linear-regression-mlr.html#logistic-regression-estimating-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Attrition dataset</strong></p>
+<p>Let’s build a logistic regression model with <code>MonthlyIncome</code> as the predictor.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="multiple-linear-regression-mlr.html#cb45-1" aria-hidden="true" tabindex="-1"></a>logregfit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Attrition <span class="sc">~</span> MonthlyIncome, <span class="at">data =</span> attrition_train, <span class="at">family =</span> binomial)   <span class="co"># fit logistic regression model</span></span>
+<span id="cb45-2"><a href="multiple-linear-regression-mlr.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logregfit)   <span class="co"># obtain results</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Attrition ~ MonthlyIncome, family = binomial, data = attrition_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.7776  -0.6676  -0.5782  -0.3121   2.6570  
+## 
+## Coefficients:
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   -9.040e-01  1.441e-01  -6.272 3.56e-10 ***
+## MonthlyIncome -1.307e-04  2.413e-05  -5.418 6.04e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1040.5  on 1176  degrees of freedom
+## Residual deviance: 1001.5  on 1175  degrees of freedom
+## AIC: 1005.5
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<!-- Consider a one-dimensional two-class problem. Let $y_1, y_2, \ldots, y_n$ represent the training responses. -->
+<!-- The **likelihood function** is then defined as, -->
+<!-- $$l\left(\beta_0, \beta_1\right)=\displaystyle \prod_{i:y_i=1} p(x_i) \prod_{i:y_i=0} \big(1-p(x_i)\big)$$ -->
+<!-- The parameter estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ are chosen to **maximize** the likelihood function. -->
+<!-- **Default dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/t4.1.png") -->
+<!-- ``` -->
+</div>
+<div id="logistic-regression-individual-predictions" class="section level2 hasAnchor" number="4.23">
+<h2><span class="header-section-number">4.23</span> Logistic Regression: Individual Predictions<a href="multiple-linear-regression-mlr.html#logistic-regression-individual-predictions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/t4.1.png") -->
+<!-- ``` -->
+<p><strong>Attrition dataset</strong></p>
+<p>For <code>MonthlyIncome</code>=$5000,</p>
+<p><span class="math display">\[\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{-0.904 + (-0.0001307 \times 5000)}}{1+e^{-0.904 + (-0.0001307 \times 5000)}}=0.174\]</span></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="multiple-linear-regression-mlr.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(logregfit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">MonthlyIncome =</span> <span class="dv">5000</span>))   <span class="co"># obtain log-odds predictions</span></span></code></pre></div>
+<pre><code>##         1 
+## -1.557622</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="multiple-linear-regression-mlr.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(logregfit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">MonthlyIncome =</span> <span class="dv">5000</span>), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)   <span class="co"># obtain probability predictions</span></span></code></pre></div>
+<pre><code>##         1 
+## 0.1739881</code></pre>
+</div>
+<div id="logistic-regression-test-set-predictions" class="section level2 hasAnchor" number="4.24">
+<h2><span class="header-section-number">4.24</span> Logistic Regression: Test Set Predictions<a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/t4.1.png") -->
+<!-- ``` -->
+<p><strong>Attrition dataset</strong></p>
+<p>To predict <strong>probabilities</strong> for observations in the test set, we use</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="multiple-linear-regression-mlr.html#cb51-1" aria-hidden="true" tabindex="-1"></a>logreg_prob_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(logregfit, <span class="at">newdata =</span> attrition_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)   <span class="co"># obtain probability predictions</span></span>
+<span id="cb51-2"><a href="multiple-linear-regression-mlr.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="multiple-linear-regression-mlr.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(logreg_prob_preds)   <span class="co"># predicted probabilities for first six observations in test set</span></span></code></pre></div>
+<pre><code>##         1        13        15        18        19        39 
+## 0.1561133 0.1695803 0.1896750 0.2223808 0.2370187 0.2261332</code></pre>
+</div>
+<div id="logistic-regression-test-set-predictions-1" class="section level2 hasAnchor" number="4.25">
+<h2><span class="header-section-number">4.25</span> Logistic Regression: Test Set Predictions<a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Attrition dataset</strong></p>
+<p>Set a threshold to obtain predicted <strong>class labels</strong>. The following uses a threshold of 0.5.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="multiple-linear-regression-mlr.html#cb53-1" aria-hidden="true" tabindex="-1"></a>threshold <span class="ot">&lt;-</span> <span class="fl">0.5</span>   <span class="co"># set threshold</span></span>
+<span id="cb53-2"><a href="multiple-linear-regression-mlr.html#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="multiple-linear-regression-mlr.html#cb53-3" aria-hidden="true" tabindex="-1"></a>logreg_class_preds <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(logreg_prob_preds <span class="sc">&gt;</span> threshold, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>))   <span class="co"># obtain class predictions</span></span></code></pre></div>
+<!-- ```{r} -->
+<!-- table(predicted = class_preds, true = attrition$Attrition)   # create confusion matrix -->
+<!-- ``` -->
+</div>
+<div id="logistic-regression-performance" class="section level2 smaller hasAnchor" number="4.26">
+<h2><span class="header-section-number">4.26</span> Logistic Regression: Performance<a href="multiple-linear-regression-mlr.html#logistic-regression-performance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Attrition dataset</strong></p>
+<!-- ```{r} -->
+<!-- table(predicted = class_preds, true = attrition$Attrition)   # create confusion matrix -->
+<!-- mean(class_preds != attrition$Attrition)   # misclassification rate -->
+<!-- ``` -->
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="multiple-linear-regression-mlr.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)   <span class="co"># load package &#39;caret&#39;</span></span>
+<span id="cb54-2"><a href="multiple-linear-regression-mlr.html#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="multiple-linear-regression-mlr.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create confusion matrix</span></span>
+<span id="cb54-4"><a href="multiple-linear-regression-mlr.html#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="multiple-linear-regression-mlr.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(logreg_class_preds) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Yes&quot;</span>)   <span class="co"># create &#39;Yes&#39; factor level (not always required)</span></span>
+<span id="cb54-6"><a href="multiple-linear-regression-mlr.html#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="multiple-linear-regression-mlr.html#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="at">data =</span> <span class="fu">relevel</span>(logreg_class_preds, <span class="at">ref =</span> <span class="st">&quot;Yes&quot;</span>), </span>
+<span id="cb54-8"><a href="multiple-linear-regression-mlr.html#cb54-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">reference =</span> <span class="fu">relevel</span>(attrition_test<span class="sc">$</span>Attrition, <span class="at">ref =</span> <span class="st">&quot;Yes&quot;</span>))</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction Yes  No
+##        Yes   0   0
+##        No   47 246
+##                                           
+##                Accuracy : 0.8396          
+##                  95% CI : (0.7925, 0.8797)
+##     No Information Rate : 0.8396          
+##     P-Value [Acc &gt; NIR] : 0.5388          
+##                                           
+##                   Kappa : 0               
+##                                           
+##  Mcnemar&#39;s Test P-Value : 1.949e-11       
+##                                           
+##             Sensitivity : 0.0000          
+##             Specificity : 1.0000          
+##          Pos Pred Value :    NaN          
+##          Neg Pred Value : 0.8396          
+##              Prevalence : 0.1604          
+##          Detection Rate : 0.0000          
+##    Detection Prevalence : 0.0000          
+##       Balanced Accuracy : 0.5000          
+##                                           
+##        &#39;Positive&#39; Class : Yes             
+## </code></pre>
+<!-- For $\text{balance}=\$2000$, -->
+<!-- $$\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{-10.6513 + 0.0055 \times 2000}}{1+e^{-10.6513 + 0.0055 \times 2000}}=0.586$$ -->
+</div>
+<div id="confusion-matrix-terms" class="section level2 hasAnchor" number="4.27">
+<h2><span class="header-section-number">4.27</span> Confusion Matrix Terms<a href="multiple-linear-regression-mlr.html#confusion-matrix-terms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- <center> -->
+<!-- |  | Predicted class labels | -->
+<!-- |-----------|----------|----------- -->
+<!-- |  |  0 | 1 | -->
+<!-- |-----------|----------|----------- -->
+<!-- | 0 | True Negative |  False Positive  | -->
+<!-- | 1 | False Negative |  True Positive | -->
+<!-- </center> -->
+<!-- \ -->
+<center>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Reference class labels</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>———–</td>
+<td>———-</td>
+<td>———–</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><br />
+</p>
+
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- **Default dataset** -->
+<!-- ```{r,message=FALSE} -->
+<!-- library(ISLR2)   # load library -->
+<!-- data("Default")   # load dataset -->
+<!-- ``` -->
+<!-- Consider `default` as the response. Split the dataset into a training and test set. Consider a 70-30 split. -->
+<!-- With the training data, create two logistic regression models: -->
+<!-- * **fit1**: `student` as the predictor, and -->
+<!-- * **fit2**: `balance` and `student` as predictors. -->
+<!-- 1) From **fit1**, between students and non-students, which group has a higher probability of default? What is the difference in the default rates (probabilities of default)? -->
+<!-- 2) Compare the coefficients in models **fit1** and **fit2**. Any observations? -->
+<!-- 3) Using models **fit1** and **fit2** from above, obtain class predictions on the test set for a threshold of 0.5.  -->
+<!-- 4) Create respective confusion matrices and compare. -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- ```{r} -->
+<!-- # logistic regression model with 'student' -->
+<!-- fit1 = glm(default ~ student, data = Default_train, family = binomial) -->
+<!-- summary(fit1) -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- ```{r} -->
+<!-- # logistic regression model with 'balance' and 'student'  -->
+<!-- fit2 = glm(default ~ balance + student, data = Default_train, family = binomial) -->
+<!-- summary(fit2)  -->
+<!-- ``` -->
+<!-- 3) Suppose you are a consultant with a credit card company that is trying to determine to whom they should offer credit.  -->
+<!-- * A student is riskier than a non-student if no information about the student’s credit card balance is available.  -->
+<!-- * However, that student is less risky than a non-student with the same credit card balance -->
+<!-- ## Logistic Regression: Categorical Predictors -->
+<!-- **Default dataset** -->
+<!-- For $\text{student}$, define -->
+<!-- <center> -->
+<!-- $x_i=\begin{cases} -->
+<!-- 1; & \text{if student} \\ -->
+<!-- 0; & \text{if not student} -->
+<!-- \end{cases}$ -->
+<!-- </center> -->
+<!-- \ -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/t4.2.png") -->
+<!-- ``` -->
+<!-- $$\hat{p}(\text{student})=\dfrac{e^{-3.5041 + 0.4049 \times 1}}{1+e^{-3.5041 + 0.4049 \times 1}}=0.043$$ -->
+<!-- $$\hat{p}(\text{non-student})=\dfrac{e^{-3.5041 + 0.4049 \times 0}}{1+e^{-3.5041 + 0.4049 \times 0}}=0.029$$ -->
+<!-- ## Multiple Logistic Regression -->
+<!-- $$p(X)=\dfrac{e^{\beta_0 + \beta_1 \ X_1+ \ldots + \beta_p \ X_p}}{1+e^{\beta_0 + \beta_1 \ X_1+\ldots \beta_p \ X_p}}$$ -->
+<!-- $$\ln \left(\dfrac{p(X)}{1-p(X)}\right)=\beta_0 + \beta_1 \ X_1+ \ldots + \beta_p \ X_p$$ -->
+<!-- **Default dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/t4.3.png") -->
+<!-- ``` -->
+<!-- ## Multiple Logistic Regression: Confounding -->
+<!-- ```{r , echo=FALSE,  fig.align='center', fig.width=10, fig.height=6} -->
+<!-- set.seed(011723)  # fix the random number generator for reproducibility -->
+<!-- train_index <- createDataPartition(y = Default$default, p = 0.7, list = FALSE) # split available data into 80% training and 20% test datasets -->
+<!-- Default_train <- Default[train_index,]   # training data, use this dataset to build model -->
+<!-- Default_test <- Default[train_index,]   # test data, use this dataset to evaluate model's performance -->
+<!-- # contrasts(Default$student)   # identify baseline for categorical predictor  -->
+<!-- fit1 = glm(default ~ student, data = Default_train, family = binomial) -->
+<!-- # summary(fit1)   # slide 117 -->
+<!-- # predict(fit3, newdata = data.frame(student = "No"), type = "response")   # predict log odds -->
+<!-- # predict(fit3, newdata = data.frame(student = 0), type = "response")   # throws error -->
+<!-- fit2 = glm(default ~ balance + student, data = Default_train, family = binomial) -->
+<!-- # summary(fit2)   # slide 117 -->
+<!-- df <- cbind(Default_train, fit1_preds = fit1$fitted.values, fit2_preds = fit2$fitted.values) -->
+<!-- g1 <- ggplot(data = df, aes(x = balance, y = fit1_preds)) + -->
+<!--   geom_line(aes(color = student), linetype = "dashed") + -->
+<!--   geom_line(aes(y = fit2_preds, color = student)) + -->
+<!--   ylab("default rate") -->
+<!-- g2 <- ggplot(data = df, aes(x = balance, y = student)) + -->
+<!--   geom_boxplot(aes(fill = student)) + -->
+<!--   theme(legend.position = "none") -->
+<!-- grid.arrange(g1, g2, ncol=2) -->
+<!-- ``` -->
+<!-- * **Misclassification rate:** -->
+<!-- * **False positive rate:** -->
+<!-- * **False negative rate:** -->
+<!-- Calculate the **misclassification rate**, **false positive rate**, and **false negative rate**. -->
+<!-- ```{r} -->
+<!-- Default$class_preds_2 <- ifelse(fit$fitted.values > 0.2, "Yes", "No")   # obtain class predictions -->
+<!-- table(true = Default$default, predicted = Default$class_preds_2)   # create confusion matrix -->
+<!-- ``` -->
+<!-- ## Logistic Regression: Performance -->
+<!-- **Default dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/SL6.png") -->
+<!-- ``` -->
+<!-- ## Multiclass Logistic Regression -->
+<!-- Also referred to as **multinomial regression**. -->
+<!-- Define a linear function for each class. Then, -->
+<!-- $$P(Y=k|X)=\dfrac{e^{\beta_{0k}+\beta_{1k}X_1+\ldots+\beta_{pk}X_p}}{\sum_{l=1}^K e^{\beta_{0l}+\beta_{1l}X_1+\ldots+\beta_{pl}X_p}}$$ -->
+<!-- ## Multiclass Logistic Regression -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/one-vs-all.jpeg") -->
+<!-- ``` -->
+<!-- ## Classification Review -->
+<!-- * Which framework are we in? -->
+<!-- * What types of problems are we solving? -->
+<!-- * What is our response variable? -->
+<!-- * What techniques have we discussed so far? -->
+<!-- * Theoretically, is there a best technique (in terms of the test error)? -->
+<!-- * Do you identify a similarity in the approaches discussed so far? -->
+<!-- ## Classification Review -->
+<!-- * Which framework are we in? - **Supervised Learning** -->
+<!-- * What types of problems are we solving? - **Classification ** -->
+<!-- * What is our response variable? - **Categorical (Qualitative)** -->
+<!-- * What techniques have we discussed so far? - **Bayes classifier, K-NN, Logistic Regression** -->
+<!-- * Theoretically, is there a best technique (in terms of the test error)? - **Bayes optimal classifier** -->
+<!-- * Do you identify a similarity in the approaches discussed so far? -->
+<!-- ## Classification Review -->
+<!-- * Do you identify a similarity in the approaches discussed so far? -->
+<!-- Suppose we have a one-dimensional two-class problem. -->
+<!-- $$\text{Bayes Classifier}: p_1(x_0)=P(Y=1 | X=x_0)$$ -->
+<!-- $$\text{K-NN}: p_1(x_0)=P(Y=1 | X=x_0) = \dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = 1)$$ -->
+<!-- $$\text{Logistic Regression}: p_1(x_0)=P(Y=1 | X=x_0) = \dfrac{e^{\beta_0 + \beta_1 \ x_0}}{1+e^{\beta_0 + \beta_1 \ x_0}}$$ -->
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="supervised-learning-assessing-model-accuracy.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="k-nearest-neighbors-classifier.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/abhicc/208notes/edit/master/03-Slides3.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/abhicc/208notes/blob/master/03-Slides3.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
