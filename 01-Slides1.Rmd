@@ -7,11 +7,6 @@
     + "Field of study that gives computers the ability to learn without being explicitly programmed."
     
 
-```{r , echo=FALSE}
-library(tidyverse)
-```
-
-
 ## What is Machine Learning?
 
 Tom M. Mitchell (1998) defined algorithms studied in the machine learning field as

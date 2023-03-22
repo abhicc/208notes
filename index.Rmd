@@ -8,3 +8,11 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+Packages that we would need
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+More packages to follow as per the requirements in the following chapters.
+

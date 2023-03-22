@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Support Vector Machines (SVM) | 208 Course Notes</title>
+  <meta name="description" content="Chapter 9 Support Vector Machines (SVM) | 208 Course Notes" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Support Vector Machines (SVM) | 208 Course Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Support Vector Machines (SVM) | 208 Course Notes" />
+  
+  
+  
+
+<meta name="author" content="Abhishek Chakraborty" />
+
+
+<meta name="date" content="2023-03-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tree-based-methods.html"/>
+<link rel="next" href="unsupervised-learning-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">208 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html"><i class="fa fa-check"></i><b>2</b> What is Machine Learning?</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#what-is-machine-learning-1"><i class="fa fa-check"></i><b>2.1</b> What is Machine Learning?</a></li>
+<li class="chapter" data-level="2.2" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question"><i class="fa fa-check"></i><b>2.2</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.3" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#statistical-learning-vs-machine-learning-vs-data-science"><i class="fa fa-check"></i><b>2.3</b> Statistical Learning vs Machine Learning vs Data Science</a></li>
+<li class="chapter" data-level="2.4" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#notations"><i class="fa fa-check"></i><b>2.4</b> Notations</a></li>
+<li class="chapter" data-level="2.5" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#notations-1"><i class="fa fa-check"></i><b>2.5</b> Notations</a></li>
+<li class="chapter" data-level="2.6" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-1"><i class="fa fa-check"></i><b>2.6</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.7" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-2"><i class="fa fa-check"></i><b>2.7</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.8" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-vs-unsupervised"><i class="fa fa-check"></i><b>2.8</b> Supervised vs Unsupervised</a></li>
+<li class="chapter" data-level="2.9" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>2.9</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.10" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-1"><i class="fa fa-check"></i><b>2.10</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.11" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>2.11</b> Unsupervised Learning</a></li>
+<li class="chapter" data-level="2.12" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-3"><i class="fa fa-check"></i><b>2.12</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.13" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-2"><i class="fa fa-check"></i><b>2.13</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.14" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-3"><i class="fa fa-check"></i><b>2.14</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.15" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-4"><i class="fa fa-check"></i><b>2.15</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.16" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-5"><i class="fa fa-check"></i><b>2.16</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.17" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-why-estimate-fmathbfx"><i class="fa fa-check"></i><b>2.17</b> Supervised Learning: Why Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?</a></li>
+<li class="chapter" data-level="2.18" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference"><i class="fa fa-check"></i><b>2.18</b> Supervised Learning: Prediction and Inference</a></li>
+<li class="chapter" data-level="2.19" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference-1"><i class="fa fa-check"></i><b>2.19</b> Supervised Learning: Prediction and Inference</a></li>
+<li class="chapter" data-level="2.20" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction"><i class="fa fa-check"></i><b>2.20</b> Supervised Learning: Prediction</a></li>
+<li class="chapter" data-level="2.21" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-4"><i class="fa fa-check"></i><b>2.21</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.22" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-how-do-we-estimate-fmathbfx"><i class="fa fa-check"></i><b>2.22</b> Supervised Learning: How Do We Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?</a></li>
+<li class="chapter" data-level="2.23" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-parametric-methods"><i class="fa fa-check"></i><b>2.23</b> Supervised Learning: Parametric Methods</a></li>
+<li class="chapter" data-level="2.24" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-parametric-methods-1"><i class="fa fa-check"></i><b>2.24</b> Supervised Learning: Parametric Methods</a></li>
+<li class="chapter" data-level="2.25" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-non-parametric-methods"><i class="fa fa-check"></i><b>2.25</b> Supervised Learning: Non-parametric Methods</a></li>
+<li class="chapter" data-level="2.26" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-flexibility-of-models"><i class="fa fa-check"></i><b>2.26</b> Supervised Learning: Flexibility of Models</a></li>
+<li class="chapter" data-level="2.27" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-some-trade-offs"><i class="fa fa-check"></i><b>2.27</b> Supervised Learning: Some Trade-offs</a></li>
+<li class="chapter" data-level="2.28" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-some-trade-offs-1"><i class="fa fa-check"></i><b>2.28</b> Supervised Learning: Some Trade-offs</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html"><i class="fa fa-check"></i><b>3</b> Supervised Learning: Assessing Model Accuracy</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-1"><i class="fa fa-check"></i><b>3.1</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.2" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-2"><i class="fa fa-check"></i><b>3.2</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.3" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-3"><i class="fa fa-check"></i><b>3.3</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.4" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-4"><i class="fa fa-check"></i><b>3.4</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.5" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-5"><i class="fa fa-check"></i><b>3.5</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.6" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-6"><i class="fa fa-check"></i><b>3.6</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.7" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off"><i class="fa fa-check"></i><b>3.7</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.8" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-1"><i class="fa fa-check"></i><b>3.8</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.9" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-2"><i class="fa fa-check"></i><b>3.9</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.10" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-5"><i class="fa fa-check"></i><b>3.10</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.11" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#simple-linear-regression-slr"><i class="fa fa-check"></i><b>3.11</b> Simple Linear Regression (SLR)</a></li>
+<li class="chapter" data-level="3.12" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-6"><i class="fa fa-check"></i><b>3.12</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.13" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters"><i class="fa fa-check"></i><b>3.13</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.14" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-1"><i class="fa fa-check"></i><b>3.14</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.15" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-2"><i class="fa fa-check"></i><b>3.15</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.16" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset"><i class="fa fa-check"></i><b>3.16</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="3.17" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset-1"><i class="fa fa-check"></i><b>3.17</b> Ames Housing dataset</a></li>
+<li class="chapter" data-level="3.18" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-3"><i class="fa fa-check"></i><b>3.18</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.19" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-model"><i class="fa fa-check"></i><b>3.19</b> SLR: Model</a></li>
+<li class="chapter" data-level="3.20" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-model-1"><i class="fa fa-check"></i><b>3.20</b> SLR: Model</a></li>
+<li class="chapter" data-level="3.21" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-prediction"><i class="fa fa-check"></i><b>3.21</b> SLR: Prediction</a></li>
+<li class="chapter" data-level="3.22" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-interpreting-parameters"><i class="fa fa-check"></i><b>3.22</b> SLR: Interpreting Parameters</a></li>
+<li class="chapter" data-level="3.23" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model"><i class="fa fa-check"></i><b>3.23</b> SLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="3.24" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model-1"><i class="fa fa-check"></i><b>3.24</b> SLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="3.25" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#your-turn"><i class="fa fa-check"></i><b>3.25</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="3.26" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-7"><i class="fa fa-check"></i><b>3.26</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.27" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-8"><i class="fa fa-check"></i><b>3.27</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.28" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-9"><i class="fa fa-check"></i><b>3.28</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.29" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging"><i class="fa fa-check"></i><b>3.29</b> Regression: Conditional Averaging</a></li>
+<li class="chapter" data-level="3.30" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging-1"><i class="fa fa-check"></i><b>3.30</b> Regression: Conditional Averaging</a></li>
+<li class="chapter" data-level="3.31" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression"><i class="fa fa-check"></i><b>3.31</b> K-Nearest Neighbors Regression</a></li>
+<li class="chapter" data-level="3.32" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-fit"><i class="fa fa-check"></i><b>3.32</b> K-Nearest Neighbors Regression: Fit</a></li>
+<li class="chapter" data-level="3.33" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-prediction"><i class="fa fa-check"></i><b>3.33</b> K-Nearest Neighbors Regression: Prediction</a></li>
+<li class="chapter" data-level="3.34" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-methods-comparison"><i class="fa fa-check"></i><b>3.34</b> Regression Methods: Comparison</a></li>
+<li class="chapter" data-level="3.35" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#your-turn-1"><i class="fa fa-check"></i><b>3.35</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="3.36" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-10"><i class="fa fa-check"></i><b>3.36</b> <span style="color:blue">Question!!!</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html"><i class="fa fa-check"></i><b>4</b> Multiple Linear Regression (MLR)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters"><i class="fa fa-check"></i><b>4.1</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-1"><i class="fa fa-check"></i><b>4.2</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-2"><i class="fa fa-check"></i><b>4.3</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-interpreting-parameters"><i class="fa fa-check"></i><b>4.4</b> MLR: Interpreting Parameters</a></li>
+<li class="chapter" data-level="4.5" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-prediction"><i class="fa fa-check"></i><b>4.5</b> MLR: Prediction</a></li>
+<li class="chapter" data-level="4.6" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model"><i class="fa fa-check"></i><b>4.6</b> MLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="4.7" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#your-turn-2"><i class="fa fa-check"></i><b>4.7</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="4.8" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model-1"><i class="fa fa-check"></i><b>4.8</b> MLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="4.9" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#question-11"><i class="fa fa-check"></i><b>4.9</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="4.10" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors"><i class="fa fa-check"></i><b>4.10</b> K-Nearest Neighbors Regression (multiple predictors)</a></li>
+<li class="chapter" data-level="4.11" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors-1"><i class="fa fa-check"></i><b>4.11</b> K-Nearest Neighbors Regression (multiple predictors)</a></li>
+<li class="chapter" data-level="4.12" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#linear-regression-vs-k-nearest-neighbors"><i class="fa fa-check"></i><b>4.12</b> Linear Regression vs K-Nearest Neighbors</a></li>
+<li class="chapter" data-level="4.13" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems"><i class="fa fa-check"></i><b>4.13</b> Classification Problems</a></li>
+<li class="chapter" data-level="4.14" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems-example"><i class="fa fa-check"></i><b>4.14</b> Classification Problems: Example</a></li>
+<li class="chapter" data-level="4.15" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems-example-1"><i class="fa fa-check"></i><b>4.15</b> Classification Problems: Example</a></li>
+<li class="chapter" data-level="4.16" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#why-not-linear-regression"><i class="fa fa-check"></i><b>4.16</b> Why Not Linear Regression?</a></li>
+<li class="chapter" data-level="4.17" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#why-not-linear-regression-1"><i class="fa fa-check"></i><b>4.17</b> Why Not Linear Regression?</a></li>
+<li class="chapter" data-level="4.18" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression"><i class="fa fa-check"></i><b>4.18</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.19" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.19</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.20" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#your-turn-3"><i class="fa fa-check"></i><b>4.20</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="4.21" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-example"><i class="fa fa-check"></i><b>4.21</b> Logistic Regression: Example</a></li>
+<li class="chapter" data-level="4.22" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-estimating-parameters"><i class="fa fa-check"></i><b>4.22</b> Logistic Regression: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.23" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-individual-predictions"><i class="fa fa-check"></i><b>4.23</b> Logistic Regression: Individual Predictions</a></li>
+<li class="chapter" data-level="4.24" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions"><i class="fa fa-check"></i><b>4.24</b> Logistic Regression: Test Set Predictions</a></li>
+<li class="chapter" data-level="4.25" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions-1"><i class="fa fa-check"></i><b>4.25</b> Logistic Regression: Test Set Predictions</a></li>
+<li class="chapter" data-level="4.26" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-performance"><i class="fa fa-check"></i><b>4.26</b> Logistic Regression: Performance</a></li>
+<li class="chapter" data-level="4.27" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#confusion-matrix-terms"><i class="fa fa-check"></i><b>4.27</b> Confusion Matrix Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html"><i class="fa fa-check"></i><b>5</b> K-Nearest Neighbors Classifier</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-4"><i class="fa fa-check"></i><b>5.1</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="5.2" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-split-data"><i class="fa fa-check"></i><b>5.2</b> K-Nearest Neighbors Classifier: Split Data</a></li>
+<li class="chapter" data-level="5.3" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-build-model"><i class="fa fa-check"></i><b>5.3</b> K-Nearest Neighbors Classifier: Build Model</a></li>
+<li class="chapter" data-level="5.4" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-predictions"><i class="fa fa-check"></i><b>5.4</b> K-Nearest Neighbors Classifier: Predictions</a></li>
+<li class="chapter" data-level="5.5" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-performance"><i class="fa fa-check"></i><b>5.5</b> K-Nearest Neighbors Classifier: Performance</a></li>
+<li class="chapter" data-level="5.6" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#roc-curve-and-auc"><i class="fa fa-check"></i><b>5.6</b> ROC Curve and AUC</a></li>
+<li class="chapter" data-level="5.7" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#roc-curve-and-auc-1"><i class="fa fa-check"></i><b>5.7</b> ROC Curve and AUC</a></li>
+<li class="chapter" data-level="5.8" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#data-splitting"><i class="fa fa-check"></i><b>5.8</b> Data Splitting</a></li>
+<li class="chapter" data-level="5.9" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#resampling-methods"><i class="fa fa-check"></i><b>5.9</b> Resampling Methods</a></li>
+<li class="chapter" data-level="5.10" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#cross-validation-cv"><i class="fa fa-check"></i><b>5.10</b> Cross-Validation (CV)</a></li>
+<li class="chapter" data-level="5.11" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>5.11</b> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="5.12" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#leave-one-out-cross-validation-loocv-1"><i class="fa fa-check"></i><b>5.12</b> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="5.13" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>5.13</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
+<li class="chapter" data-level="5.14" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation"><i class="fa fa-check"></i><b>5.14</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.15" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-1"><i class="fa fa-check"></i><b>5.15</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.16" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-2"><i class="fa fa-check"></i><b>5.16</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.17" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-3"><i class="fa fa-check"></i><b>5.17</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.18" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-4"><i class="fa fa-check"></i><b>5.18</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.19" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-5"><i class="fa fa-check"></i><b>5.19</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.20" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-results"><i class="fa fa-check"></i><b>5.20</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Results</a></li>
+<li class="chapter" data-level="5.21" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#final-model-and-prediction-error-estimate"><i class="fa fa-check"></i><b>5.21</b> Final Model and Prediction Error Estimate</a></li>
+<li class="chapter" data-level="5.22" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#variable-importance"><i class="fa fa-check"></i><b>5.22</b> Variable Importance</a></li>
+<li class="chapter" data-level="5.23" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#bias-variance-trade-off-for-loocv-and-k-fold-cv"><i class="fa fa-check"></i><b>5.23</b> Bias-Variance Trade-off for LOOCV and <span class="math inline">\(k\)</span>-fold CV</a></li>
+<li class="chapter" data-level="5.24" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-5"><i class="fa fa-check"></i><b>5.24</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="5.25" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-split-data"><i class="fa fa-check"></i><b>5.25</b> <span style="color:blue">Your Turn!!!</span>: Split Data</a></li>
+<li class="chapter" data-level="5.26" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-perform-cv"><i class="fa fa-check"></i><b>5.26</b> <span style="color:blue">Your Turn!!!</span>: Perform CV</a></li>
+<li class="chapter" data-level="5.27" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-observe-cv-results"><i class="fa fa-check"></i><b>5.27</b> <span style="color:blue">Your Turn!!!</span>: Observe CV Results</a></li>
+<li class="chapter" data-level="5.28" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-final-model"><i class="fa fa-check"></i><b>5.28</b> <span style="color:blue">Your Turn!!!</span>: Final Model</a></li>
+<li class="chapter" data-level="5.29" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#mid-term-check"><i class="fa fa-check"></i><b>5.29</b> Mid-Term Check</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="review-of-cv.html"><a href="review-of-cv.html"><i class="fa fa-check"></i><b>6</b> Review of CV</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="review-of-cv.html"><a href="review-of-cv.html#data-leakage-a-serious-common-problem"><i class="fa fa-check"></i><b>6.1</b> Data Leakage (A Serious, Common Problem)</a></li>
+<li class="chapter" data-level="6.2" data-path="review-of-cv.html"><a href="review-of-cv.html#data-preprocessing-and-feature-enginnering"><i class="fa fa-check"></i><b>6.2</b> Data Preprocessing and Feature Enginnering</a></li>
+<li class="chapter" data-level="6.3" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-2"><i class="fa fa-check"></i><b>6.3</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.4" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-3"><i class="fa fa-check"></i><b>6.4</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.5" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-4"><i class="fa fa-check"></i><b>6.5</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.6" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-5"><i class="fa fa-check"></i><b>6.6</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.7" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-6"><i class="fa fa-check"></i><b>6.7</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.8" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-7"><i class="fa fa-check"></i><b>6.8</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.9" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables"><i class="fa fa-check"></i><b>6.9</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.10" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-1"><i class="fa fa-check"></i><b>6.10</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.11" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-2"><i class="fa fa-check"></i><b>6.11</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.12" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries"><i class="fa fa-check"></i><b>6.12</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.13" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries-1"><i class="fa fa-check"></i><b>6.13</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.14" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries-2"><i class="fa fa-check"></i><b>6.14</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.15" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables"><i class="fa fa-check"></i><b>6.15</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.16" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-1"><i class="fa fa-check"></i><b>6.16</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.17" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-2"><i class="fa fa-check"></i><b>6.17</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.18" data-path="review-of-cv.html"><a href="review-of-cv.html#standardizing-centering-and-scaling-numeric-predictors"><i class="fa fa-check"></i><b>6.18</b> Standardizing (centering and scaling) Numeric Predictors</a></li>
+<li class="chapter" data-level="6.19" data-path="review-of-cv.html"><a href="review-of-cv.html#lumping-predictors"><i class="fa fa-check"></i><b>6.19</b> Lumping Predictors</a></li>
+<li class="chapter" data-level="6.20" data-path="review-of-cv.html"><a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors"><i class="fa fa-check"></i><b>6.20</b> One-hot/dummy Encoding Categorical Predictors</a></li>
+<li class="chapter" data-level="6.21" data-path="review-of-cv.html"><a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors-1"><i class="fa fa-check"></i><b>6.21</b> One-hot/dummy Encoding Categorical Predictors</a></li>
+<li class="chapter" data-level="6.22" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-steps"><i class="fa fa-check"></i><b>6.22</b> Preprocessing Steps</a></li>
+<li class="chapter" data-level="6.23" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-with-recipes-package"><i class="fa fa-check"></i><b>6.23</b> Preprocessing With <code>recipes</code> Package</a></li>
+<li class="chapter" data-level="6.24" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-with-recipes-package-1"><i class="fa fa-check"></i><b>6.24</b> Preprocessing With <code>recipes</code> Package</a></li>
+<li class="chapter" data-level="6.25" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model"><i class="fa fa-check"></i><b>6.25</b> Training Model</a></li>
+<li class="chapter" data-level="6.26" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model-1"><i class="fa fa-check"></i><b>6.26</b> Training Model</a></li>
+<li class="chapter" data-level="6.27" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model-2"><i class="fa fa-check"></i><b>6.27</b> Training Model</a></li>
+<li class="chapter" data-level="6.28" data-path="review-of-cv.html"><a href="review-of-cv.html#final-model-and-test-set-error"><i class="fa fa-check"></i><b>6.28</b> Final Model and Test Set Error</a></li>
+<li class="chapter" data-level="6.29" data-path="review-of-cv.html"><a href="review-of-cv.html#variable-importance-1"><i class="fa fa-check"></i><b>6.29</b> Variable Importance</a></li>
+<li class="chapter" data-level="6.30" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-6"><i class="fa fa-check"></i><b>6.30</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="6.31" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1"><i class="fa fa-check"></i><b>6.31</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.32" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-1"><i class="fa fa-check"></i><b>6.32</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.33" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-2"><i class="fa fa-check"></i><b>6.33</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.34" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-3"><i class="fa fa-check"></i><b>6.34</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.35" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-4"><i class="fa fa-check"></i><b>6.35</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.36" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-2"><i class="fa fa-check"></i><b>6.36</b> <span style="color:blue">Your Turn!!!</span> Step 2</a></li>
+<li class="chapter" data-level="6.37" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-3"><i class="fa fa-check"></i><b>6.37</b> <span style="color:blue">Your Turn!!!</span> Step 3</a></li>
+<li class="chapter" data-level="6.38" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4"><i class="fa fa-check"></i><b>6.38</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.39" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4-1"><i class="fa fa-check"></i><b>6.39</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.40" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4-2"><i class="fa fa-check"></i><b>6.40</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.41" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5"><i class="fa fa-check"></i><b>6.41</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+<li class="chapter" data-level="6.42" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5-1"><i class="fa fa-check"></i><b>6.42</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+<li class="chapter" data-level="6.43" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5-2"><i class="fa fa-check"></i><b>6.43</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html"><i class="fa fa-check"></i><b>7</b> Linear Model Selection and Regularization</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#alternatives-to-least-squares"><i class="fa fa-check"></i><b>7.1</b> Alternatives to Least Squares</a></li>
+<li class="chapter" data-level="7.2" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#shrinkageregularization-methods"><i class="fa fa-check"></i><b>7.2</b> Shrinkage/Regularization Methods</a></li>
+<li class="chapter" data-level="7.3" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso"><i class="fa fa-check"></i><b>7.3</b> The Lasso</a></li>
+<li class="chapter" data-level="7.4" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-1"><i class="fa fa-check"></i><b>7.4</b> The Lasso</a></li>
+<li class="chapter" data-level="7.5" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-scaling-of-predictors"><i class="fa fa-check"></i><b>7.5</b> The Lasso: Scaling of Predictors</a></li>
+<li class="chapter" data-level="7.6" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation"><i class="fa fa-check"></i><b>7.6</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.7" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-1"><i class="fa fa-check"></i><b>7.7</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.8" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-2"><i class="fa fa-check"></i><b>7.8</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.9" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-3"><i class="fa fa-check"></i><b>7.9</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.10" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-4"><i class="fa fa-check"></i><b>7.10</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.11" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-5"><i class="fa fa-check"></i><b>7.11</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.12" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-6"><i class="fa fa-check"></i><b>7.12</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.13" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-7"><i class="fa fa-check"></i><b>7.13</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.14" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-8"><i class="fa fa-check"></i><b>7.14</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.15" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-9"><i class="fa fa-check"></i><b>7.15</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.16" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-10"><i class="fa fa-check"></i><b>7.16</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.17" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-11"><i class="fa fa-check"></i><b>7.17</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.18" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-12"><i class="fa fa-check"></i><b>7.18</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.19" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-13"><i class="fa fa-check"></i><b>7.19</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.20" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-14"><i class="fa fa-check"></i><b>7.20</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.21" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-15"><i class="fa fa-check"></i><b>7.21</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.22" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-16"><i class="fa fa-check"></i><b>7.22</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.23" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-17"><i class="fa fa-check"></i><b>7.23</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.24" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-18"><i class="fa fa-check"></i><b>7.24</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.25" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#multivariate-adaptive-regression-splines-mars"><i class="fa fa-check"></i><b>7.25</b> Multivariate Adaptive Regression Splines (MARS)</a></li>
+<li class="chapter" data-level="7.26" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-geometry"><i class="fa fa-check"></i><b>7.26</b> MARS: Geometry</a></li>
+<li class="chapter" data-level="7.27" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation"><i class="fa fa-check"></i><b>7.27</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.28" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation-1"><i class="fa fa-check"></i><b>7.28</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.29" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation-2"><i class="fa fa-check"></i><b>7.29</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.30" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation-3"><i class="fa fa-check"></i><b>7.30</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.31" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation-4"><i class="fa fa-check"></i><b>7.31</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.32" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars"><i class="fa fa-check"></i><b>7.32</b> MARS</a></li>
+<li class="chapter" data-level="7.33" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation"><i class="fa fa-check"></i><b>7.33</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.34" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-1"><i class="fa fa-check"></i><b>7.34</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.35" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-2"><i class="fa fa-check"></i><b>7.35</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.36" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-3"><i class="fa fa-check"></i><b>7.36</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.37" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-4"><i class="fa fa-check"></i><b>7.37</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.38" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-5"><i class="fa fa-check"></i><b>7.38</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.39" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-19"><i class="fa fa-check"></i><b>7.39</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.40" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-20"><i class="fa fa-check"></i><b>7.40</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.41" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-21"><i class="fa fa-check"></i><b>7.41</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.42" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-22"><i class="fa fa-check"></i><b>7.42</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.43" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-23"><i class="fa fa-check"></i><b>7.43</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.44" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-24"><i class="fa fa-check"></i><b>7.44</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.45" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-25"><i class="fa fa-check"></i><b>7.45</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.46" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-26"><i class="fa fa-check"></i><b>7.46</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.47" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-27"><i class="fa fa-check"></i><b>7.47</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.48" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-28"><i class="fa fa-check"></i><b>7.48</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.49" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-29"><i class="fa fa-check"></i><b>7.49</b> <span style="color:blue">Your Turn!!!</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>8</b> Tree-Based Methods</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#terminology-for-trees"><i class="fa fa-check"></i><b>8.1</b> Terminology for Trees</a></li>
+<li class="chapter" data-level="8.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#terminology-for-trees-1"><i class="fa fa-check"></i><b>8.2</b> Terminology for Trees</a></li>
+<li class="chapter" data-level="8.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction"><i class="fa fa-check"></i><b>8.3</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction-1"><i class="fa fa-check"></i><b>8.4</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction-2"><i class="fa fa-check"></i><b>8.5</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction-3"><i class="fa fa-check"></i><b>8.6</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.7" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction-4"><i class="fa fa-check"></i><b>8.7</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.8" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree"><i class="fa fa-check"></i><b>8.8</b> Building a Tree</a></li>
+<li class="chapter" data-level="8.9" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-1"><i class="fa fa-check"></i><b>8.9</b> Building a Tree</a></li>
+<li class="chapter" data-level="8.10" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>8.10</b> Tree Pruning</a></li>
+<li class="chapter" data-level="8.11" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning-1"><i class="fa fa-check"></i><b>8.11</b> Tree Pruning</a></li>
+<li class="chapter" data-level="8.12" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-an-optimal-tree"><i class="fa fa-check"></i><b>8.12</b> Building an Optimal Tree</a></li>
+<li class="chapter" data-level="8.13" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation"><i class="fa fa-check"></i><b>8.13</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.14" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-1"><i class="fa fa-check"></i><b>8.14</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.15" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-2"><i class="fa fa-check"></i><b>8.15</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.16" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-3"><i class="fa fa-check"></i><b>8.16</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.17" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-4"><i class="fa fa-check"></i><b>8.17</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.18" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-5"><i class="fa fa-check"></i><b>8.18</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.19" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-6"><i class="fa fa-check"></i><b>8.19</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.20" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-7"><i class="fa fa-check"></i><b>8.20</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.21" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-8"><i class="fa fa-check"></i><b>8.21</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.22" data-path="tree-based-methods.html"><a href="tree-based-methods.html#trees"><i class="fa fa-check"></i><b>8.22</b> Trees</a></li>
+<li class="chapter" data-level="8.23" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-9"><i class="fa fa-check"></i><b>8.23</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.24" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-10"><i class="fa fa-check"></i><b>8.24</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.25" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-11"><i class="fa fa-check"></i><b>8.25</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.26" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-12"><i class="fa fa-check"></i><b>8.26</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.27" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-trees"><i class="fa fa-check"></i><b>8.27</b> Classification Trees</a></li>
+<li class="chapter" data-level="8.28" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-30"><i class="fa fa-check"></i><b>8.28</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.29" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-31"><i class="fa fa-check"></i><b>8.29</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.30" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-32"><i class="fa fa-check"></i><b>8.30</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.31" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-33"><i class="fa fa-check"></i><b>8.31</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.32" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-34"><i class="fa fa-check"></i><b>8.32</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.33" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-35"><i class="fa fa-check"></i><b>8.33</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.34" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-36"><i class="fa fa-check"></i><b>8.34</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.35" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-37"><i class="fa fa-check"></i><b>8.35</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.36" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-38"><i class="fa fa-check"></i><b>8.36</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.37" data-path="tree-based-methods.html"><a href="tree-based-methods.html#ensemble-methods"><i class="fa fa-check"></i><b>8.37</b> Ensemble Methods</a></li>
+<li class="chapter" data-level="8.38" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging"><i class="fa fa-check"></i><b>8.38</b> Bagging</a></li>
+<li class="chapter" data-level="8.39" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-1"><i class="fa fa-check"></i><b>8.39</b> Bagging</a></li>
+<li class="chapter" data-level="8.40" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-2"><i class="fa fa-check"></i><b>8.40</b> Bagging</a></li>
+<li class="chapter" data-level="8.41" data-path="tree-based-methods.html"><a href="tree-based-methods.html#out-of-bag-error-estimation"><i class="fa fa-check"></i><b>8.41</b> Out-of-Bag Error Estimation</a></li>
+<li class="chapter" data-level="8.42" data-path="tree-based-methods.html"><a href="tree-based-methods.html#variable-importance-measures"><i class="fa fa-check"></i><b>8.42</b> Variable Importance Measures</a></li>
+<li class="chapter" data-level="8.43" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-implementation"><i class="fa fa-check"></i><b>8.43</b> Bagging: Implementation</a></li>
+<li class="chapter" data-level="8.44" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-implementation-1"><i class="fa fa-check"></i><b>8.44</b> Bagging: Implementation</a></li>
+<li class="chapter" data-level="8.45" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-implementation-2"><i class="fa fa-check"></i><b>8.45</b> Bagging: Implementation</a></li>
+<li class="chapter" data-level="8.46" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-disadvantages"><i class="fa fa-check"></i><b>8.46</b> Bagging: Disadvantages</a></li>
+<li class="chapter" data-level="8.47" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-disadvantages-1"><i class="fa fa-check"></i><b>8.47</b> Bagging: Disadvantages</a></li>
+<li class="chapter" data-level="8.48" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>8.48</b> Random Forests</a></li>
+<li class="chapter" data-level="8.49" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests-implementation"><i class="fa fa-check"></i><b>8.49</b> Random Forests: Implementation</a></li>
+<li class="chapter" data-level="8.50" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests-implementation-1"><i class="fa fa-check"></i><b>8.50</b> Random Forests: Implementation</a></li>
+<li class="chapter" data-level="8.51" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests-implementation-2"><i class="fa fa-check"></i><b>8.51</b> Random Forests: Implementation</a></li>
+<li class="chapter" data-level="8.52" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-39"><i class="fa fa-check"></i><b>8.52</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.53" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-40"><i class="fa fa-check"></i><b>8.53</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.54" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-41"><i class="fa fa-check"></i><b>8.54</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.55" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-42"><i class="fa fa-check"></i><b>8.55</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.56" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-43"><i class="fa fa-check"></i><b>8.56</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.57" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-44"><i class="fa fa-check"></i><b>8.57</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.58" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-45"><i class="fa fa-check"></i><b>8.58</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.59" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-46"><i class="fa fa-check"></i><b>8.59</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.60" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-47"><i class="fa fa-check"></i><b>8.60</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.61" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-48"><i class="fa fa-check"></i><b>8.61</b> <span style="color:blue">Your Turn!!!</span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html"><i class="fa fa-check"></i><b>9</b> Support Vector Machines (SVM)</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#hyperplane"><i class="fa fa-check"></i><b>9.1</b> Hyperplane</a></li>
+<li class="chapter" data-level="9.2" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#hyperplane-1"><i class="fa fa-check"></i><b>9.2</b> Hyperplane</a></li>
+<li class="chapter" data-level="9.3" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#hyperplane-2"><i class="fa fa-check"></i><b>9.3</b> Hyperplane</a></li>
+<li class="chapter" data-level="9.4" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#separating-hyperplane"><i class="fa fa-check"></i><b>9.4</b> Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.5" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#separating-hyperplane-1"><i class="fa fa-check"></i><b>9.5</b> Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.6" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane"><i class="fa fa-check"></i><b>9.6</b> Optimal Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.7" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane-1"><i class="fa fa-check"></i><b>9.7</b> Optimal Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.8" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane-2"><i class="fa fa-check"></i><b>9.8</b> Optimal Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.9" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane-issue-1"><i class="fa fa-check"></i><b>9.9</b> Optimal Separating Hyperplane: Issue 1</a></li>
+<li class="chapter" data-level="9.10" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane-issue-2"><i class="fa fa-check"></i><b>9.10</b> Optimal Separating Hyperplane: Issue 2</a></li>
+<li class="chapter" data-level="9.11" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier"><i class="fa fa-check"></i><b>9.11</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.12" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-1"><i class="fa fa-check"></i><b>9.12</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.13" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-2"><i class="fa fa-check"></i><b>9.13</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.14" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-3"><i class="fa fa-check"></i><b>9.14</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.15" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-4"><i class="fa fa-check"></i><b>9.15</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.16" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-5"><i class="fa fa-check"></i><b>9.16</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.17" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries"><i class="fa fa-check"></i><b>9.17</b> Non-linear Boundaries</a></li>
+<li class="chapter" data-level="9.18" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#feature-expansion"><i class="fa fa-check"></i><b>9.18</b> Feature Expansion</a></li>
+<li class="chapter" data-level="9.19" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#feature-expansion-1"><i class="fa fa-check"></i><b>9.19</b> Feature Expansion</a></li>
+<li class="chapter" data-level="9.20" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#feature-expansion-2"><i class="fa fa-check"></i><b>9.20</b> Feature Expansion</a></li>
+<li class="chapter" data-level="9.21" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset"><i class="fa fa-check"></i><b>9.21</b> Non-linear Boundaries: Circle dataset</a></li>
+<li class="chapter" data-level="9.22" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset-1"><i class="fa fa-check"></i><b>9.22</b> Non-linear Boundaries: Circle dataset</a></li>
+<li class="chapter" data-level="9.23" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset-2"><i class="fa fa-check"></i><b>9.23</b> Non-linear Boundaries: Circle dataset</a></li>
+<li class="chapter" data-level="9.24" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset"><i class="fa fa-check"></i><b>9.24</b> Non-linear Boundaries: Spirals dataset</a></li>
+<li class="chapter" data-level="9.25" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-1"><i class="fa fa-check"></i><b>9.25</b> Non-linear Boundaries: Spirals dataset</a></li>
+<li class="chapter" data-level="9.26" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-2"><i class="fa fa-check"></i><b>9.26</b> Non-linear Boundaries: Spirals dataset</a></li>
+<li class="chapter" data-level="9.27" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-3"><i class="fa fa-check"></i><b>9.27</b> Non-linear Boundaries: Spirals dataset</a></li>
+<li class="chapter" data-level="9.28" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#summary"><i class="fa fa-check"></i><b>9.28</b> Summary</a></li>
+<li class="chapter" data-level="9.29" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-49"><i class="fa fa-check"></i><b>9.29</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.30" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-50"><i class="fa fa-check"></i><b>9.30</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.31" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-51"><i class="fa fa-check"></i><b>9.31</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.32" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-52"><i class="fa fa-check"></i><b>9.32</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.33" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-53"><i class="fa fa-check"></i><b>9.33</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.34" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-54"><i class="fa fa-check"></i><b>9.34</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.35" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-55"><i class="fa fa-check"></i><b>9.35</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.36" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-56"><i class="fa fa-check"></i><b>9.36</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.37" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-57"><i class="fa fa-check"></i><b>9.37</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.38" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-58"><i class="fa fa-check"></i><b>9.38</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.39" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-59"><i class="fa fa-check"></i><b>9.39</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.40" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#summary-of-supervised-learning-methods"><i class="fa fa-check"></i><b>9.40</b> Summary of Supervised Learning Methods</a></li>
+<li class="chapter" data-level="9.41" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks"><i class="fa fa-check"></i><b>9.41</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.42" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-1"><i class="fa fa-check"></i><b>9.42</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.43" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#biological-neural-networks"><i class="fa fa-check"></i><b>9.43</b> Biological Neural Networks</a></li>
+<li class="chapter" data-level="9.44" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#artificial-neural-networks"><i class="fa fa-check"></i><b>9.44</b> Artificial Neural Networks</a></li>
+<li class="chapter" data-level="9.45" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-2"><i class="fa fa-check"></i><b>9.45</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.46" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-3"><i class="fa fa-check"></i><b>9.46</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.47" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-4"><i class="fa fa-check"></i><b>9.47</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.48" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-60"><i class="fa fa-check"></i><b>9.48</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.49" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-5"><i class="fa fa-check"></i><b>9.49</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.50" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-6"><i class="fa fa-check"></i><b>9.50</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.51" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-input-data"><i class="fa fa-check"></i><b>9.51</b> Neural Networks: Input Data</a></li>
+<li class="chapter" data-level="9.52" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-network-architecture"><i class="fa fa-check"></i><b>9.52</b> Neural Networks: Network Architecture</a></li>
+<li class="chapter" data-level="9.53" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-network-architecture-1"><i class="fa fa-check"></i><b>9.53</b> Neural Networks: Network Architecture</a></li>
+<li class="chapter" data-level="9.54" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-network-architecture-2"><i class="fa fa-check"></i><b>9.54</b> Neural Networks: Network Architecture</a></li>
+<li class="chapter" data-level="9.55" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-feedback-mechanism"><i class="fa fa-check"></i><b>9.55</b> Neural Networks: Feedback Mechanism</a></li>
+<li class="chapter" data-level="9.56" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-feedback-mechanism-1"><i class="fa fa-check"></i><b>9.56</b> Neural Networks: Feedback Mechanism</a></li>
+<li class="chapter" data-level="9.57" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-model-training"><i class="fa fa-check"></i><b>9.57</b> Neural Networks: Model Training</a></li>
+<li class="chapter" data-level="9.58" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-model-training-1"><i class="fa fa-check"></i><b>9.58</b> Neural Networks: Model Training</a></li>
+<li class="chapter" data-level="9.59" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-further-topics"><i class="fa fa-check"></i><b>9.59</b> Neural Networks: Further Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html"><i class="fa fa-check"></i><b>10</b> Unsupervised Learning</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#unsupervised-learning-2"><i class="fa fa-check"></i><b>10.1</b> Unsupervised Learning</a></li>
+<li class="chapter" data-level="10.2" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#principal-components-analysis-pca"><i class="fa fa-check"></i><b>10.2</b> Principal Components Analysis (PCA)</a></li>
+<li class="chapter" data-level="10.3" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-example"><i class="fa fa-check"></i><b>10.3</b> PCA: Example</a></li>
+<li class="chapter" data-level="10.4" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-example-1"><i class="fa fa-check"></i><b>10.4</b> PCA: Example</a></li>
+<li class="chapter" data-level="10.5" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-data-requirements"><i class="fa fa-check"></i><b>10.5</b> PCA: Data Requirements</a></li>
+<li class="chapter" data-level="10.6" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-toy-example"><i class="fa fa-check"></i><b>10.6</b> PCA: Toy Example</a></li>
+<li class="chapter" data-level="10.7" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-toy-example-1"><i class="fa fa-check"></i><b>10.7</b> PCA: Toy Example</a></li>
+<li class="chapter" data-level="10.8" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-toy-example-2"><i class="fa fa-check"></i><b>10.8</b> PCA: Toy Example</a></li>
+<li class="chapter" data-level="10.9" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-first-pc"><i class="fa fa-check"></i><b>10.9</b> PCA: First PC</a></li>
+<li class="chapter" data-level="10.10" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-first-pc-1"><i class="fa fa-check"></i><b>10.10</b> PCA: First PC</a></li>
+<li class="chapter" data-level="10.11" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-second-pc"><i class="fa fa-check"></i><b>10.11</b> PCA: Second PC</a></li>
+<li class="chapter" data-level="10.12" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-how-many-pcs-to-use"><i class="fa fa-check"></i><b>10.12</b> PCA: How Many PCs to Use?</a></li>
+<li class="chapter" data-level="10.13" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-61"><i class="fa fa-check"></i><b>10.13</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.14" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-62"><i class="fa fa-check"></i><b>10.14</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.15" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-63"><i class="fa fa-check"></i><b>10.15</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.16" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-64"><i class="fa fa-check"></i><b>10.16</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.17" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-65"><i class="fa fa-check"></i><b>10.17</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.18" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#principal-components-regression-pcr"><i class="fa fa-check"></i><b>10.18</b> Principal Components Regression (PCR)</a></li>
+<li class="chapter" data-level="10.19" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#principal-components-regression-pcr-1"><i class="fa fa-check"></i><b>10.19</b> Principal Components Regression (PCR)</a></li>
+<li class="chapter" data-level="10.20" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#clustering"><i class="fa fa-check"></i><b>10.20</b> Clustering</a></li>
+<li class="chapter" data-level="10.21" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#clustering-applications"><i class="fa fa-check"></i><b>10.21</b> Clustering: Applications</a></li>
+<li class="chapter" data-level="10.22" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering"><i class="fa fa-check"></i><b>10.22</b> K-Means Clustering</a></li>
+<li class="chapter" data-level="10.23" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-1"><i class="fa fa-check"></i><b>10.23</b> K-Means Clustering</a></li>
+<li class="chapter" data-level="10.24" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-2"><i class="fa fa-check"></i><b>10.24</b> K-Means Clustering</a></li>
+<li class="chapter" data-level="10.25" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-formulation"><i class="fa fa-check"></i><b>10.25</b> K-Means Clustering Formulation</a></li>
+<li class="chapter" data-level="10.26" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-algorithm"><i class="fa fa-check"></i><b>10.26</b> K-Means Clustering Algorithm</a></li>
+<li class="chapter" data-level="10.27" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-algorithm-1"><i class="fa fa-check"></i><b>10.27</b> K-Means Clustering Algorithm</a></li>
+<li class="chapter" data-level="10.28" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-algorithm-2"><i class="fa fa-check"></i><b>10.28</b> K-Means Clustering Algorithm</a></li>
+<li class="chapter" data-level="10.29" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering"><i class="fa fa-check"></i><b>10.29</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="10.30" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-1"><i class="fa fa-check"></i><b>10.30</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="10.31" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-2"><i class="fa fa-check"></i><b>10.31</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="10.32" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-types-of-linkage"><i class="fa fa-check"></i><b>10.32</b> Hierarchical Clustering: Types of Linkage</a></li>
+<li class="chapter" data-level="10.33" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-algorithm"><i class="fa fa-check"></i><b>10.33</b> Hierarchical Clustering Algorithm</a></li>
+<li class="chapter" data-level="10.34" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-choice-of-dissimilarity-measure"><i class="fa fa-check"></i><b>10.34</b> Hierarchical Clustering: Choice of Dissimilarity Measure</a></li>
+<li class="chapter" data-level="10.35" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#practical-issues-in-clustering"><i class="fa fa-check"></i><b>10.35</b> Practical Issues in Clustering</a></li>
+<li class="chapter" data-level="10.36" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-66"><i class="fa fa-check"></i><b>10.36</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.37" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-67"><i class="fa fa-check"></i><b>10.37</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.38" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-68"><i class="fa fa-check"></i><b>10.38</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.39" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#to-sum-it-all-up"><i class="fa fa-check"></i><b>10.39</b> To Sum It All Up</a></li>
+<li class="chapter" data-level="10.40" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#next-steps"><i class="fa fa-check"></i><b>10.40</b> Next Steps</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">208 Course Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="support-vector-machines-svm" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Support Vector Machines (SVM)<a href="support-vector-machines-svm.html#support-vector-machines-svm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<ul>
+<li><p>One of the best “out of the box” classifiers.</p></li>
+<li><p>Mostly intended for two-class classification problems.</p></li>
+</ul>
+<p>Idea: <strong>Try and find a plane that separates the classes in feature space</strong>.</p>
+<ul>
+<li>We will talk about
+<ul>
+<li>Maximal Margin Classifier</li>
+<li>Support Vector Classifier</li>
+<li>Support Vector Machine</li>
+</ul></li>
+</ul>
+<div id="hyperplane" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Hyperplane<a href="support-vector-machines-svm.html#hyperplane" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>In <span class="math inline">\(p\)</span>-dimensions, a <strong>hyperplane</strong> is a flat affine subspace of dimension <span class="math inline">\(p-1\)</span>.</p></li>
+<li><p>Mathematical form of a hyperplane</p></li>
+</ul>
+<p><img src="EFT/e9.2.png" width="70%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>When <span class="math inline">\(p=2\)</span>, a hyperplane is a line.</li>
+</ul>
+<p><img src="EFT/e9.1.png" width="40%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><p>If <span class="math inline">\(\beta_0=0\)</span>, the hyperplane goes through the origin, otherwise not.</p></li>
+<li><p>A hyperplane divides the <span class="math inline">\(p\)</span>-dim space into 2 halves.</p></li>
+</ul>
+<p><img src="EFT/e9.3.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="EFT/e9.4.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hyperplane-1" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Hyperplane<a href="support-vector-machines-svm.html#hyperplane-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Hyperplane in 2-dimensions: <span class="math inline">\(1+2X_1+3X_2\)</span>=0</strong></p>
+<p><img src="EFT/9.1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hyperplane-2" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Hyperplane<a href="support-vector-machines-svm.html#hyperplane-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Hyperplane in 3-dimensions: <span class="math inline">\(1+2X_1+3X_2-X_3=0\)</span></strong></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-262-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="separating-hyperplane" class="section level2 smaller hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Separating Hyperplane<a href="support-vector-machines-svm.html#separating-hyperplane" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For a two-class problem, suppose that it is possible to construct a hyperplane that separates the training observations perfectly according to their class labels.</p>
+<p>Such a hyperplane is known as a <strong>separating hyperplane</strong>.</p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/9.2.png") -->
+<!-- ``` -->
+<!-- Henceforth, $f(x_i)=\beta_0+\beta_1 \ x_{i1}+\beta_2 \ x_{i2} + \ldots + \beta_p \ x_{ip}$. -->
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-263-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="separating-hyperplane-1" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Separating Hyperplane<a href="support-vector-machines-svm.html#separating-hyperplane-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For a <span class="math inline">\(p\)</span>-dimensional two-class problem,</p>
+<p><img src="EFT/e9.6-7.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Equivalently, for <span class="math inline">\(i=1,2,\ldots,n\)</span></p>
+<p><img src="EFT/e9.8.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Consider a test observation <span class="math inline">\(x^*\)</span>, we compute <span class="math inline">\(f(x^*)\)</span>.</p>
+<p>A classifier based on a separating hyperplane leads to a linear decision boundary.</p>
+</div>
+<div id="optimal-separating-hyperplane" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> Optimal Separating Hyperplane<a href="support-vector-machines-svm.html#optimal-separating-hyperplane" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This is also known as the <strong>maximal margin classifier</strong> or <strong>hard margin classifier</strong>.</p>
+<ul>
+<li><p>One that makes the biggest gap or <strong>margin</strong> between the two classes.</p></li>
+<li><p>One that is farthest from the training observations.</p></li>
+</ul>
+<p><strong>Margin</strong>: The minimal (perpendicular) distance from the observations to the hyperplane. Denoted by <span class="math inline">\(M\)</span>.</p>
+<p>The maximal margin hyperplane is the separating hyperplane for which the margin is largest, that is, the hyperplane that has the farthest minimum distance to the training observations.</p>
+</div>
+<div id="optimal-separating-hyperplane-1" class="section level2 hasAnchor" number="9.7">
+<h2><span class="header-section-number">9.7</span> Optimal Separating Hyperplane<a href="support-vector-machines-svm.html#optimal-separating-hyperplane-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<pre><code>##  Setting default kernel parameters</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-266-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- ## Maximal Margin Classifier -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/9.3.png") -->
+<!-- ``` -->
+</div>
+<div id="optimal-separating-hyperplane-2" class="section level2 hasAnchor" number="9.8">
+<h2><span class="header-section-number">9.8</span> Optimal Separating Hyperplane<a href="support-vector-machines-svm.html#optimal-separating-hyperplane-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/e9.9-11.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>The second constraint guarantees that each observation will be on the correct side of the hyperplane (<span class="math inline">\(M\)</span> positive).</p>
+<p>The first constraint ensures that the perpendicular distance from <span class="math inline">\(i^{th}\)</span> observation to the hyperplane is
+<span class="math display">\[y_i \left( \beta_0+\beta_1 \ x_{i1}+\beta_2 \ x_{i2} + \ldots + \beta_p \ x_{ip}\right)\]</span></p>
+</div>
+<div id="optimal-separating-hyperplane-issue-1" class="section level2 hasAnchor" number="9.9">
+<h2><span class="header-section-number">9.9</span> Optimal Separating Hyperplane: Issue 1<a href="support-vector-machines-svm.html#optimal-separating-hyperplane-issue-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The optimal separating hyperplane fits the data too hard.</p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("SVMissue1.png") -->
+<!-- ``` -->
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-268-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="optimal-separating-hyperplane-issue-2" class="section level2 hasAnchor" number="9.10">
+<h2><span class="header-section-number">9.10</span> Optimal Separating Hyperplane: Issue 2<a href="support-vector-machines-svm.html#optimal-separating-hyperplane-issue-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An optimal separating hyperplane may not always be possible to construct, that is, non-separable data. This is often the case, unless <span class="math inline">\(n&lt;p\)</span>.</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-269-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- ## Non-separable Data -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/9.4.png") -->
+<!-- ``` -->
+<!-- The data are not separable by a linear boundary. This is often the case, unless $n<p$. -->
+<!-- ## Noisy Data -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/9.5.png") -->
+<!-- ``` -->
+<!-- The data are separable, but noisy. Leads to an unsatisfactory maximal margin hyperplane. -->
+</div>
+<div id="support-vector-classifier" class="section level2 hasAnchor" number="9.11">
+<h2><span class="header-section-number">9.11</span> Support Vector Classifier<a href="support-vector-machines-svm.html#support-vector-classifier" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We might be willing to misclassify a few observations for</p>
+<ul>
+<li><p>greater robustness to individual observations, and</p></li>
+<li><p>better classify <strong>most</strong> of the observations.</p></li>
+</ul>
+<p>This leads us to the <strong>support vector classifier</strong>. Also called the <strong>soft margin classifier</strong>.</p>
+<p>The margin is <strong>soft</strong> because it can be violated by some of the training observations.</p>
+<!-- ## Support Vector Classifier -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/9.6.png") -->
+<!-- ``` -->
+</div>
+<div id="support-vector-classifier-1" class="section level2 hasAnchor" number="9.12">
+<h2><span class="header-section-number">9.12</span> Support Vector Classifier<a href="support-vector-machines-svm.html#support-vector-classifier-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/e9.12-15.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><span class="math inline">\(M\)</span>: width of the margin</p>
+<p><span class="math inline">\(\epsilon_1, \ldots, \epsilon_n\)</span>: <strong>Slack variables</strong></p>
+<p><span class="math inline">\(C\)</span>: <strong>Budget</strong> (tuning parameter)</p>
+<!-- ## Support Vector Classifier -->
+<!-- * $\epsilon_i=0$: -->
+<!-- * $\epsilon_i>0$: -->
+<!-- * $\epsilon_i>1$: -->
+<!-- * $C=0$: -->
+<!-- * $C>0$: -->
+<!-- * Support vectors: -->
+<!-- ## Support Vector Classifier: Bias-Variance Trade-Off {.smaller} -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/9.7.png") -->
+<!-- ``` -->
+</div>
+<div id="support-vector-classifier-2" class="section level2 smaller hasAnchor" number="9.13">
+<h2><span class="header-section-number">9.13</span> Support Vector Classifier<a href="support-vector-machines-svm.html#support-vector-classifier-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="support-vector-machines-svm.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb429-2"><a href="support-vector-machines-svm.html#cb429-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb429-3"><a href="support-vector-machines-svm.html#cb429-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)  <span class="co"># load library</span></span>
+<span id="cb429-4"><a href="support-vector-machines-svm.html#cb429-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb429-5"><a href="support-vector-machines-svm.html#cb429-5" aria-hidden="true" tabindex="-1"></a><span class="co"># implement CV to find optimal C</span></span>
+<span id="cb429-6"><a href="support-vector-machines-svm.html#cb429-6" aria-hidden="true" tabindex="-1"></a>svc_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(y <span class="sc">~</span> ., </span>
+<span id="cb429-7"><a href="support-vector-machines-svm.html#cb429-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> svcdata,</span>
+<span id="cb429-8"><a href="support-vector-machines-svm.html#cb429-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;svmLinear&quot;</span>,               </span>
+<span id="cb429-9"><a href="support-vector-machines-svm.html#cb429-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>),</span>
+<span id="cb429-10"><a href="support-vector-machines-svm.html#cb429-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">tuneLength =</span> <span class="dv">20</span>,</span>
+<span id="cb429-11"><a href="support-vector-machines-svm.html#cb429-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span>
+<span id="cb429-12"><a href="support-vector-machines-svm.html#cb429-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb429-13"><a href="support-vector-machines-svm.html#cb429-13" aria-hidden="true" tabindex="-1"></a>svc_cv<span class="sc">$</span>bestTune   <span class="co"># optimal C</span></span></code></pre></div>
+<pre><code>##   C
+## 1 1</code></pre>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="support-vector-machines-svm.html#cb431-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model with optimal C</span></span>
+<span id="cb431-2"><a href="support-vector-machines-svm.html#cb431-2" aria-hidden="true" tabindex="-1"></a>final_model_svc <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(y <span class="sc">~</span> .,</span>
+<span id="cb431-3"><a href="support-vector-machines-svm.html#cb431-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> svcdata,</span>
+<span id="cb431-4"><a href="support-vector-machines-svm.html#cb431-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">kernel =</span> <span class="st">&quot;vanilladot&quot;</span>,  </span>
+<span id="cb431-5"><a href="support-vector-machines-svm.html#cb431-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">C =</span> svc_cv<span class="sc">$</span>bestTune<span class="sc">$</span>C,                </span>
+<span id="cb431-6"><a href="support-vector-machines-svm.html#cb431-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">prob.model =</span> <span class="cn">TRUE</span>)       <span class="co"># needed to obtain predicted probabilities</span></span></code></pre></div>
+<pre><code>##  Setting default kernel parameters</code></pre>
+</div>
+<div id="support-vector-classifier-3" class="section level2 hasAnchor" number="9.14">
+<h2><span class="header-section-number">9.14</span> Support Vector Classifier<a href="support-vector-machines-svm.html#support-vector-classifier-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-273-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="support-vector-classifier-4" class="section level2 hasAnchor" number="9.15">
+<h2><span class="header-section-number">9.15</span> Support Vector Classifier<a href="support-vector-machines-svm.html#support-vector-classifier-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="support-vector-machines-svm.html#cb433-1" aria-hidden="true" tabindex="-1"></a>final_model_svc   <span class="co"># number of support vectors</span></span></code></pre></div>
+<pre><code>## Support Vector Machine object of class &quot;ksvm&quot; 
+## 
+## SV type: C-svc  (classification) 
+##  parameter : cost C = 1 
+## 
+## Linear (vanilla) kernel function. 
+## 
+## Number of Support Vectors : 16 
+## 
+## Objective Function Value : -14.2888 
+## Training error : 0.047619 
+## Probability model included.</code></pre>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="support-vector-machines-svm.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="fu">alphaindex</span>(final_model_svc)   <span class="co"># which observations are support vectors</span></span></code></pre></div>
+<pre><code>## [[1]]
+##  [1]  16  17  21  22  31  49  55  56  88  96  97 101 102 103 104 105</code></pre>
+</div>
+<div id="support-vector-classifier-5" class="section level2 hasAnchor" number="9.16">
+<h2><span class="header-section-number">9.16</span> Support Vector Classifier<a href="support-vector-machines-svm.html#support-vector-classifier-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="support-vector-machines-svm.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(final_model_svc)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-275-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="non-linear-boundaries" class="section level2 hasAnchor" number="9.17">
+<h2><span class="header-section-number">9.17</span> Non-linear Boundaries<a href="support-vector-machines-svm.html#non-linear-boundaries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Why support vector classifiers fail?</strong></p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/9.8.png") -->
+<!-- ``` -->
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-276-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="feature-expansion" class="section level2 hasAnchor" number="9.18">
+<h2><span class="header-section-number">9.18</span> Feature Expansion<a href="support-vector-machines-svm.html#feature-expansion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>The problem of non-linear boundaries can be solved by enlarging the feature space (like in linear regression) using transformations of predictors.</p></li>
+<li><p>Fit a support vector classifier in the enlarged space.</p></li>
+<li><p>Results in non-linear boundaries in the original space.</p></li>
+</ul>
+<!-- Consider $p$ original features $X_1, X_2, \ldots, X_p$ -->
+<!-- Make $2p$ features $X_1, X^2_1, X_2, X^2_2, \ldots, X_p, X^2_p$ -->
+<!-- Then, we have -->
+<!-- $$\beta_0+\beta_{11} \ x_{i1}+\beta_{12} \ x^2_{i1}+\beta_{21} \ x_{i2}+\beta_{22} \ x^2_{i2}+ \ldots + \beta_{p1} \ x_{ip}+\beta_{p2} \ x^2_{ip}$$ -->
+</div>
+<div id="feature-expansion-1" class="section level2 hasAnchor" number="9.19">
+<h2><span class="header-section-number">9.19</span> Feature Expansion<a href="support-vector-machines-svm.html#feature-expansion-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-277-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="feature-expansion-2" class="section level2 hasAnchor" number="9.20">
+<h2><span class="header-section-number">9.20</span> Feature Expansion<a href="support-vector-machines-svm.html#feature-expansion-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>kernel function</strong> quantifies the similarity between two observations. It helps in transforming the original feature space to an enlarged feature space where the data points can be separated by a linear boundary.</p>
+<p>Commonly used <strong>kernel funtions</strong> are</p>
+<ul>
+<li><strong>Polynomial Kernel of degree <span class="math inline">\(d\)</span></strong></li>
+</ul>
+<p><span class="math display">\[k(x_i, x_{i&#39;}) = \left(1+scale\sum_{j=1}^{p} x_{ij} \ x_{i&#39;j} \right)^{degree}\]</span></p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e9.22.png") -->
+<!-- ``` -->
+<ul>
+<li><strong>Radial Basis Function Kernel</strong></li>
+</ul>
+<p><span class="math display">\[k(x_i, x_{i&#39;}) = \text{exp}\left(-\sigma\sum_{j=1}^{p} (x_{ij} - x_{i&#39;j})^2 \right)\]</span></p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/e9.24.png") -->
+<!-- ``` -->
+<p>A support vector classifier with a non-linear kernel is known as a <strong>support vector machine</strong>.</p>
+<!-- ## Feature Expansion -->
+<!-- ```{r, echo=FALSE, fig.align='center'} -->
+<!-- p2a <- ggplot(circle, aes(x = x1, y = x2)) + -->
+<!--   geom_point(aes(shape = y, color = y), size = 3, alpha = 0.75) + -->
+<!--   xlab(expression(X[1])) + -->
+<!--   ylab(expression(X[2])) + -->
+<!--   xlim(-1.25, 1.25) + -->
+<!--   ylim(-1.25, 1.25) + -->
+<!--   coord_fixed() + -->
+<!--   theme(legend.position = "none") + -->
+<!--   theme_bw() -->
+<!-- circle_3d <- circle -->
+<!-- circle_3d$x3 <- circle_3d$x1^2 + circle_3d$x2^2 -->
+<!-- # 3-D scatterplot -->
+<!-- p2b <- cloud( -->
+<!--   x = x3 ~ x1 * x2,  -->
+<!--   data = circle_3d,  -->
+<!--   groups = y, -->
+<!--   color = y,  -->
+<!--   main = "Enlarged feature space", -->
+<!--   par.settings = list( -->
+<!--     superpose.symbol = list( -->
+<!--       pch = 19, -->
+<!--       cex = 1, -->
+<!--       col = y -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+<!-- # adjustcolor(dark2[1L:2L], alpha.f = 0.5) -->
+<!-- # Combine plots -->
+<!-- gridExtra::grid.arrange(p2a, p2b, nrow = 1) -->
+<!-- ``` -->
+</div>
+<div id="non-linear-boundaries-circle-dataset" class="section level2 smaller hasAnchor" number="9.21">
+<h2><span class="header-section-number">9.21</span> Non-linear Boundaries: Circle dataset<a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We train an SVM with the polynomial kernel.</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="support-vector-machines-svm.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb438-2"><a href="support-vector-machines-svm.html#cb438-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb438-3"><a href="support-vector-machines-svm.html#cb438-3" aria-hidden="true" tabindex="-1"></a><span class="co"># implement CV to find optimal parameters</span></span>
+<span id="cb438-4"><a href="support-vector-machines-svm.html#cb438-4" aria-hidden="true" tabindex="-1"></a>param_grid_poly <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">degree =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb438-5"><a href="support-vector-machines-svm.html#cb438-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">scale =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>), </span>
+<span id="cb438-6"><a href="support-vector-machines-svm.html#cb438-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb438-7"><a href="support-vector-machines-svm.html#cb438-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb438-8"><a href="support-vector-machines-svm.html#cb438-8" aria-hidden="true" tabindex="-1"></a>svm_poly_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(y <span class="sc">~</span> ., </span>
+<span id="cb438-9"><a href="support-vector-machines-svm.html#cb438-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> circle,</span>
+<span id="cb438-10"><a href="support-vector-machines-svm.html#cb438-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="st">&quot;svmPoly&quot;</span>, </span>
+<span id="cb438-11"><a href="support-vector-machines-svm.html#cb438-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>),</span>
+<span id="cb438-12"><a href="support-vector-machines-svm.html#cb438-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tuneGrid =</span> param_grid_poly,</span>
+<span id="cb438-13"><a href="support-vector-machines-svm.html#cb438-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span>
+<span id="cb438-14"><a href="support-vector-machines-svm.html#cb438-14" aria-hidden="true" tabindex="-1"></a>                     </span>
+<span id="cb438-15"><a href="support-vector-machines-svm.html#cb438-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb438-16"><a href="support-vector-machines-svm.html#cb438-16" aria-hidden="true" tabindex="-1"></a>svm_poly_cv<span class="sc">$</span>bestTune</span></code></pre></div>
+<pre><code>##    degree scale C
+## 19      2     1 1</code></pre>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="support-vector-machines-svm.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(svm_poly_cv<span class="sc">$</span>results<span class="sc">$</span>Accuracy)</span></code></pre></div>
+<pre><code>## [1] 0.9850852</code></pre>
+</div>
+<div id="non-linear-boundaries-circle-dataset-1" class="section level2 smaller hasAnchor" number="9.22">
+<h2><span class="header-section-number">9.22</span> Non-linear Boundaries: Circle dataset<a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="support-vector-machines-svm.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model with optimal parameters</span></span>
+<span id="cb442-2"><a href="support-vector-machines-svm.html#cb442-2" aria-hidden="true" tabindex="-1"></a>final_model_svm_poly <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(y <span class="sc">~</span> ., </span>
+<span id="cb442-3"><a href="support-vector-machines-svm.html#cb442-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> circle,</span>
+<span id="cb442-4"><a href="support-vector-machines-svm.html#cb442-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">kernel =</span> <span class="st">&quot;polydot&quot;</span>,</span>
+<span id="cb442-5"><a href="support-vector-machines-svm.html#cb442-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">degree =</span> svm_poly_cv<span class="sc">$</span>bestTune<span class="sc">$</span>degree,</span>
+<span id="cb442-6"><a href="support-vector-machines-svm.html#cb442-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">scale =</span> svm_poly_cv<span class="sc">$</span>bestTune<span class="sc">$</span>scale,</span>
+<span id="cb442-7"><a href="support-vector-machines-svm.html#cb442-7" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">offset =</span> <span class="dv">1</span>),</span>
+<span id="cb442-8"><a href="support-vector-machines-svm.html#cb442-8" aria-hidden="true" tabindex="-1"></a>                             <span class="at">C =</span> svm_poly_cv<span class="sc">$</span>bestTune<span class="sc">$</span>C,</span>
+<span id="cb442-9"><a href="support-vector-machines-svm.html#cb442-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">prob.model =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb442-10"><a href="support-vector-machines-svm.html#cb442-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb442-11"><a href="support-vector-machines-svm.html#cb442-11" aria-hidden="true" tabindex="-1"></a>final_model_svm_poly</span></code></pre></div>
+<pre><code>## Support Vector Machine object of class &quot;ksvm&quot; 
+## 
+## SV type: C-svc  (classification) 
+##  parameter : cost C = 1 
+## 
+## Polynomial kernel function. 
+##  Hyperparameters : degree =  2  scale =  1  offset =  1 
+## 
+## Number of Support Vectors : 38 
+## 
+## Objective Function Value : -26.8156 
+## Training error : 0.01 
+## Probability model included.</code></pre>
+</div>
+<div id="non-linear-boundaries-circle-dataset-2" class="section level2 hasAnchor" number="9.23">
+<h2><span class="header-section-number">9.23</span> Non-linear Boundaries: Circle dataset<a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-280-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="non-linear-boundaries-spirals-dataset" class="section level2 hasAnchor" number="9.24">
+<h2><span class="header-section-number">9.24</span> Non-linear Boundaries: Spirals dataset<a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-281-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="non-linear-boundaries-spirals-dataset-1" class="section level2 smaller hasAnchor" number="9.25">
+<h2><span class="header-section-number">9.25</span> Non-linear Boundaries: Spirals dataset<a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We train an SVM with the radial basis function kernel.</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="support-vector-machines-svm.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb444-2"><a href="support-vector-machines-svm.html#cb444-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb444-3"><a href="support-vector-machines-svm.html#cb444-3" aria-hidden="true" tabindex="-1"></a><span class="co"># implement CV to find optimal parameters</span></span>
+<span id="cb444-4"><a href="support-vector-machines-svm.html#cb444-4" aria-hidden="true" tabindex="-1"></a>param_grid_radial <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">sigma =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>),</span>
+<span id="cb444-5"><a href="support-vector-machines-svm.html#cb444-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">100</span>))</span>
+<span id="cb444-6"><a href="support-vector-machines-svm.html#cb444-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb444-7"><a href="support-vector-machines-svm.html#cb444-7" aria-hidden="true" tabindex="-1"></a>svm_radial_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(classes <span class="sc">~</span> .,</span>
+<span id="cb444-8"><a href="support-vector-machines-svm.html#cb444-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> spirals,</span>
+<span id="cb444-9"><a href="support-vector-machines-svm.html#cb444-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;svmRadial&quot;</span>,</span>
+<span id="cb444-10"><a href="support-vector-machines-svm.html#cb444-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">tuneGrid =</span> param_grid_radial,</span>
+<span id="cb444-11"><a href="support-vector-machines-svm.html#cb444-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>),</span>
+<span id="cb444-12"><a href="support-vector-machines-svm.html#cb444-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span>
+<span id="cb444-13"><a href="support-vector-machines-svm.html#cb444-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb444-14"><a href="support-vector-machines-svm.html#cb444-14" aria-hidden="true" tabindex="-1"></a>svm_radial_cv<span class="sc">$</span>bestTune</span></code></pre></div>
+<pre><code>##    sigma   C
+## 24     2 100</code></pre>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="support-vector-machines-svm.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(svm_radial_cv<span class="sc">$</span>results<span class="sc">$</span>Accuracy)</span></code></pre></div>
+<pre><code>## [1] 0.8866667</code></pre>
+</div>
+<div id="non-linear-boundaries-spirals-dataset-2" class="section level2 smaller hasAnchor" number="9.26">
+<h2><span class="header-section-number">9.26</span> Non-linear Boundaries: Spirals dataset<a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="support-vector-machines-svm.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model with optimal parameters</span></span>
+<span id="cb448-2"><a href="support-vector-machines-svm.html#cb448-2" aria-hidden="true" tabindex="-1"></a>final_model_svm_radial <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(classes <span class="sc">~</span> ., </span>
+<span id="cb448-3"><a href="support-vector-machines-svm.html#cb448-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">data =</span> spirals, </span>
+<span id="cb448-4"><a href="support-vector-machines-svm.html#cb448-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">kernel =</span> <span class="st">&quot;rbfdot&quot;</span>,</span>
+<span id="cb448-5"><a href="support-vector-machines-svm.html#cb448-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">sigma =</span> svm_radial_cv<span class="sc">$</span>bestTune<span class="sc">$</span>sigma),</span>
+<span id="cb448-6"><a href="support-vector-machines-svm.html#cb448-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">C =</span> svm_radial_cv<span class="sc">$</span>bestTune<span class="sc">$</span>C, </span>
+<span id="cb448-7"><a href="support-vector-machines-svm.html#cb448-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">prob.model =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb448-8"><a href="support-vector-machines-svm.html#cb448-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb448-9"><a href="support-vector-machines-svm.html#cb448-9" aria-hidden="true" tabindex="-1"></a>final_model_svm_radial</span></code></pre></div>
+<pre><code>## Support Vector Machine object of class &quot;ksvm&quot; 
+## 
+## SV type: C-svc  (classification) 
+##  parameter : cost C = 100 
+## 
+## Gaussian Radial Basis kernel function. 
+##  Hyperparameter : sigma =  2 
+## 
+## Number of Support Vectors : 89 
+## 
+## Objective Function Value : -4086.086 
+## Training error : 0.036667 
+## Probability model included.</code></pre>
+</div>
+<div id="non-linear-boundaries-spirals-dataset-3" class="section level2 hasAnchor" number="9.27">
+<h2><span class="header-section-number">9.27</span> Non-linear Boundaries: Spirals dataset<a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-284-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/e9.16.png") -->
+<!-- ``` -->
+<!-- Computations can become unmanageable if we end up with huge number of features. SVM leads to efficient computations through the use of **kernels**. -->
+<!-- ## Inner Products -->
+<!-- The **inner product** of two $p$-dimensional vectors $a$ and $b$ is $$\langle a,b \rangle=\displaystyle \sum_{j=1}^{p} a_j \ b_j=a_1b_1+a_2b_2+\ldots+a_pb_p$$ -->
+<!-- For two observations $x_i$ and $x_{i'}$, we have, -->
+<!-- $$\langle x_i,x_{i'} \rangle=\displaystyle \sum_{j=1}^{p} x_{ij} \ x_{i'j}$$ -->
+<!-- It turns out that the solution to the support vector classifier problem involves only the **inner products** of the observations. -->
+<!-- ## Inner Products and Support Vector Classifier -->
+<!-- The linear support vector classifier can be represented as -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/e9.18.png") -->
+<!-- ``` -->
+<!-- To estimate the parameters $\alpha_1,\ldots,\alpha_n$ and $\beta_0$, we need $n \choose 2$ inner products $\langle x_i,x_{i'} \rangle$ between all pairs of observations. -->
+<!-- It turns out that $\alpha_i$ is nonzero only for the support vectors in the solution. If $\mathcal{S}$ denotes the collection of indices of support vectors, -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e9.19.png") -->
+<!-- ``` -->
+<!-- ## Inner Products and Support Vector Classifier -->
+<!-- For a test data point $x^*$, we have (say $p=2$ and $n=3$) -->
+<!-- $$f(x^*)=\beta_0+\displaystyle\sum_{i \in \mathcal{S}} \alpha_i \ \langle x^*,x_i \rangle \ \ \text{and} \ \ f(x^*)=\beta_0+\beta_1 \ x^*_1+\beta_2 \ x^*_2$$ -->
+<!-- ## Kernels -->
+<!-- Replace inner products $\langle x_i,x_{i'} \rangle$ with **kernels**. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '20%'} -->
+<!-- knitr::include_graphics("EFT/e9.20.png") -->
+<!-- ``` -->
+<!-- We then have -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e9.23.png") -->
+<!-- ``` -->
+<!-- A kernel quantifies the similarity between two observations. -->
+<!-- A support vector classifier is a special case if -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/e9.21.png") -->
+<!-- ``` -->
+<!-- ## Kernels -->
+<!-- **Polynomial Kernel of degree $d$** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e9.22.png") -->
+<!-- ``` -->
+<!-- **Radial Kernel** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/e9.24.png") -->
+<!-- ``` -->
+<!-- A support vector classifier with a non-linear kernel is known as a **support vector machine**. -->
+<!-- ## Support Vector Machines (SVM) -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/9.9.png") -->
+<!-- ``` -->
+<!-- ## Support Vector Machines (SVM) -->
+<!-- **Heart dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/9.10.png") -->
+<!-- ``` -->
+<!-- ## Support Vector Machines (SVM) -->
+<!-- **Heart dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/9.11.png") -->
+<!-- ``` -->
+<!-- ## SVMs with More than Two Classes -->
+<!-- * **One-vs-One Classification**: Construct $K \choose 2$ SVMs for each pair of classes. Classify $x^*$ to the class that wins the most pairwise competitions. -->
+<!-- * **One-vs-All Classification**: Construct $K$ different 2-class SVMs. Classify $x^*$ to the class for which $\hat{f}_k(x^*)$ is largest. -->
+</div>
+<div id="summary" class="section level2 hasAnchor" number="9.28">
+<h2><span class="header-section-number">9.28</span> Summary<a href="support-vector-machines-svm.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>SVMs are black-box algorithms. Lack interpretability.</p></li>
+<li><p>One of the best methods for two-class classification problems.</p></li>
+</ul>
+<!-- * SVMs have a close relationship with logistic regression. (Section 9.5) -->
+<ul>
+<li><p>If we wish to estimate probabilities, logistic regression is the way to go.</p></li>
+<li><p>For non-linear boundaries, SVMs are popular.</p></li>
+</ul>
+</div>
+<div id="your-turn-49" class="section level2 hasAnchor" number="9.29">
+<h2><span class="header-section-number">9.29</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-49" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will work with the <code>Sonar</code> data from the <code>mlbench</code> package. The task is to predict <code>Class</code> (‘R’ if the object is a rock and ‘M’ if it is a mine (metal cylinder)) using the rest of the variables in the data (predictors).</p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="support-vector-machines-svm.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mlbench)   <span class="co"># load library</span></span>
+<span id="cb450-2"><a href="support-vector-machines-svm.html#cb450-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-3"><a href="support-vector-machines-svm.html#cb450-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Sonar)     <span class="co"># load dataset</span></span></code></pre></div>
+<p>Compare the performance of the following support vector-based models:</p>
+<ul>
+<li><p>a support vector classifier,</p></li>
+<li><p>a support vector machine with polynomial kernel,</p></li>
+<li><p>a support vector machine with radial basis function kernel.</p></li>
+</ul>
+</div>
+<div id="your-turn-50" class="section level2 hasAnchor" number="9.30">
+<h2><span class="header-section-number">9.30</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-50" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Perform the following tasks.</strong></p>
+<ul>
+<li><p>Investigate the dataset and complete any necessary tasks.</p></li>
+<li><p>Split the data into training and test sets (70-30).</p></li>
+<li><p>Perform required data preprocessing and create the blueprint. If using <code>step_dummy()</code>, set <code>one_hot = FALSE</code>. Prepare the blueprint on the training data. Obtain the modified training and test datasets.</p></li>
+<li><p>Implement 5-fold CV (no repeats) for each of the models above.</p></li>
+<li><p>Report the optimal CV Accuracy of each model. Report the optimal hyperparameters for each model. Which model performs best in this situation?</p></li>
+<li><p>Build the final model. Obtain class label predictions on the test set. Create the corresponding confusion matrix and report the test set accuracy. See help page for <code>predict.ksvm</code> function.</p></li>
+</ul>
+</div>
+<div id="your-turn-51" class="section level2 hasAnchor" number="9.31">
+<h2><span class="header-section-number">9.31</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-51" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="support-vector-machines-svm.html#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(Sonar)   <span class="co"># all features are numerical (output not displayed here)</span></span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="support-vector-machines-svm.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(Sonar))  <span class="co"># no missing entries</span></span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="your-turn-52" class="section level2 hasAnchor" number="9.32">
+<h2><span class="header-section-number">9.32</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-52" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="support-vector-machines-svm.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb454-2"><a href="support-vector-machines-svm.html#cb454-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb454-3"><a href="support-vector-machines-svm.html#cb454-3" aria-hidden="true" tabindex="-1"></a><span class="co"># split the data into training and test sets</span></span>
+<span id="cb454-4"><a href="support-vector-machines-svm.html#cb454-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb454-5"><a href="support-vector-machines-svm.html#cb454-5" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(Sonar<span class="sc">$</span>Class, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb454-6"><a href="support-vector-machines-svm.html#cb454-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb454-7"><a href="support-vector-machines-svm.html#cb454-7" aria-hidden="true" tabindex="-1"></a>Sonar_train <span class="ot">&lt;-</span> Sonar[index, ]</span>
+<span id="cb454-8"><a href="support-vector-machines-svm.html#cb454-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb454-9"><a href="support-vector-machines-svm.html#cb454-9" aria-hidden="true" tabindex="-1"></a>Sonar_test <span class="ot">&lt;-</span> Sonar[<span class="sc">-</span>index, ]</span></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="support-vector-machines-svm.html#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nearZeroVar</span>(Sonar_train, <span class="at">saveMetrics =</span> <span class="cn">TRUE</span>)  <span class="co"># no zv/nzv features (output not displayed here)</span></span></code></pre></div>
+</div>
+<div id="your-turn-53" class="section level2 hasAnchor" number="9.33">
+<h2><span class="header-section-number">9.33</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-53" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="support-vector-machines-svm.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb456-2"><a href="support-vector-machines-svm.html#cb456-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb456-3"><a href="support-vector-machines-svm.html#cb456-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create recipe and blueprint, prepare and apply blueprint</span></span>
+<span id="cb456-4"><a href="support-vector-machines-svm.html#cb456-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb456-5"><a href="support-vector-machines-svm.html#cb456-5" aria-hidden="true" tabindex="-1"></a>blueprint <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> Sonar_train) <span class="sc">%&gt;%</span></span>
+<span id="cb456-6"><a href="support-vector-machines-svm.html#cb456-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span>
+<span id="cb456-7"><a href="support-vector-machines-svm.html#cb456-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb456-8"><a href="support-vector-machines-svm.html#cb456-8" aria-hidden="true" tabindex="-1"></a>prepare <span class="ot">&lt;-</span> <span class="fu">prep</span>(blueprint, <span class="at">training =</span> Sonar_train)</span>
+<span id="cb456-9"><a href="support-vector-machines-svm.html#cb456-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb456-10"><a href="support-vector-machines-svm.html#cb456-10" aria-hidden="true" tabindex="-1"></a>baked_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(prepare, <span class="at">new_data =</span> Sonar_train)</span>
+<span id="cb456-11"><a href="support-vector-machines-svm.html#cb456-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb456-12"><a href="support-vector-machines-svm.html#cb456-12" aria-hidden="true" tabindex="-1"></a>baked_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(prepare, <span class="at">new_data =</span> Sonar_test)</span></code></pre></div>
+</div>
+<div id="your-turn-54" class="section level2 hasAnchor" number="9.34">
+<h2><span class="header-section-number">9.34</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-54" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="support-vector-machines-svm.html#cb457-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb457-2"><a href="support-vector-machines-svm.html#cb457-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb457-3"><a href="support-vector-machines-svm.html#cb457-3" aria-hidden="true" tabindex="-1"></a>cv_specs <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)   <span class="co"># CV specifications</span></span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="support-vector-machines-svm.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb458-2"><a href="support-vector-machines-svm.html#cb458-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb458-3"><a href="support-vector-machines-svm.html#cb458-3" aria-hidden="true" tabindex="-1"></a><span class="co"># CV with support vector classifier</span></span>
+<span id="cb458-4"><a href="support-vector-machines-svm.html#cb458-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb458-5"><a href="support-vector-machines-svm.html#cb458-5" aria-hidden="true" tabindex="-1"></a>param_grid_linear <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">100</span>))</span>
+<span id="cb458-6"><a href="support-vector-machines-svm.html#cb458-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb458-7"><a href="support-vector-machines-svm.html#cb458-7" aria-hidden="true" tabindex="-1"></a>svc_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(blueprint, </span>
+<span id="cb458-8"><a href="support-vector-machines-svm.html#cb458-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> Sonar_train,</span>
+<span id="cb458-9"><a href="support-vector-machines-svm.html#cb458-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;svmLinear&quot;</span>,               </span>
+<span id="cb458-10"><a href="support-vector-machines-svm.html#cb458-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">trControl =</span> cv_specs,</span>
+<span id="cb458-11"><a href="support-vector-machines-svm.html#cb458-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">tuneGrid =</span> param_grid_linear,</span>
+<span id="cb458-12"><a href="support-vector-machines-svm.html#cb458-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span></code></pre></div>
+</div>
+<div id="your-turn-55" class="section level2 smaller hasAnchor" number="9.35">
+<h2><span class="header-section-number">9.35</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-55" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="support-vector-machines-svm.html#cb459-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb459-2"><a href="support-vector-machines-svm.html#cb459-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb459-3"><a href="support-vector-machines-svm.html#cb459-3" aria-hidden="true" tabindex="-1"></a><span class="co"># CV with support vector machine with polynomial kernel</span></span>
+<span id="cb459-4"><a href="support-vector-machines-svm.html#cb459-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb459-5"><a href="support-vector-machines-svm.html#cb459-5" aria-hidden="true" tabindex="-1"></a>param_grid_poly <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">degree =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb459-6"><a href="support-vector-machines-svm.html#cb459-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">scale =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>),</span>
+<span id="cb459-7"><a href="support-vector-machines-svm.html#cb459-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">100</span>))</span>
+<span id="cb459-8"><a href="support-vector-machines-svm.html#cb459-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb459-9"><a href="support-vector-machines-svm.html#cb459-9" aria-hidden="true" tabindex="-1"></a>svm_poly_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(blueprint, </span>
+<span id="cb459-10"><a href="support-vector-machines-svm.html#cb459-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> Sonar_train,</span>
+<span id="cb459-11"><a href="support-vector-machines-svm.html#cb459-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="st">&quot;svmPoly&quot;</span>, </span>
+<span id="cb459-12"><a href="support-vector-machines-svm.html#cb459-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">trControl =</span> cv_specs,</span>
+<span id="cb459-13"><a href="support-vector-machines-svm.html#cb459-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tuneGrid =</span> param_grid_poly,</span>
+<span id="cb459-14"><a href="support-vector-machines-svm.html#cb459-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="support-vector-machines-svm.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">022823</span>)   <span class="co"># set seed</span></span>
+<span id="cb460-2"><a href="support-vector-machines-svm.html#cb460-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb460-3"><a href="support-vector-machines-svm.html#cb460-3" aria-hidden="true" tabindex="-1"></a><span class="co"># CV with support vector machine with radial basis function kernel</span></span>
+<span id="cb460-4"><a href="support-vector-machines-svm.html#cb460-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb460-5"><a href="support-vector-machines-svm.html#cb460-5" aria-hidden="true" tabindex="-1"></a>param_grid_radial <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">sigma =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>),</span>
+<span id="cb460-6"><a href="support-vector-machines-svm.html#cb460-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">100</span>))</span>
+<span id="cb460-7"><a href="support-vector-machines-svm.html#cb460-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb460-8"><a href="support-vector-machines-svm.html#cb460-8" aria-hidden="true" tabindex="-1"></a>svm_radial_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(blueprint,</span>
+<span id="cb460-9"><a href="support-vector-machines-svm.html#cb460-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> Sonar_train,</span>
+<span id="cb460-10"><a href="support-vector-machines-svm.html#cb460-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;svmRadial&quot;</span>,</span>
+<span id="cb460-11"><a href="support-vector-machines-svm.html#cb460-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">tuneGrid =</span> param_grid_radial,</span>
+<span id="cb460-12"><a href="support-vector-machines-svm.html#cb460-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> cv_specs,</span>
+<span id="cb460-13"><a href="support-vector-machines-svm.html#cb460-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span></code></pre></div>
+</div>
+<div id="your-turn-56" class="section level2 hasAnchor" number="9.36">
+<h2><span class="header-section-number">9.36</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-56" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="support-vector-machines-svm.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="co"># optimal CV Accuracies</span></span>
+<span id="cb461-2"><a href="support-vector-machines-svm.html#cb461-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb461-3"><a href="support-vector-machines-svm.html#cb461-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(svc_cv<span class="sc">$</span>results<span class="sc">$</span>Accuracy)   <span class="co"># SVC</span></span></code></pre></div>
+<pre><code>## [1] 0.8150903</code></pre>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="support-vector-machines-svm.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(svm_poly_cv<span class="sc">$</span>results<span class="sc">$</span>Accuracy)   <span class="co"># SVM with polynomial kernel</span></span></code></pre></div>
+<pre><code>## [1] 0.8286535</code></pre>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="support-vector-machines-svm.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(svm_radial_cv<span class="sc">$</span>results<span class="sc">$</span>Accuracy)    <span class="co"># SVM with radial basis function kernel</span></span></code></pre></div>
+<pre><code>## [1] 0.5678325</code></pre>
+</div>
+<div id="your-turn-57" class="section level2 hasAnchor" number="9.37">
+<h2><span class="header-section-number">9.37</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-57" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="support-vector-machines-svm.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="co"># optimal hyperparameters</span></span>
+<span id="cb467-2"><a href="support-vector-machines-svm.html#cb467-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb467-3"><a href="support-vector-machines-svm.html#cb467-3" aria-hidden="true" tabindex="-1"></a>svc_cv<span class="sc">$</span>bestTune     <span class="co"># SVC</span></span></code></pre></div>
+<pre><code>##     C
+## 2 0.1</code></pre>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="support-vector-machines-svm.html#cb469-1" aria-hidden="true" tabindex="-1"></a>svm_poly_cv<span class="sc">$</span>bestTune    <span class="co"># SVM with polynomial kernel</span></span></code></pre></div>
+<pre><code>##   degree scale   C
+## 2      1   0.5 0.1</code></pre>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="support-vector-machines-svm.html#cb471-1" aria-hidden="true" tabindex="-1"></a>svm_radial_cv<span class="sc">$</span>bestTune   <span class="co"># SVM with radial basis function kernel</span></span></code></pre></div>
+<pre><code>##   sigma C
+## 4   0.5 5</code></pre>
+</div>
+<div id="your-turn-58" class="section level2 hasAnchor" number="9.38">
+<h2><span class="header-section-number">9.38</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-58" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="support-vector-machines-svm.html#cb473-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build final model</span></span>
+<span id="cb473-2"><a href="support-vector-machines-svm.html#cb473-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb473-3"><a href="support-vector-machines-svm.html#cb473-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(Class<span class="sc">~</span>., </span>
+<span id="cb473-4"><a href="support-vector-machines-svm.html#cb473-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> baked_train,</span>
+<span id="cb473-5"><a href="support-vector-machines-svm.html#cb473-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">kernel =</span> <span class="st">&quot;polydot&quot;</span>,</span>
+<span id="cb473-6"><a href="support-vector-machines-svm.html#cb473-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">kpar =</span> <span class="fu">list</span>(<span class="at">degree =</span> svm_poly_cv<span class="sc">$</span>bestTune<span class="sc">$</span>degree,</span>
+<span id="cb473-7"><a href="support-vector-machines-svm.html#cb473-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">scale =</span> svm_poly_cv<span class="sc">$</span>bestTune<span class="sc">$</span>scale,</span>
+<span id="cb473-8"><a href="support-vector-machines-svm.html#cb473-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">offset =</span> <span class="dv">1</span>),</span>
+<span id="cb473-9"><a href="support-vector-machines-svm.html#cb473-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">C =</span> svm_poly_cv<span class="sc">$</span>bestTune<span class="sc">$</span>C,</span>
+<span id="cb473-10"><a href="support-vector-machines-svm.html#cb473-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">prob.model =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="support-vector-machines-svm.html#cb474-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain predictions on test data</span></span>
+<span id="cb474-2"><a href="support-vector-machines-svm.html#cb474-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb474-3"><a href="support-vector-machines-svm.html#cb474-3" aria-hidden="true" tabindex="-1"></a>final_model_class_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_model, <span class="at">newdata =</span> baked_test, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)  <span class="co"># predictions on test set</span></span></code></pre></div>
+</div>
+<div id="your-turn-59" class="section level2 smaller hasAnchor" number="9.39">
+<h2><span class="header-section-number">9.39</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-59" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="support-vector-machines-svm.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix</span></span>
+<span id="cb475-2"><a href="support-vector-machines-svm.html#cb475-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb475-3"><a href="support-vector-machines-svm.html#cb475-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(<span class="at">data =</span> final_model_class_preds, <span class="at">reference =</span> baked_test<span class="sc">$</span>Class)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  M  R
+##          M 27 11
+##          R  6 18
+##                                           
+##                Accuracy : 0.7258          
+##                  95% CI : (0.5977, 0.8315)
+##     No Information Rate : 0.5323          
+##     P-Value [Acc &gt; NIR] : 0.001435        
+##                                           
+##                   Kappa : 0.4435          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.331975        
+##                                           
+##             Sensitivity : 0.8182          
+##             Specificity : 0.6207          
+##          Pos Pred Value : 0.7105          
+##          Neg Pred Value : 0.7500          
+##              Prevalence : 0.5323          
+##          Detection Rate : 0.4355          
+##    Detection Prevalence : 0.6129          
+##       Balanced Accuracy : 0.7194          
+##                                           
+##        &#39;Positive&#39; Class : M               
+## </code></pre>
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- You will work with the `Sonar` data from the `mlbench` package. The task is to predict `Class` ("R" if the object is a rock and "M" if it is a mine (metal cylinder)) using the rest of the variables in the data (predictors). -->
+<!-- ```{r, eval=FALSE} -->
+<!-- library(mlbench) -->
+<!-- data(Sonar) -->
+<!-- ``` -->
+<!-- * Step 1: Investigate the dataset -->
+<!-- * Step 2: Split the data into training and test sets. -->
+<!-- * Step 3: Perform required data preprocessing and create the blueprint.  -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- * Step 4: Implement 5-fold CV repeated 5 times to compare the performance of the following models. Use `metric = "Accuracy"`. -->
+<!--     - a support vector classifier (`method = "svmLinear"`) with -->
+<!--     - a support vector machine with polynomial kernel -->
+<!--     - a support vector machine with radial basis function kernel -->
+<!-- Use -->
+<!-- ```{r} -->
+<!-- param_grid_linear <- expand.grid(C = c(0.001, 0.1, 1, 5, 10, 100)) -->
+<!-- param_grid_poly <- expand.grid(degree = c(1, 2, 3, 4), -->
+<!--                           scale = c(0.5, 1, 1.5, 2),  -->
+<!--                           C = c(0.001, 0.1, 1, 5, 10, 100)) -->
+<!-- param_grid_radial <- expand.grid(sigma = c(0.5, 1, 1.5, 2), -->
+<!--                           C = c(0.001, 0.1, 1, 5, 10, 100)) -->
+<!-- ``` -->
+<!-- How do the models compare in terms of the `Accuracy` obtained from CV? -->
+</div>
+<div id="summary-of-supervised-learning-methods" class="section level2 hasAnchor" number="9.40">
+<h2><span class="header-section-number">9.40</span> Summary of Supervised Learning Methods<a href="support-vector-machines-svm.html#summary-of-supervised-learning-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<thead>
+<tr class="header">
+<th>Technique</th>
+<th align="center">Regression</th>
+<th>Classification</th>
+<th>Tuning Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td align="center"></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center"></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center"></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center"></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center"></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center"></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center"></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="neural-networks" class="section level2 hasAnchor" number="9.41">
+<h2><span class="header-section-number">9.41</span> Neural Networks<a href="support-vector-machines-svm.html#neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>MNIST Handwritten Digits</strong></p>
+<p>We will work with the famous <a href="http://yann.lecun.com/exdb/mnist/">MNIST handwritten digits</a> dataset. We will attempt to use a neural network to classify images into digits.</p>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="support-vector-machines-svm.html#cb477-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dslabs)   <span class="co"># load library</span></span>
+<span id="cb477-2"><a href="support-vector-machines-svm.html#cb477-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb477-3"><a href="support-vector-machines-svm.html#cb477-3" aria-hidden="true" tabindex="-1"></a>mnist <span class="ot">&lt;-</span> <span class="fu">read_mnist</span>()    <span class="co"># load dataset</span></span>
+<span id="cb477-4"><a href="support-vector-machines-svm.html#cb477-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb477-5"><a href="support-vector-machines-svm.html#cb477-5" aria-hidden="true" tabindex="-1"></a>mnist_train_x <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>images   <span class="co"># training set features</span></span>
+<span id="cb477-6"><a href="support-vector-machines-svm.html#cb477-6" aria-hidden="true" tabindex="-1"></a>mnist_train_y <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>labels   <span class="co"># training set responses</span></span>
+<span id="cb477-7"><a href="support-vector-machines-svm.html#cb477-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb477-8"><a href="support-vector-machines-svm.html#cb477-8" aria-hidden="true" tabindex="-1"></a>mnist_test_x <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>images     <span class="co"># test set features</span></span>
+<span id="cb477-9"><a href="support-vector-machines-svm.html#cb477-9" aria-hidden="true" tabindex="-1"></a>mnist_test_y <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>labels     <span class="co"># test set responses</span></span></code></pre></div>
+</div>
+<div id="neural-networks-1" class="section level2 hasAnchor" number="9.42">
+<h2><span class="header-section-number">9.42</span> Neural Networks<a href="support-vector-machines-svm.html#neural-networks-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>MNIST Handwritten Digits</strong></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-301"></span>
+<img src="EFT/digits.png" alt="From ISLR2" width="70%" />
+<p class="caption">
+Figure 9.1: From ISLR2
+</p>
+</div>
+</div>
+<div id="biological-neural-networks" class="section level2 hasAnchor" number="9.43">
+<h2><span class="header-section-number">9.43</span> Biological Neural Networks<a href="support-vector-machines-svm.html#biological-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-302"></span>
+<img src="EFT/bnn.png" alt="From Wikipedia" width="70%" />
+<p class="caption">
+Figure 9.2: From Wikipedia
+</p>
+</div>
+</div>
+<div id="artificial-neural-networks" class="section level2 hasAnchor" number="9.44">
+<h2><span class="header-section-number">9.44</span> Artificial Neural Networks<a href="support-vector-machines-svm.html#artificial-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Deep Neural Networks (DNN) perform learning by mapping features to targets through a process of simple data transformations and feedback signals.</p>
+<p>At their most basic levels, neural networks have three layers</p>
+<ul>
+<li><p>an input layer,</p></li>
+<li><p>a hidden layer, and</p></li>
+<li><p>an output layer.</p></li>
+</ul>
+<p>The input layer consists of all of the original input features. The majority of the learning takes place in the hidden layer, and the output layer outputs the final predictions.</p>
+<p><strong>In 1958, psychologist Frank Rosenblatt invented the <code>perceptron</code>, the first artificial neural network.</strong></p>
+</div>
+<div id="neural-networks-2" class="section level2 hasAnchor" number="9.45">
+<h2><span class="header-section-number">9.45</span> Neural Networks<a href="support-vector-machines-svm.html#neural-networks-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-303"></span>
+<img src="EFT/nn1.png" alt="From ISLR2" width="70%" />
+<p class="caption">
+Figure 9.3: From ISLR2
+</p>
+</div>
+</div>
+<div id="neural-networks-3" class="section level2 smaller hasAnchor" number="9.46">
+<h2><span class="header-section-number">9.46</span> Neural Networks<a href="support-vector-machines-svm.html#neural-networks-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>What is <code>deep</code> in deep neural nets?</strong></p>
+<p>Most machine learning algorithms only have the ability to use one or two layers of data transformation to learn the output representation. We call these <strong>shallow models</strong> since they only use 1–2 representations of the feature space.</p>
+<p>As data sets continue to grow in the dimensions of the feature space, finding the optimal output representation with a shallow model is not always possible.</p>
+<p>Deep learning provides a multi-layer approach to learn data representations, typically performed with a multi-layer neural network. DNNs place an emphasis on learning successive layers of meaningful representations.</p>
+<p>DNNs perform successive non-linear transformations across each layer, allowing DNNs to model very complex and non-linear relationships. This can make DNNs suitable machine learning approaches for traditional regression and classification problems as well. But it is important to keep in mind that deep learning thrives when dimensions of your data are sufficiently large (e.g., very large training sets). As the number of observations <span class="math inline">\(n\)</span> and feature inputs <span class="math inline">\(p\)</span> decrease, shallow machine learning approaches tend to perform just as well, if not better, and are more efficient.</p>
+</div>
+<div id="neural-networks-4" class="section level2 hasAnchor" number="9.47">
+<h2><span class="header-section-number">9.47</span> Neural Networks<a href="support-vector-machines-svm.html#neural-networks-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Consider a linear combination of the input features, that is,</li>
+</ul>
+<p><span class="math display">\[w_{k0} + w_{k1} \ X_1 + w_{k2} \ X_2 + w_{k3} \ X_3 + w_{k4} \ X_4\]</span></p>
+<p>This happens for each hidden layer node <span class="math inline">\(A_k\)</span>, <span class="math inline">\(k=1, \ldots, 5\)</span>.</p>
+<ul>
+<li>Consider a <strong>non-linear activation function</strong> to transform the linear combination of input features, that is,</li>
+</ul>
+<p><span class="math display">\[A_k = g\left(w_{k0} + w_{k1} \ X_1 + w_{k2} \ X_2 + w_{k3} \ X_3 + w_{k4} \ X_4\right)\]</span></p>
+<ul>
+<li>Finally, the output is a linear combination of <span class="math inline">\(A_k\)</span>’s, that is,</li>
+</ul>
+<p><span class="math display">\[\hat{Y} = \hat{f}(X) = \beta_0 + \beta_1 \ A_1 + \beta_2 \ A_2 + \beta_3 \ A_3 + \beta_4 \ A_4 + \beta_5 \ A_5\]</span></p>
+</div>
+<div id="your-turn-60" class="section level2 hasAnchor" number="9.48">
+<h2><span class="header-section-number">9.48</span> <span style="color:blue">Your Turn!!!</span><a href="support-vector-machines-svm.html#your-turn-60" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we have two input features <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>. Consider the parameters</p>
+<p><span class="math display">\[\beta_0 = 0 \ \ \ \ \ \beta_1 = \frac{1}{4} \ \ \ \ \ \beta_2 = -\frac{1}{4}\]</span></p>
+<p><span class="math display">\[w_{10} = 0 \ \ \ \ \ w_{11} = 1 \ \ \ \ \ w_{12} = 1\]</span></p>
+<p><span class="math display">\[w_{20} = 0 \ \ \ \ \ w_{21} = 1 \ \ \ \ \ w_{22} = -1\]</span></p>
+<p>and the activation function <span class="math inline">\(g(z)=z^2\)</span>.</p>
+<p>What is <span class="math inline">\(\hat{f}(X_1, X_2)\)</span>?</p>
+<p>You can use the fact that <span class="math inline">\((a+b)^2 = a^2 + 2ab + b^2\)</span>.</p>
+</div>
+<div id="neural-networks-5" class="section level2 hasAnchor" number="9.49">
+<h2><span class="header-section-number">9.49</span> Neural Networks<a href="support-vector-machines-svm.html#neural-networks-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are multiple activation funtions to choose from but the most common ones include</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-304"></span>
+<img src="EFT/afs.png" alt="From ISLR2" width="90%" />
+<p class="caption">
+Figure 9.4: From ISLR2
+</p>
+</div>
+</div>
+<div id="neural-networks-6" class="section level2 hasAnchor" number="9.50">
+<h2><span class="header-section-number">9.50</span> Neural Networks<a href="support-vector-machines-svm.html#neural-networks-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To build a feedforward DNN we need four key components:</p>
+<ul>
+<li><p>Input data (the <span class="math inline">\(X\)</span>’s);</p></li>
+<li><p>A pre-defined network architecture;</p></li>
+<li><p>A feedback mechanism to help the network learn;</p></li>
+<li><p>A model training approach.</p></li>
+</ul>
+</div>
+<div id="neural-networks-input-data" class="section level2 hasAnchor" number="9.51">
+<h2><span class="header-section-number">9.51</span> Neural Networks: Input Data<a href="support-vector-machines-svm.html#neural-networks-input-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Feedforward DNNs require all feature inputs to be numeric.</p></li>
+<li><p>Due to the data transformation process that DNNs perform, they are highly sensitive to the individual scale of the feature values. Consequently, we should standardize our features first.</p></li>
+<li><p>Since we are working with a multinomial response (0–9), <code>keras</code> requires our response to be a one-hot encoded matrix, which can be accomplished with the keras function <code>to_categorical</code>.</p></li>
+</ul>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="support-vector-machines-svm.html#cb478-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(keras)</span>
+<span id="cb478-2"><a href="support-vector-machines-svm.html#cb478-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb478-3"><a href="support-vector-machines-svm.html#cb478-3" aria-hidden="true" tabindex="-1"></a>mnist_train_y <span class="ot">&lt;-</span> <span class="fu">to_categorical</span>(mnist_train_y, <span class="at">num_classes =</span> <span class="dv">10</span>)    <span class="co"># one-hot encode response</span></span>
+<span id="cb478-4"><a href="support-vector-machines-svm.html#cb478-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb478-5"><a href="support-vector-machines-svm.html#cb478-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(mnist_train_x)  <span class="co"># get number of features, to be used later</span></span></code></pre></div>
+</div>
+<div id="neural-networks-network-architecture" class="section level2 hasAnchor" number="9.52">
+<h2><span class="header-section-number">9.52</span> Neural Networks: Network Architecture<a href="support-vector-machines-svm.html#neural-networks-network-architecture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>It involves deciding the</p>
+<ul>
+<li><p>number of layers and nodes</p></li>
+<li><p>activation function</p></li>
+</ul>
+<p>Layers are considered <strong>dense</strong> (fully connected) when all the nodes in each successive layer are connected. Consequently, the more layers and nodes you add the more opportunities for new features to be learned (commonly referred to as the model’s <strong>capacity</strong>).</p>
+<p>The choice of output layer is driven by the modeling task. For regression problems, your output layer will contain one node that outputs the final predicted value. For binary classification problems, the output layer will still contain only one node and that node will predict the probability of success (however you define success). For multi-class classification probelms, the output layer will contain the same number of nodes as the number of classes being predicted.</p>
+<p>For the output layers we use the linear activation function for regression problems, the sigmoid activation function for binary classification problems, and softmax for multi-class classification problems.</p>
+</div>
+<div id="neural-networks-network-architecture-1" class="section level2 hasAnchor" number="9.53">
+<h2><span class="header-section-number">9.53</span> Neural Networks: Network Architecture<a href="support-vector-machines-svm.html#neural-networks-network-architecture-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="support-vector-machines-svm.html#cb479-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb479-2"><a href="support-vector-machines-svm.html#cb479-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">256</span>, <span class="at">activation =</span> <span class="st">&quot;relu&quot;</span>, <span class="at">input_shape =</span> p) <span class="sc">%&gt;%</span></span>
+<span id="cb479-3"><a href="support-vector-machines-svm.html#cb479-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">128</span>, <span class="at">activation =</span> <span class="st">&quot;relu&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb479-4"><a href="support-vector-machines-svm.html#cb479-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">10</span>, <span class="at">activation =</span> <span class="st">&quot;softmax&quot;</span>)</span></code></pre></div>
+</div>
+<div id="neural-networks-network-architecture-2" class="section level2 hasAnchor" number="9.54">
+<h2><span class="header-section-number">9.54</span> Neural Networks: Network Architecture<a href="support-vector-machines-svm.html#neural-networks-network-architecture-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-307"></span>
+<img src="EFT/nn2.png" alt="From ISLR2" width="70%" />
+<p class="caption">
+Figure 9.5: From ISLR2
+</p>
+</div>
+</div>
+<div id="neural-networks-feedback-mechanism" class="section level2 hasAnchor" number="9.55">
+<h2><span class="header-section-number">9.55</span> Neural Networks: Feedback Mechanism<a href="support-vector-machines-svm.html#neural-networks-feedback-mechanism" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>On the first run (or forward pass), the DNN will select a batch of observations, randomly assign weights across all the node connections, and predict the output. The engine of neural networks is how it assesses its own accuracy and automatically adjusts the weights across all the node connections to improve that accuracy. This process is called <strong>backpropagation</strong>. To perform backpropagation we need two things:</p>
+<ul>
+<li><p>An objective function</p>
+<ul>
+<li>mean squared error (coded as <code>mse</code>)</li>
+<li>categorical cross entropy (coded as <code>categorical_crossentropy</code>)</li>
+</ul></li>
+<li><p>An optimizer</p>
+<ul>
+<li>stochastic gradient descent (coded as <code>sgd</code>)</li>
+<li>Adam (coded as <code>adam</code>)</li>
+<li>RMSProp (coded as <code>rmsprop</code>)</li>
+</ul></li>
+</ul>
+</div>
+<div id="neural-networks-feedback-mechanism-1" class="section level2 hasAnchor" number="9.56">
+<h2><span class="header-section-number">9.56</span> Neural Networks: Feedback Mechanism<a href="support-vector-machines-svm.html#neural-networks-feedback-mechanism-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="support-vector-machines-svm.html#cb480-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb480-2"><a href="support-vector-machines-svm.html#cb480-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">256</span>, <span class="at">activation =</span> <span class="st">&quot;relu&quot;</span>, <span class="at">input_shape =</span> p) <span class="sc">%&gt;%</span></span>
+<span id="cb480-3"><a href="support-vector-machines-svm.html#cb480-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">128</span>, <span class="at">activation =</span> <span class="st">&quot;relu&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb480-4"><a href="support-vector-machines-svm.html#cb480-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">10</span>, <span class="at">activation =</span> <span class="st">&quot;softmax&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb480-5"><a href="support-vector-machines-svm.html#cb480-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">compile</span>(<span class="at">loss =</span> <span class="st">&#39;categorical_crossentropy&#39;</span>,    <span class="co"># adjust for regression task</span></span>
+<span id="cb480-6"><a href="support-vector-machines-svm.html#cb480-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">optimizer =</span> <span class="fu">optimizer_rmsprop</span>(), </span>
+<span id="cb480-7"><a href="support-vector-machines-svm.html#cb480-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">&#39;accuracy&#39;</span>))              <span class="co"># adjust for regression task</span></span></code></pre></div>
+</div>
+<div id="neural-networks-model-training" class="section level2 hasAnchor" number="9.57">
+<h2><span class="header-section-number">9.57</span> Neural Networks: Model Training<a href="support-vector-machines-svm.html#neural-networks-model-training" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p><strong>batch_size</strong>: The DNN will take a batch of data to run through the optimizing process. Values are typically provided as a power of two.</p></li>
+<li><p><strong>epochs</strong>: An epoch describes the number of times the algorithm sees the entire data set.</p></li>
+<li><p><strong>validation_split</strong>: The model will hold out XX% of the data so that we can compute a more accurate estimate of an out-of-sample error rate.</p></li>
+</ul>
+</div>
+<div id="neural-networks-model-training-1" class="section level2 hasAnchor" number="9.58">
+<h2><span class="header-section-number">9.58</span> Neural Networks: Model Training<a href="support-vector-machines-svm.html#neural-networks-model-training-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="support-vector-machines-svm.html#cb481-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> </span>
+<span id="cb481-2"><a href="support-vector-machines-svm.html#cb481-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">fit</span>(<span class="at">x =</span> mnist_train_x, </span>
+<span id="cb481-3"><a href="support-vector-machines-svm.html#cb481-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> mnist_train_y, </span>
+<span id="cb481-4"><a href="support-vector-machines-svm.html#cb481-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">epochs =</span> <span class="dv">35</span>, </span>
+<span id="cb481-5"><a href="support-vector-machines-svm.html#cb481-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">batch_size =</span> <span class="dv">128</span>, </span>
+<span id="cb481-6"><a href="support-vector-machines-svm.html#cb481-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">validation_split =</span> <span class="fl">0.2</span>, </span>
+<span id="cb481-7"><a href="support-vector-machines-svm.html#cb481-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="neural-networks-further-topics" class="section level2 hasAnchor" number="9.59">
+<h2><span class="header-section-number">9.59</span> Neural Networks: Further Topics<a href="support-vector-machines-svm.html#neural-networks-further-topics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Other components in a neural net:</p>
+<ul>
+<li><p>batch normalization</p></li>
+<li><p>regularization and dropout</p></li>
+<li><p>adjusting learning rate of optimization</p></li>
+</ul>
+<p>Other variations of neural nets include</p>
+<ul>
+<li><p>Convolutional Neural Networks (CNN)</p></li>
+<li><p>Recurrent Neural Networks (RNN)</p></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tree-based-methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unsupervised-learning-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/abhicc/208notes/edit/master/08-Slides9.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/abhicc/208notes/blob/master/08-Slides9.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

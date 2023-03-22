@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Unsupervised Learning | 208 Course Notes</title>
+  <meta name="description" content="Chapter 10 Unsupervised Learning | 208 Course Notes" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Unsupervised Learning | 208 Course Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Unsupervised Learning | 208 Course Notes" />
+  
+  
+  
+
+<meta name="author" content="Abhishek Chakraborty" />
+
+
+<meta name="date" content="2023-03-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="support-vector-machines-svm.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">208 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html"><i class="fa fa-check"></i><b>2</b> What is Machine Learning?</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#what-is-machine-learning-1"><i class="fa fa-check"></i><b>2.1</b> What is Machine Learning?</a></li>
+<li class="chapter" data-level="2.2" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question"><i class="fa fa-check"></i><b>2.2</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.3" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#statistical-learning-vs-machine-learning-vs-data-science"><i class="fa fa-check"></i><b>2.3</b> Statistical Learning vs Machine Learning vs Data Science</a></li>
+<li class="chapter" data-level="2.4" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#notations"><i class="fa fa-check"></i><b>2.4</b> Notations</a></li>
+<li class="chapter" data-level="2.5" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#notations-1"><i class="fa fa-check"></i><b>2.5</b> Notations</a></li>
+<li class="chapter" data-level="2.6" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-1"><i class="fa fa-check"></i><b>2.6</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.7" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-2"><i class="fa fa-check"></i><b>2.7</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.8" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-vs-unsupervised"><i class="fa fa-check"></i><b>2.8</b> Supervised vs Unsupervised</a></li>
+<li class="chapter" data-level="2.9" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning"><i class="fa fa-check"></i><b>2.9</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.10" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-1"><i class="fa fa-check"></i><b>2.10</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.11" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#unsupervised-learning"><i class="fa fa-check"></i><b>2.11</b> Unsupervised Learning</a></li>
+<li class="chapter" data-level="2.12" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-3"><i class="fa fa-check"></i><b>2.12</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.13" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-2"><i class="fa fa-check"></i><b>2.13</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.14" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-3"><i class="fa fa-check"></i><b>2.14</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.15" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-4"><i class="fa fa-check"></i><b>2.15</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.16" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-5"><i class="fa fa-check"></i><b>2.16</b> Supervised Learning</a></li>
+<li class="chapter" data-level="2.17" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-why-estimate-fmathbfx"><i class="fa fa-check"></i><b>2.17</b> Supervised Learning: Why Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?</a></li>
+<li class="chapter" data-level="2.18" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference"><i class="fa fa-check"></i><b>2.18</b> Supervised Learning: Prediction and Inference</a></li>
+<li class="chapter" data-level="2.19" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction-and-inference-1"><i class="fa fa-check"></i><b>2.19</b> Supervised Learning: Prediction and Inference</a></li>
+<li class="chapter" data-level="2.20" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-prediction"><i class="fa fa-check"></i><b>2.20</b> Supervised Learning: Prediction</a></li>
+<li class="chapter" data-level="2.21" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#question-4"><i class="fa fa-check"></i><b>2.21</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="2.22" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-how-do-we-estimate-fmathbfx"><i class="fa fa-check"></i><b>2.22</b> Supervised Learning: How Do We Estimate <span class="math inline">\(f(\mathbf{X})\)</span>?</a></li>
+<li class="chapter" data-level="2.23" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-parametric-methods"><i class="fa fa-check"></i><b>2.23</b> Supervised Learning: Parametric Methods</a></li>
+<li class="chapter" data-level="2.24" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-parametric-methods-1"><i class="fa fa-check"></i><b>2.24</b> Supervised Learning: Parametric Methods</a></li>
+<li class="chapter" data-level="2.25" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-non-parametric-methods"><i class="fa fa-check"></i><b>2.25</b> Supervised Learning: Non-parametric Methods</a></li>
+<li class="chapter" data-level="2.26" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-flexibility-of-models"><i class="fa fa-check"></i><b>2.26</b> Supervised Learning: Flexibility of Models</a></li>
+<li class="chapter" data-level="2.27" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-some-trade-offs"><i class="fa fa-check"></i><b>2.27</b> Supervised Learning: Some Trade-offs</a></li>
+<li class="chapter" data-level="2.28" data-path="what-is-machine-learning.html"><a href="what-is-machine-learning.html#supervised-learning-some-trade-offs-1"><i class="fa fa-check"></i><b>2.28</b> Supervised Learning: Some Trade-offs</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html"><i class="fa fa-check"></i><b>3</b> Supervised Learning: Assessing Model Accuracy</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-1"><i class="fa fa-check"></i><b>3.1</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.2" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-2"><i class="fa fa-check"></i><b>3.2</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.3" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-3"><i class="fa fa-check"></i><b>3.3</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.4" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-4"><i class="fa fa-check"></i><b>3.4</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.5" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-5"><i class="fa fa-check"></i><b>3.5</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.6" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-assessing-model-accuracy-6"><i class="fa fa-check"></i><b>3.6</b> Supervised Learning: Assessing Model Accuracy</a></li>
+<li class="chapter" data-level="3.7" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off"><i class="fa fa-check"></i><b>3.7</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.8" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-1"><i class="fa fa-check"></i><b>3.8</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.9" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#supervised-learning-bias-variance-trade-off-2"><i class="fa fa-check"></i><b>3.9</b> Supervised Learning: Bias-Variance Trade-off</a></li>
+<li class="chapter" data-level="3.10" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-5"><i class="fa fa-check"></i><b>3.10</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.11" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#simple-linear-regression-slr"><i class="fa fa-check"></i><b>3.11</b> Simple Linear Regression (SLR)</a></li>
+<li class="chapter" data-level="3.12" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-6"><i class="fa fa-check"></i><b>3.12</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.13" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters"><i class="fa fa-check"></i><b>3.13</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.14" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-1"><i class="fa fa-check"></i><b>3.14</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.15" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-2"><i class="fa fa-check"></i><b>3.15</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.16" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset"><i class="fa fa-check"></i><b>3.16</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="3.17" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#ames-housing-dataset-1"><i class="fa fa-check"></i><b>3.17</b> Ames Housing dataset</a></li>
+<li class="chapter" data-level="3.18" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-estimating-parameters-3"><i class="fa fa-check"></i><b>3.18</b> SLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="3.19" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-model"><i class="fa fa-check"></i><b>3.19</b> SLR: Model</a></li>
+<li class="chapter" data-level="3.20" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-model-1"><i class="fa fa-check"></i><b>3.20</b> SLR: Model</a></li>
+<li class="chapter" data-level="3.21" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-prediction"><i class="fa fa-check"></i><b>3.21</b> SLR: Prediction</a></li>
+<li class="chapter" data-level="3.22" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-interpreting-parameters"><i class="fa fa-check"></i><b>3.22</b> SLR: Interpreting Parameters</a></li>
+<li class="chapter" data-level="3.23" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model"><i class="fa fa-check"></i><b>3.23</b> SLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="3.24" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#slr-assessing-accuracy-of-model-1"><i class="fa fa-check"></i><b>3.24</b> SLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="3.25" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#your-turn"><i class="fa fa-check"></i><b>3.25</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="3.26" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-7"><i class="fa fa-check"></i><b>3.26</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.27" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-8"><i class="fa fa-check"></i><b>3.27</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.28" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-9"><i class="fa fa-check"></i><b>3.28</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="3.29" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging"><i class="fa fa-check"></i><b>3.29</b> Regression: Conditional Averaging</a></li>
+<li class="chapter" data-level="3.30" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-conditional-averaging-1"><i class="fa fa-check"></i><b>3.30</b> Regression: Conditional Averaging</a></li>
+<li class="chapter" data-level="3.31" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression"><i class="fa fa-check"></i><b>3.31</b> K-Nearest Neighbors Regression</a></li>
+<li class="chapter" data-level="3.32" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-fit"><i class="fa fa-check"></i><b>3.32</b> K-Nearest Neighbors Regression: Fit</a></li>
+<li class="chapter" data-level="3.33" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#k-nearest-neighbors-regression-prediction"><i class="fa fa-check"></i><b>3.33</b> K-Nearest Neighbors Regression: Prediction</a></li>
+<li class="chapter" data-level="3.34" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#regression-methods-comparison"><i class="fa fa-check"></i><b>3.34</b> Regression Methods: Comparison</a></li>
+<li class="chapter" data-level="3.35" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#your-turn-1"><i class="fa fa-check"></i><b>3.35</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="3.36" data-path="supervised-learning-assessing-model-accuracy.html"><a href="supervised-learning-assessing-model-accuracy.html#question-10"><i class="fa fa-check"></i><b>3.36</b> <span style="color:blue">Question!!!</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html"><i class="fa fa-check"></i><b>4</b> Multiple Linear Regression (MLR)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters"><i class="fa fa-check"></i><b>4.1</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.2" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-1"><i class="fa fa-check"></i><b>4.2</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.3" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-estimating-parameters-2"><i class="fa fa-check"></i><b>4.3</b> MLR: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.4" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-interpreting-parameters"><i class="fa fa-check"></i><b>4.4</b> MLR: Interpreting Parameters</a></li>
+<li class="chapter" data-level="4.5" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-prediction"><i class="fa fa-check"></i><b>4.5</b> MLR: Prediction</a></li>
+<li class="chapter" data-level="4.6" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model"><i class="fa fa-check"></i><b>4.6</b> MLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="4.7" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#your-turn-2"><i class="fa fa-check"></i><b>4.7</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="4.8" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#mlr-assessing-accuracy-of-model-1"><i class="fa fa-check"></i><b>4.8</b> MLR: Assessing Accuracy of Model</a></li>
+<li class="chapter" data-level="4.9" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#question-11"><i class="fa fa-check"></i><b>4.9</b> <span style="color:blue">Question!!!</span></a></li>
+<li class="chapter" data-level="4.10" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors"><i class="fa fa-check"></i><b>4.10</b> K-Nearest Neighbors Regression (multiple predictors)</a></li>
+<li class="chapter" data-level="4.11" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#k-nearest-neighbors-regression-multiple-predictors-1"><i class="fa fa-check"></i><b>4.11</b> K-Nearest Neighbors Regression (multiple predictors)</a></li>
+<li class="chapter" data-level="4.12" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#linear-regression-vs-k-nearest-neighbors"><i class="fa fa-check"></i><b>4.12</b> Linear Regression vs K-Nearest Neighbors</a></li>
+<li class="chapter" data-level="4.13" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems"><i class="fa fa-check"></i><b>4.13</b> Classification Problems</a></li>
+<li class="chapter" data-level="4.14" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems-example"><i class="fa fa-check"></i><b>4.14</b> Classification Problems: Example</a></li>
+<li class="chapter" data-level="4.15" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#classification-problems-example-1"><i class="fa fa-check"></i><b>4.15</b> Classification Problems: Example</a></li>
+<li class="chapter" data-level="4.16" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#why-not-linear-regression"><i class="fa fa-check"></i><b>4.16</b> Why Not Linear Regression?</a></li>
+<li class="chapter" data-level="4.17" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#why-not-linear-regression-1"><i class="fa fa-check"></i><b>4.17</b> Why Not Linear Regression?</a></li>
+<li class="chapter" data-level="4.18" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression"><i class="fa fa-check"></i><b>4.18</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.19" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.19</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.20" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#your-turn-3"><i class="fa fa-check"></i><b>4.20</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="4.21" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-example"><i class="fa fa-check"></i><b>4.21</b> Logistic Regression: Example</a></li>
+<li class="chapter" data-level="4.22" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-estimating-parameters"><i class="fa fa-check"></i><b>4.22</b> Logistic Regression: Estimating Parameters</a></li>
+<li class="chapter" data-level="4.23" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-individual-predictions"><i class="fa fa-check"></i><b>4.23</b> Logistic Regression: Individual Predictions</a></li>
+<li class="chapter" data-level="4.24" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions"><i class="fa fa-check"></i><b>4.24</b> Logistic Regression: Test Set Predictions</a></li>
+<li class="chapter" data-level="4.25" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-test-set-predictions-1"><i class="fa fa-check"></i><b>4.25</b> Logistic Regression: Test Set Predictions</a></li>
+<li class="chapter" data-level="4.26" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#logistic-regression-performance"><i class="fa fa-check"></i><b>4.26</b> Logistic Regression: Performance</a></li>
+<li class="chapter" data-level="4.27" data-path="multiple-linear-regression-mlr.html"><a href="multiple-linear-regression-mlr.html#confusion-matrix-terms"><i class="fa fa-check"></i><b>4.27</b> Confusion Matrix Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html"><i class="fa fa-check"></i><b>5</b> K-Nearest Neighbors Classifier</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-4"><i class="fa fa-check"></i><b>5.1</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="5.2" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-split-data"><i class="fa fa-check"></i><b>5.2</b> K-Nearest Neighbors Classifier: Split Data</a></li>
+<li class="chapter" data-level="5.3" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-build-model"><i class="fa fa-check"></i><b>5.3</b> K-Nearest Neighbors Classifier: Build Model</a></li>
+<li class="chapter" data-level="5.4" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-predictions"><i class="fa fa-check"></i><b>5.4</b> K-Nearest Neighbors Classifier: Predictions</a></li>
+<li class="chapter" data-level="5.5" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-nearest-neighbors-classifier-performance"><i class="fa fa-check"></i><b>5.5</b> K-Nearest Neighbors Classifier: Performance</a></li>
+<li class="chapter" data-level="5.6" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#roc-curve-and-auc"><i class="fa fa-check"></i><b>5.6</b> ROC Curve and AUC</a></li>
+<li class="chapter" data-level="5.7" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#roc-curve-and-auc-1"><i class="fa fa-check"></i><b>5.7</b> ROC Curve and AUC</a></li>
+<li class="chapter" data-level="5.8" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#data-splitting"><i class="fa fa-check"></i><b>5.8</b> Data Splitting</a></li>
+<li class="chapter" data-level="5.9" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#resampling-methods"><i class="fa fa-check"></i><b>5.9</b> Resampling Methods</a></li>
+<li class="chapter" data-level="5.10" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#cross-validation-cv"><i class="fa fa-check"></i><b>5.10</b> Cross-Validation (CV)</a></li>
+<li class="chapter" data-level="5.11" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>5.11</b> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="5.12" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#leave-one-out-cross-validation-loocv-1"><i class="fa fa-check"></i><b>5.12</b> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="5.13" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>5.13</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation</a></li>
+<li class="chapter" data-level="5.14" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation"><i class="fa fa-check"></i><b>5.14</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.15" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-1"><i class="fa fa-check"></i><b>5.15</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.16" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-2"><i class="fa fa-check"></i><b>5.16</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.17" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-3"><i class="fa fa-check"></i><b>5.17</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.18" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-4"><i class="fa fa-check"></i><b>5.18</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.19" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-implementation-5"><i class="fa fa-check"></i><b>5.19</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Implementation</a></li>
+<li class="chapter" data-level="5.20" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#k-fold-cross-validation-results"><i class="fa fa-check"></i><b>5.20</b> <span class="math inline">\(k\)</span>-Fold Cross-Validation: Results</a></li>
+<li class="chapter" data-level="5.21" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#final-model-and-prediction-error-estimate"><i class="fa fa-check"></i><b>5.21</b> Final Model and Prediction Error Estimate</a></li>
+<li class="chapter" data-level="5.22" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#variable-importance"><i class="fa fa-check"></i><b>5.22</b> Variable Importance</a></li>
+<li class="chapter" data-level="5.23" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#bias-variance-trade-off-for-loocv-and-k-fold-cv"><i class="fa fa-check"></i><b>5.23</b> Bias-Variance Trade-off for LOOCV and <span class="math inline">\(k\)</span>-fold CV</a></li>
+<li class="chapter" data-level="5.24" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-5"><i class="fa fa-check"></i><b>5.24</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="5.25" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-split-data"><i class="fa fa-check"></i><b>5.25</b> <span style="color:blue">Your Turn!!!</span>: Split Data</a></li>
+<li class="chapter" data-level="5.26" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-perform-cv"><i class="fa fa-check"></i><b>5.26</b> <span style="color:blue">Your Turn!!!</span>: Perform CV</a></li>
+<li class="chapter" data-level="5.27" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-observe-cv-results"><i class="fa fa-check"></i><b>5.27</b> <span style="color:blue">Your Turn!!!</span>: Observe CV Results</a></li>
+<li class="chapter" data-level="5.28" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#your-turn-final-model"><i class="fa fa-check"></i><b>5.28</b> <span style="color:blue">Your Turn!!!</span>: Final Model</a></li>
+<li class="chapter" data-level="5.29" data-path="k-nearest-neighbors-classifier.html"><a href="k-nearest-neighbors-classifier.html#mid-term-check"><i class="fa fa-check"></i><b>5.29</b> Mid-Term Check</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="review-of-cv.html"><a href="review-of-cv.html"><i class="fa fa-check"></i><b>6</b> Review of CV</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="review-of-cv.html"><a href="review-of-cv.html#data-leakage-a-serious-common-problem"><i class="fa fa-check"></i><b>6.1</b> Data Leakage (A Serious, Common Problem)</a></li>
+<li class="chapter" data-level="6.2" data-path="review-of-cv.html"><a href="review-of-cv.html#data-preprocessing-and-feature-enginnering"><i class="fa fa-check"></i><b>6.2</b> Data Preprocessing and Feature Enginnering</a></li>
+<li class="chapter" data-level="6.3" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-2"><i class="fa fa-check"></i><b>6.3</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.4" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-3"><i class="fa fa-check"></i><b>6.4</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.5" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-4"><i class="fa fa-check"></i><b>6.5</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.6" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-5"><i class="fa fa-check"></i><b>6.6</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.7" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-6"><i class="fa fa-check"></i><b>6.7</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.8" data-path="review-of-cv.html"><a href="review-of-cv.html#ames-housing-dataset-7"><i class="fa fa-check"></i><b>6.8</b> Ames Housing Dataset</a></li>
+<li class="chapter" data-level="6.9" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables"><i class="fa fa-check"></i><b>6.9</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.10" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-1"><i class="fa fa-check"></i><b>6.10</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.11" data-path="review-of-cv.html"><a href="review-of-cv.html#zero-variance-zv-andor-near-zero-variance-nzv-variables-2"><i class="fa fa-check"></i><b>6.11</b> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+<li class="chapter" data-level="6.12" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries"><i class="fa fa-check"></i><b>6.12</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.13" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries-1"><i class="fa fa-check"></i><b>6.13</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.14" data-path="review-of-cv.html"><a href="review-of-cv.html#imputing-missing-entries-2"><i class="fa fa-check"></i><b>6.14</b> Imputing Missing Entries</a></li>
+<li class="chapter" data-level="6.15" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables"><i class="fa fa-check"></i><b>6.15</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.16" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-1"><i class="fa fa-check"></i><b>6.16</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.17" data-path="review-of-cv.html"><a href="review-of-cv.html#label-encoding-ordinal-categorical-variables-2"><i class="fa fa-check"></i><b>6.17</b> Label Encoding Ordinal Categorical Variables</a></li>
+<li class="chapter" data-level="6.18" data-path="review-of-cv.html"><a href="review-of-cv.html#standardizing-centering-and-scaling-numeric-predictors"><i class="fa fa-check"></i><b>6.18</b> Standardizing (centering and scaling) Numeric Predictors</a></li>
+<li class="chapter" data-level="6.19" data-path="review-of-cv.html"><a href="review-of-cv.html#lumping-predictors"><i class="fa fa-check"></i><b>6.19</b> Lumping Predictors</a></li>
+<li class="chapter" data-level="6.20" data-path="review-of-cv.html"><a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors"><i class="fa fa-check"></i><b>6.20</b> One-hot/dummy Encoding Categorical Predictors</a></li>
+<li class="chapter" data-level="6.21" data-path="review-of-cv.html"><a href="review-of-cv.html#one-hotdummy-encoding-categorical-predictors-1"><i class="fa fa-check"></i><b>6.21</b> One-hot/dummy Encoding Categorical Predictors</a></li>
+<li class="chapter" data-level="6.22" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-steps"><i class="fa fa-check"></i><b>6.22</b> Preprocessing Steps</a></li>
+<li class="chapter" data-level="6.23" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-with-recipes-package"><i class="fa fa-check"></i><b>6.23</b> Preprocessing With <code>recipes</code> Package</a></li>
+<li class="chapter" data-level="6.24" data-path="review-of-cv.html"><a href="review-of-cv.html#preprocessing-with-recipes-package-1"><i class="fa fa-check"></i><b>6.24</b> Preprocessing With <code>recipes</code> Package</a></li>
+<li class="chapter" data-level="6.25" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model"><i class="fa fa-check"></i><b>6.25</b> Training Model</a></li>
+<li class="chapter" data-level="6.26" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model-1"><i class="fa fa-check"></i><b>6.26</b> Training Model</a></li>
+<li class="chapter" data-level="6.27" data-path="review-of-cv.html"><a href="review-of-cv.html#training-model-2"><i class="fa fa-check"></i><b>6.27</b> Training Model</a></li>
+<li class="chapter" data-level="6.28" data-path="review-of-cv.html"><a href="review-of-cv.html#final-model-and-test-set-error"><i class="fa fa-check"></i><b>6.28</b> Final Model and Test Set Error</a></li>
+<li class="chapter" data-level="6.29" data-path="review-of-cv.html"><a href="review-of-cv.html#variable-importance-1"><i class="fa fa-check"></i><b>6.29</b> Variable Importance</a></li>
+<li class="chapter" data-level="6.30" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-6"><i class="fa fa-check"></i><b>6.30</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="6.31" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1"><i class="fa fa-check"></i><b>6.31</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.32" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-1"><i class="fa fa-check"></i><b>6.32</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.33" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-2"><i class="fa fa-check"></i><b>6.33</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.34" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-3"><i class="fa fa-check"></i><b>6.34</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.35" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-1-4"><i class="fa fa-check"></i><b>6.35</b> <span style="color:blue">Your Turn!!!</span> Step 1</a></li>
+<li class="chapter" data-level="6.36" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-2"><i class="fa fa-check"></i><b>6.36</b> <span style="color:blue">Your Turn!!!</span> Step 2</a></li>
+<li class="chapter" data-level="6.37" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-3"><i class="fa fa-check"></i><b>6.37</b> <span style="color:blue">Your Turn!!!</span> Step 3</a></li>
+<li class="chapter" data-level="6.38" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4"><i class="fa fa-check"></i><b>6.38</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.39" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4-1"><i class="fa fa-check"></i><b>6.39</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.40" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-4-2"><i class="fa fa-check"></i><b>6.40</b> <span style="color:blue">Your Turn!!!</span> Step 4</a></li>
+<li class="chapter" data-level="6.41" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5"><i class="fa fa-check"></i><b>6.41</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+<li class="chapter" data-level="6.42" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5-1"><i class="fa fa-check"></i><b>6.42</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+<li class="chapter" data-level="6.43" data-path="review-of-cv.html"><a href="review-of-cv.html#your-turn-step-5-2"><i class="fa fa-check"></i><b>6.43</b> <span style="color:blue">Your Turn!!!</span> Step 5</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html"><i class="fa fa-check"></i><b>7</b> Linear Model Selection and Regularization</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#alternatives-to-least-squares"><i class="fa fa-check"></i><b>7.1</b> Alternatives to Least Squares</a></li>
+<li class="chapter" data-level="7.2" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#shrinkageregularization-methods"><i class="fa fa-check"></i><b>7.2</b> Shrinkage/Regularization Methods</a></li>
+<li class="chapter" data-level="7.3" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso"><i class="fa fa-check"></i><b>7.3</b> The Lasso</a></li>
+<li class="chapter" data-level="7.4" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-1"><i class="fa fa-check"></i><b>7.4</b> The Lasso</a></li>
+<li class="chapter" data-level="7.5" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-scaling-of-predictors"><i class="fa fa-check"></i><b>7.5</b> The Lasso: Scaling of Predictors</a></li>
+<li class="chapter" data-level="7.6" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation"><i class="fa fa-check"></i><b>7.6</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.7" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-1"><i class="fa fa-check"></i><b>7.7</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.8" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-2"><i class="fa fa-check"></i><b>7.8</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.9" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-3"><i class="fa fa-check"></i><b>7.9</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.10" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-4"><i class="fa fa-check"></i><b>7.10</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.11" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-5"><i class="fa fa-check"></i><b>7.11</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.12" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#the-lasso-implementation-6"><i class="fa fa-check"></i><b>7.12</b> The Lasso: Implementation</a></li>
+<li class="chapter" data-level="7.13" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-7"><i class="fa fa-check"></i><b>7.13</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.14" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-8"><i class="fa fa-check"></i><b>7.14</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.15" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-9"><i class="fa fa-check"></i><b>7.15</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.16" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-10"><i class="fa fa-check"></i><b>7.16</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.17" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-11"><i class="fa fa-check"></i><b>7.17</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.18" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-12"><i class="fa fa-check"></i><b>7.18</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.19" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-13"><i class="fa fa-check"></i><b>7.19</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.20" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-14"><i class="fa fa-check"></i><b>7.20</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.21" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-15"><i class="fa fa-check"></i><b>7.21</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.22" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-16"><i class="fa fa-check"></i><b>7.22</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.23" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-17"><i class="fa fa-check"></i><b>7.23</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.24" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-18"><i class="fa fa-check"></i><b>7.24</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.25" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#multivariate-adaptive-regression-splines-mars"><i class="fa fa-check"></i><b>7.25</b> Multivariate Adaptive Regression Splines (MARS)</a></li>
+<li class="chapter" data-level="7.26" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-geometry"><i class="fa fa-check"></i><b>7.26</b> MARS: Geometry</a></li>
+<li class="chapter" data-level="7.27" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation"><i class="fa fa-check"></i><b>7.27</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.28" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation-1"><i class="fa fa-check"></i><b>7.28</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.29" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation-2"><i class="fa fa-check"></i><b>7.29</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.30" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation-3"><i class="fa fa-check"></i><b>7.30</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.31" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-implementation-4"><i class="fa fa-check"></i><b>7.31</b> MARS: Implementation</a></li>
+<li class="chapter" data-level="7.32" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars"><i class="fa fa-check"></i><b>7.32</b> MARS</a></li>
+<li class="chapter" data-level="7.33" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation"><i class="fa fa-check"></i><b>7.33</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.34" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-1"><i class="fa fa-check"></i><b>7.34</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.35" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-2"><i class="fa fa-check"></i><b>7.35</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.36" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-3"><i class="fa fa-check"></i><b>7.36</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.37" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-4"><i class="fa fa-check"></i><b>7.37</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.38" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#mars-without-feature-engineering-implementation-5"><i class="fa fa-check"></i><b>7.38</b> MARS Without Feature Engineering: Implementation</a></li>
+<li class="chapter" data-level="7.39" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-19"><i class="fa fa-check"></i><b>7.39</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.40" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-20"><i class="fa fa-check"></i><b>7.40</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.41" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-21"><i class="fa fa-check"></i><b>7.41</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.42" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-22"><i class="fa fa-check"></i><b>7.42</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.43" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-23"><i class="fa fa-check"></i><b>7.43</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.44" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-24"><i class="fa fa-check"></i><b>7.44</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.45" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-25"><i class="fa fa-check"></i><b>7.45</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.46" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-26"><i class="fa fa-check"></i><b>7.46</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.47" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-27"><i class="fa fa-check"></i><b>7.47</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.48" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-28"><i class="fa fa-check"></i><b>7.48</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="7.49" data-path="linear-model-selection-and-regularization.html"><a href="linear-model-selection-and-regularization.html#your-turn-29"><i class="fa fa-check"></i><b>7.49</b> <span style="color:blue">Your Turn!!!</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>8</b> Tree-Based Methods</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#terminology-for-trees"><i class="fa fa-check"></i><b>8.1</b> Terminology for Trees</a></li>
+<li class="chapter" data-level="8.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#terminology-for-trees-1"><i class="fa fa-check"></i><b>8.2</b> Terminology for Trees</a></li>
+<li class="chapter" data-level="8.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction"><i class="fa fa-check"></i><b>8.3</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction-1"><i class="fa fa-check"></i><b>8.4</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction-2"><i class="fa fa-check"></i><b>8.5</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction-3"><i class="fa fa-check"></i><b>8.6</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.7" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-and-prediction-4"><i class="fa fa-check"></i><b>8.7</b> Building a Tree and Prediction</a></li>
+<li class="chapter" data-level="8.8" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree"><i class="fa fa-check"></i><b>8.8</b> Building a Tree</a></li>
+<li class="chapter" data-level="8.9" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-a-tree-1"><i class="fa fa-check"></i><b>8.9</b> Building a Tree</a></li>
+<li class="chapter" data-level="8.10" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>8.10</b> Tree Pruning</a></li>
+<li class="chapter" data-level="8.11" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning-1"><i class="fa fa-check"></i><b>8.11</b> Tree Pruning</a></li>
+<li class="chapter" data-level="8.12" data-path="tree-based-methods.html"><a href="tree-based-methods.html#building-an-optimal-tree"><i class="fa fa-check"></i><b>8.12</b> Building an Optimal Tree</a></li>
+<li class="chapter" data-level="8.13" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation"><i class="fa fa-check"></i><b>8.13</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.14" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-1"><i class="fa fa-check"></i><b>8.14</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.15" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-2"><i class="fa fa-check"></i><b>8.15</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.16" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-3"><i class="fa fa-check"></i><b>8.16</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.17" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-4"><i class="fa fa-check"></i><b>8.17</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.18" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-5"><i class="fa fa-check"></i><b>8.18</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.19" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-6"><i class="fa fa-check"></i><b>8.19</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.20" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-7"><i class="fa fa-check"></i><b>8.20</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.21" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-8"><i class="fa fa-check"></i><b>8.21</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.22" data-path="tree-based-methods.html"><a href="tree-based-methods.html#trees"><i class="fa fa-check"></i><b>8.22</b> Trees</a></li>
+<li class="chapter" data-level="8.23" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-9"><i class="fa fa-check"></i><b>8.23</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.24" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-10"><i class="fa fa-check"></i><b>8.24</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.25" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-11"><i class="fa fa-check"></i><b>8.25</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.26" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-tree-implementation-12"><i class="fa fa-check"></i><b>8.26</b> Regression Tree: Implementation</a></li>
+<li class="chapter" data-level="8.27" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-trees"><i class="fa fa-check"></i><b>8.27</b> Classification Trees</a></li>
+<li class="chapter" data-level="8.28" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-30"><i class="fa fa-check"></i><b>8.28</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.29" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-31"><i class="fa fa-check"></i><b>8.29</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.30" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-32"><i class="fa fa-check"></i><b>8.30</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.31" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-33"><i class="fa fa-check"></i><b>8.31</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.32" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-34"><i class="fa fa-check"></i><b>8.32</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.33" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-35"><i class="fa fa-check"></i><b>8.33</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.34" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-36"><i class="fa fa-check"></i><b>8.34</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.35" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-37"><i class="fa fa-check"></i><b>8.35</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.36" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-38"><i class="fa fa-check"></i><b>8.36</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.37" data-path="tree-based-methods.html"><a href="tree-based-methods.html#ensemble-methods"><i class="fa fa-check"></i><b>8.37</b> Ensemble Methods</a></li>
+<li class="chapter" data-level="8.38" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging"><i class="fa fa-check"></i><b>8.38</b> Bagging</a></li>
+<li class="chapter" data-level="8.39" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-1"><i class="fa fa-check"></i><b>8.39</b> Bagging</a></li>
+<li class="chapter" data-level="8.40" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-2"><i class="fa fa-check"></i><b>8.40</b> Bagging</a></li>
+<li class="chapter" data-level="8.41" data-path="tree-based-methods.html"><a href="tree-based-methods.html#out-of-bag-error-estimation"><i class="fa fa-check"></i><b>8.41</b> Out-of-Bag Error Estimation</a></li>
+<li class="chapter" data-level="8.42" data-path="tree-based-methods.html"><a href="tree-based-methods.html#variable-importance-measures"><i class="fa fa-check"></i><b>8.42</b> Variable Importance Measures</a></li>
+<li class="chapter" data-level="8.43" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-implementation"><i class="fa fa-check"></i><b>8.43</b> Bagging: Implementation</a></li>
+<li class="chapter" data-level="8.44" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-implementation-1"><i class="fa fa-check"></i><b>8.44</b> Bagging: Implementation</a></li>
+<li class="chapter" data-level="8.45" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-implementation-2"><i class="fa fa-check"></i><b>8.45</b> Bagging: Implementation</a></li>
+<li class="chapter" data-level="8.46" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-disadvantages"><i class="fa fa-check"></i><b>8.46</b> Bagging: Disadvantages</a></li>
+<li class="chapter" data-level="8.47" data-path="tree-based-methods.html"><a href="tree-based-methods.html#bagging-disadvantages-1"><i class="fa fa-check"></i><b>8.47</b> Bagging: Disadvantages</a></li>
+<li class="chapter" data-level="8.48" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>8.48</b> Random Forests</a></li>
+<li class="chapter" data-level="8.49" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests-implementation"><i class="fa fa-check"></i><b>8.49</b> Random Forests: Implementation</a></li>
+<li class="chapter" data-level="8.50" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests-implementation-1"><i class="fa fa-check"></i><b>8.50</b> Random Forests: Implementation</a></li>
+<li class="chapter" data-level="8.51" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests-implementation-2"><i class="fa fa-check"></i><b>8.51</b> Random Forests: Implementation</a></li>
+<li class="chapter" data-level="8.52" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-39"><i class="fa fa-check"></i><b>8.52</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.53" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-40"><i class="fa fa-check"></i><b>8.53</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.54" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-41"><i class="fa fa-check"></i><b>8.54</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.55" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-42"><i class="fa fa-check"></i><b>8.55</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.56" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-43"><i class="fa fa-check"></i><b>8.56</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.57" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-44"><i class="fa fa-check"></i><b>8.57</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.58" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-45"><i class="fa fa-check"></i><b>8.58</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.59" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-46"><i class="fa fa-check"></i><b>8.59</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.60" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-47"><i class="fa fa-check"></i><b>8.60</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="8.61" data-path="tree-based-methods.html"><a href="tree-based-methods.html#your-turn-48"><i class="fa fa-check"></i><b>8.61</b> <span style="color:blue">Your Turn!!!</span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html"><i class="fa fa-check"></i><b>9</b> Support Vector Machines (SVM)</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#hyperplane"><i class="fa fa-check"></i><b>9.1</b> Hyperplane</a></li>
+<li class="chapter" data-level="9.2" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#hyperplane-1"><i class="fa fa-check"></i><b>9.2</b> Hyperplane</a></li>
+<li class="chapter" data-level="9.3" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#hyperplane-2"><i class="fa fa-check"></i><b>9.3</b> Hyperplane</a></li>
+<li class="chapter" data-level="9.4" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#separating-hyperplane"><i class="fa fa-check"></i><b>9.4</b> Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.5" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#separating-hyperplane-1"><i class="fa fa-check"></i><b>9.5</b> Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.6" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane"><i class="fa fa-check"></i><b>9.6</b> Optimal Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.7" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane-1"><i class="fa fa-check"></i><b>9.7</b> Optimal Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.8" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane-2"><i class="fa fa-check"></i><b>9.8</b> Optimal Separating Hyperplane</a></li>
+<li class="chapter" data-level="9.9" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane-issue-1"><i class="fa fa-check"></i><b>9.9</b> Optimal Separating Hyperplane: Issue 1</a></li>
+<li class="chapter" data-level="9.10" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#optimal-separating-hyperplane-issue-2"><i class="fa fa-check"></i><b>9.10</b> Optimal Separating Hyperplane: Issue 2</a></li>
+<li class="chapter" data-level="9.11" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier"><i class="fa fa-check"></i><b>9.11</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.12" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-1"><i class="fa fa-check"></i><b>9.12</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.13" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-2"><i class="fa fa-check"></i><b>9.13</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.14" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-3"><i class="fa fa-check"></i><b>9.14</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.15" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-4"><i class="fa fa-check"></i><b>9.15</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.16" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#support-vector-classifier-5"><i class="fa fa-check"></i><b>9.16</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.17" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries"><i class="fa fa-check"></i><b>9.17</b> Non-linear Boundaries</a></li>
+<li class="chapter" data-level="9.18" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#feature-expansion"><i class="fa fa-check"></i><b>9.18</b> Feature Expansion</a></li>
+<li class="chapter" data-level="9.19" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#feature-expansion-1"><i class="fa fa-check"></i><b>9.19</b> Feature Expansion</a></li>
+<li class="chapter" data-level="9.20" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#feature-expansion-2"><i class="fa fa-check"></i><b>9.20</b> Feature Expansion</a></li>
+<li class="chapter" data-level="9.21" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset"><i class="fa fa-check"></i><b>9.21</b> Non-linear Boundaries: Circle dataset</a></li>
+<li class="chapter" data-level="9.22" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset-1"><i class="fa fa-check"></i><b>9.22</b> Non-linear Boundaries: Circle dataset</a></li>
+<li class="chapter" data-level="9.23" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-circle-dataset-2"><i class="fa fa-check"></i><b>9.23</b> Non-linear Boundaries: Circle dataset</a></li>
+<li class="chapter" data-level="9.24" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset"><i class="fa fa-check"></i><b>9.24</b> Non-linear Boundaries: Spirals dataset</a></li>
+<li class="chapter" data-level="9.25" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-1"><i class="fa fa-check"></i><b>9.25</b> Non-linear Boundaries: Spirals dataset</a></li>
+<li class="chapter" data-level="9.26" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-2"><i class="fa fa-check"></i><b>9.26</b> Non-linear Boundaries: Spirals dataset</a></li>
+<li class="chapter" data-level="9.27" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#non-linear-boundaries-spirals-dataset-3"><i class="fa fa-check"></i><b>9.27</b> Non-linear Boundaries: Spirals dataset</a></li>
+<li class="chapter" data-level="9.28" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#summary"><i class="fa fa-check"></i><b>9.28</b> Summary</a></li>
+<li class="chapter" data-level="9.29" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-49"><i class="fa fa-check"></i><b>9.29</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.30" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-50"><i class="fa fa-check"></i><b>9.30</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.31" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-51"><i class="fa fa-check"></i><b>9.31</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.32" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-52"><i class="fa fa-check"></i><b>9.32</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.33" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-53"><i class="fa fa-check"></i><b>9.33</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.34" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-54"><i class="fa fa-check"></i><b>9.34</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.35" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-55"><i class="fa fa-check"></i><b>9.35</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.36" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-56"><i class="fa fa-check"></i><b>9.36</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.37" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-57"><i class="fa fa-check"></i><b>9.37</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.38" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-58"><i class="fa fa-check"></i><b>9.38</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.39" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-59"><i class="fa fa-check"></i><b>9.39</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.40" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#summary-of-supervised-learning-methods"><i class="fa fa-check"></i><b>9.40</b> Summary of Supervised Learning Methods</a></li>
+<li class="chapter" data-level="9.41" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks"><i class="fa fa-check"></i><b>9.41</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.42" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-1"><i class="fa fa-check"></i><b>9.42</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.43" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#biological-neural-networks"><i class="fa fa-check"></i><b>9.43</b> Biological Neural Networks</a></li>
+<li class="chapter" data-level="9.44" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#artificial-neural-networks"><i class="fa fa-check"></i><b>9.44</b> Artificial Neural Networks</a></li>
+<li class="chapter" data-level="9.45" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-2"><i class="fa fa-check"></i><b>9.45</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.46" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-3"><i class="fa fa-check"></i><b>9.46</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.47" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-4"><i class="fa fa-check"></i><b>9.47</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.48" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#your-turn-60"><i class="fa fa-check"></i><b>9.48</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="9.49" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-5"><i class="fa fa-check"></i><b>9.49</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.50" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-6"><i class="fa fa-check"></i><b>9.50</b> Neural Networks</a></li>
+<li class="chapter" data-level="9.51" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-input-data"><i class="fa fa-check"></i><b>9.51</b> Neural Networks: Input Data</a></li>
+<li class="chapter" data-level="9.52" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-network-architecture"><i class="fa fa-check"></i><b>9.52</b> Neural Networks: Network Architecture</a></li>
+<li class="chapter" data-level="9.53" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-network-architecture-1"><i class="fa fa-check"></i><b>9.53</b> Neural Networks: Network Architecture</a></li>
+<li class="chapter" data-level="9.54" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-network-architecture-2"><i class="fa fa-check"></i><b>9.54</b> Neural Networks: Network Architecture</a></li>
+<li class="chapter" data-level="9.55" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-feedback-mechanism"><i class="fa fa-check"></i><b>9.55</b> Neural Networks: Feedback Mechanism</a></li>
+<li class="chapter" data-level="9.56" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-feedback-mechanism-1"><i class="fa fa-check"></i><b>9.56</b> Neural Networks: Feedback Mechanism</a></li>
+<li class="chapter" data-level="9.57" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-model-training"><i class="fa fa-check"></i><b>9.57</b> Neural Networks: Model Training</a></li>
+<li class="chapter" data-level="9.58" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-model-training-1"><i class="fa fa-check"></i><b>9.58</b> Neural Networks: Model Training</a></li>
+<li class="chapter" data-level="9.59" data-path="support-vector-machines-svm.html"><a href="support-vector-machines-svm.html#neural-networks-further-topics"><i class="fa fa-check"></i><b>9.59</b> Neural Networks: Further Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html"><i class="fa fa-check"></i><b>10</b> Unsupervised Learning</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#unsupervised-learning-2"><i class="fa fa-check"></i><b>10.1</b> Unsupervised Learning</a></li>
+<li class="chapter" data-level="10.2" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#principal-components-analysis-pca"><i class="fa fa-check"></i><b>10.2</b> Principal Components Analysis (PCA)</a></li>
+<li class="chapter" data-level="10.3" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-example"><i class="fa fa-check"></i><b>10.3</b> PCA: Example</a></li>
+<li class="chapter" data-level="10.4" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-example-1"><i class="fa fa-check"></i><b>10.4</b> PCA: Example</a></li>
+<li class="chapter" data-level="10.5" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-data-requirements"><i class="fa fa-check"></i><b>10.5</b> PCA: Data Requirements</a></li>
+<li class="chapter" data-level="10.6" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-toy-example"><i class="fa fa-check"></i><b>10.6</b> PCA: Toy Example</a></li>
+<li class="chapter" data-level="10.7" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-toy-example-1"><i class="fa fa-check"></i><b>10.7</b> PCA: Toy Example</a></li>
+<li class="chapter" data-level="10.8" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-toy-example-2"><i class="fa fa-check"></i><b>10.8</b> PCA: Toy Example</a></li>
+<li class="chapter" data-level="10.9" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-first-pc"><i class="fa fa-check"></i><b>10.9</b> PCA: First PC</a></li>
+<li class="chapter" data-level="10.10" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-first-pc-1"><i class="fa fa-check"></i><b>10.10</b> PCA: First PC</a></li>
+<li class="chapter" data-level="10.11" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-second-pc"><i class="fa fa-check"></i><b>10.11</b> PCA: Second PC</a></li>
+<li class="chapter" data-level="10.12" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#pca-how-many-pcs-to-use"><i class="fa fa-check"></i><b>10.12</b> PCA: How Many PCs to Use?</a></li>
+<li class="chapter" data-level="10.13" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-61"><i class="fa fa-check"></i><b>10.13</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.14" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-62"><i class="fa fa-check"></i><b>10.14</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.15" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-63"><i class="fa fa-check"></i><b>10.15</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.16" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-64"><i class="fa fa-check"></i><b>10.16</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.17" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-65"><i class="fa fa-check"></i><b>10.17</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.18" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#principal-components-regression-pcr"><i class="fa fa-check"></i><b>10.18</b> Principal Components Regression (PCR)</a></li>
+<li class="chapter" data-level="10.19" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#principal-components-regression-pcr-1"><i class="fa fa-check"></i><b>10.19</b> Principal Components Regression (PCR)</a></li>
+<li class="chapter" data-level="10.20" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#clustering"><i class="fa fa-check"></i><b>10.20</b> Clustering</a></li>
+<li class="chapter" data-level="10.21" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#clustering-applications"><i class="fa fa-check"></i><b>10.21</b> Clustering: Applications</a></li>
+<li class="chapter" data-level="10.22" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering"><i class="fa fa-check"></i><b>10.22</b> K-Means Clustering</a></li>
+<li class="chapter" data-level="10.23" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-1"><i class="fa fa-check"></i><b>10.23</b> K-Means Clustering</a></li>
+<li class="chapter" data-level="10.24" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-2"><i class="fa fa-check"></i><b>10.24</b> K-Means Clustering</a></li>
+<li class="chapter" data-level="10.25" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-formulation"><i class="fa fa-check"></i><b>10.25</b> K-Means Clustering Formulation</a></li>
+<li class="chapter" data-level="10.26" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-algorithm"><i class="fa fa-check"></i><b>10.26</b> K-Means Clustering Algorithm</a></li>
+<li class="chapter" data-level="10.27" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-algorithm-1"><i class="fa fa-check"></i><b>10.27</b> K-Means Clustering Algorithm</a></li>
+<li class="chapter" data-level="10.28" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#k-means-clustering-algorithm-2"><i class="fa fa-check"></i><b>10.28</b> K-Means Clustering Algorithm</a></li>
+<li class="chapter" data-level="10.29" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering"><i class="fa fa-check"></i><b>10.29</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="10.30" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-1"><i class="fa fa-check"></i><b>10.30</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="10.31" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-2"><i class="fa fa-check"></i><b>10.31</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="10.32" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-types-of-linkage"><i class="fa fa-check"></i><b>10.32</b> Hierarchical Clustering: Types of Linkage</a></li>
+<li class="chapter" data-level="10.33" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-algorithm"><i class="fa fa-check"></i><b>10.33</b> Hierarchical Clustering Algorithm</a></li>
+<li class="chapter" data-level="10.34" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#hierarchical-clustering-choice-of-dissimilarity-measure"><i class="fa fa-check"></i><b>10.34</b> Hierarchical Clustering: Choice of Dissimilarity Measure</a></li>
+<li class="chapter" data-level="10.35" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#practical-issues-in-clustering"><i class="fa fa-check"></i><b>10.35</b> Practical Issues in Clustering</a></li>
+<li class="chapter" data-level="10.36" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-66"><i class="fa fa-check"></i><b>10.36</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.37" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-67"><i class="fa fa-check"></i><b>10.37</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.38" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#your-turn-68"><i class="fa fa-check"></i><b>10.38</b> <span style="color:blue">Your Turn!!!</span></a></li>
+<li class="chapter" data-level="10.39" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#to-sum-it-all-up"><i class="fa fa-check"></i><b>10.39</b> To Sum It All Up</a></li>
+<li class="chapter" data-level="10.40" data-path="unsupervised-learning-1.html"><a href="unsupervised-learning-1.html#next-steps"><i class="fa fa-check"></i><b>10.40</b> Next Steps</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">208 Course Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="unsupervised-learning-1" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Unsupervised Learning<a href="unsupervised-learning-1.html#unsupervised-learning-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<ul>
+<li><strong>Supervised learning</strong> problems involve a set of <span class="math inline">\(p\)</span> features <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span> and a response <span class="math inline">\(Y\)</span> measured on <span class="math inline">\(n\)</span> observations.
+<ul>
+<li>Objective is prediction and explain (if possible) the relation between response and predictors.</li>
+</ul></li>
+<li>In <strong>unsupervised learning</strong> problems, we observe only the features <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>.
+<ul>
+<li>Objectives can be to visualize the data, or,</li>
+<li>discover subgroups among variables or among observations.</li>
+</ul></li>
+</ul>
+<p>We will discuss two methods:</p>
+<ul>
+<li><p><strong>Principal Components Analysis (PCA)</strong>: Used for data visualization and pre-processing.</p></li>
+<li><p><strong>Clustering</strong>: Discover unknown subgroups in data.</p></li>
+</ul>
+<div id="unsupervised-learning-2" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Unsupervised Learning<a href="unsupervised-learning-1.html#unsupervised-learning-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Unsupervised learning problems tend to be more subjective than supervised learning problems.</p></li>
+<li><p>Often performed as part of an <strong>exploratory data analysis</strong>.</p></li>
+<li><p>Difficult to assess the results obtained from unsupervised learning methods.</p></li>
+<li><p>It is easier to obtain <strong>unlabeled data</strong>.</p></li>
+</ul>
+</div>
+<div id="principal-components-analysis-pca" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Principal Components Analysis (PCA)<a href="unsupervised-learning-1.html#principal-components-analysis-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>PCA seeks a low-dimensional representation of a dataset that captures as much of the information as possible. PCA serves as a tool for</p>
+<ul>
+<li>Data compression</li>
+<li>Data visualization</li>
+</ul>
+<p>The principal components are linear combinations of the <span class="math inline">\(p\)</span> original features subject to certain constraints.</p>
+</div>
+<div id="pca-example" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> PCA: Example<a href="unsupervised-learning-1.html#pca-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>USArrests dataset</strong></p>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="unsupervised-learning-1.html#cb482-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)   <span class="co"># load package</span></span>
+<span id="cb482-2"><a href="unsupervised-learning-1.html#cb482-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;USArrests&quot;</span>)   <span class="co"># load dataset</span></span>
+<span id="cb482-3"><a href="unsupervised-learning-1.html#cb482-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-4"><a href="unsupervised-learning-1.html#cb482-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(USArrests)   <span class="co"># first six observations</span></span></code></pre></div>
+<pre><code>##            Murder Assault UrbanPop Rape
+## Alabama      13.2     236       58 21.2
+## Alaska       10.0     263       48 44.5
+## Arizona       8.1     294       80 31.0
+## Arkansas      8.8     190       50 19.5
+## California    9.0     276       91 40.6
+## Colorado      7.9     204       78 38.7</code></pre>
+</div>
+<div id="pca-example-1" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> PCA: Example<a href="unsupervised-learning-1.html#pca-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>USArrests dataset</strong></p>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="unsupervised-learning-1.html#cb484-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(USArrests)   <span class="co"># correlation matrix of variables</span></span></code></pre></div>
+<pre><code>##              Murder   Assault   UrbanPop      Rape
+## Murder   1.00000000 0.8018733 0.06957262 0.5635788
+## Assault  0.80187331 1.0000000 0.25887170 0.6652412
+## UrbanPop 0.06957262 0.2588717 1.00000000 0.4113412
+## Rape     0.56357883 0.6652412 0.41134124 1.0000000</code></pre>
+</div>
+<div id="pca-data-requirements" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> PCA: Data Requirements<a href="unsupervised-learning-1.html#pca-data-requirements" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To perform dimension reduction techniques in R, generally, the data should be prepared as follows:</p>
+<ul>
+<li><p>Data are in tidy format per Wickham et al. (2014);</p></li>
+<li><p>Any missing values in the data must be removed or imputed;</p></li>
+<li><p>Typically, the data must all be numeric values (e.g., one-hot, label, ordinal encoding categorical features);</p></li>
+<li><p>Numeric data should be standardized (e.g., centered and scaled) to make features comparable.</p></li>
+</ul>
+</div>
+<div id="pca-toy-example" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> PCA: Toy Example<a href="unsupervised-learning-1.html#pca-toy-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-312-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pca-toy-example-1" class="section level2 hasAnchor" number="10.7">
+<h2><span class="header-section-number">10.7</span> PCA: Toy Example<a href="unsupervised-learning-1.html#pca-toy-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-313-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pca-toy-example-2" class="section level2 hasAnchor" number="10.8">
+<h2><span class="header-section-number">10.8</span> PCA: Toy Example<a href="unsupervised-learning-1.html#pca-toy-example-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-314"></span>
+<img src="EFT/pca3.jpg" alt="PCs with 3 features. [Adapted from HMLR, Boehmke &amp; Greenwell]" width="80%" />
+<p class="caption">
+Figure 10.1: PCs with 3 features. [Adapted from HMLR, Boehmke &amp; Greenwell]
+</p>
+</div>
+</div>
+<div id="pca-first-pc" class="section level2 hasAnchor" number="10.9">
+<h2><span class="header-section-number">10.9</span> PCA: First PC<a href="unsupervised-learning-1.html#pca-first-pc" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>first principal component</strong> <span class="math inline">\(Z_1\)</span> of a set of features <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span> is the normalized linear combination of the features that has the largest variance.</p>
+<p><img src="EFT/e10.1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>By <strong>normalized</strong>, we mean <span class="math inline">\(\displaystyle \sum_{j=1}^p \phi^2_{j1}=1\)</span>.</p>
+<p>For the <span class="math inline">\(i^{th}\)</span> observation,</p>
+<p><img src="EFT/e10.2.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>The elements <span class="math inline">\(\phi_{11},\phi_{21}, \ldots, \phi_{p1}\)</span> are <strong>loadings of the first PC</strong>. The loadings make up the <strong>first PC loading vector</strong> <span class="math inline">\(\phi_1=(\phi_{11} \ \ \phi_{21} \ \ \ldots \ \ \phi_{p1})^T\)</span>.</p>
+<p><span class="math inline">\(z_{11}, z_{21}, \ldots, z_{n1}\)</span> are the <strong>first PC scores</strong>.</p>
+</div>
+<div id="pca-first-pc-1" class="section level2 hasAnchor" number="10.10">
+<h2><span class="header-section-number">10.10</span> PCA: First PC<a href="unsupervised-learning-1.html#pca-first-pc-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose an <span class="math inline">\(n \times p\)</span> feature matrix <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<p><img src="EFT/DataMatrix1.png" width="40%" style="display: block; margin: auto;" /></p>
+<p>The first PC is obtained by solving</p>
+<p><img src="EFT/e10.3.png" width="80%" style="display: block; margin: auto;" /></p>
+<!-- ## PCA: First PC -->
+<!-- The loading vector $\phi_1$ defines a direction in feature space along which the data vary the most. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/6.14.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/e6.20.png") -->
+<!-- ``` -->
+<!-- ## PCA: First PC -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/6.15.png") -->
+<!-- ``` -->
+<!-- The first PC scores are the projections of the $n$ data points onto the first PC direction. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/e6.20.png") -->
+<!-- ``` -->
+</div>
+<div id="pca-second-pc" class="section level2 hasAnchor" number="10.11">
+<h2><span class="header-section-number">10.11</span> PCA: Second PC<a href="unsupervised-learning-1.html#pca-second-pc" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>second principal component</strong> <span class="math inline">\(Z_2\)</span> is the linear combination of <span class="math inline">\(X_1,\ldots,X_p\)</span> that has maximal variance among all linear combinations that are <strong>uncorrelated</strong> with <span class="math inline">\(Z_1\)</span>.</p>
+<p>The second PC scores are <span class="math inline">\(z_{12}, z_{22}, \ldots, z_{n2}\)</span> where</p>
+<p><img src="EFT/e10.4.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><span class="math inline">\(\phi_2\)</span> is the <strong>second PC loading vector</strong> with <strong>loadings</strong> <span class="math inline">\(\phi_{12},\phi_{22}, \ldots, \phi_{p2}\)</span>.</p>
+<p><span class="math inline">\(Z_2\)</span> <strong>uncorrelated</strong> with <span class="math inline">\(Z_1\)</span> is equivalent to <span class="math inline">\(\phi_2\)</span> being orthogonal (perpendicular) with <span class="math inline">\(\phi_1\)</span>.</p>
+<!-- ## PCA: Second PC -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/6.14.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/e6.19.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/e6.205.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/t10.1.png") -->
+<!-- ``` -->
+<!-- ## PCA: Example -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '73%'} -->
+<!-- knitr::include_graphics("EFT/10.1.png") -->
+<!-- ``` -->
+<!-- ## PCA: Another Interpretation -->
+<!-- PCs provide low-dimensional linear surfaces that are closest (using average squared Euclidean distance) to the observations. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.2.png") -->
+<!-- ``` -->
+<!-- ## PCA: Scaling the Variables -->
+<!-- If the variables are in different units, scaling each to have standard deviation equal to one is recommended. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.3.png") -->
+<!-- ``` -->
+<!-- ## PCA: Proportion of Variance Explained (PVE) -->
+<!-- **Total variance** present in the dataset -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/e10.6.png") -->
+<!-- ``` -->
+<!-- Variance explained by the $m^{th}$ PC -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e10.7.png") -->
+<!-- ``` -->
+<!-- The PVE of the $m^{th}$ PC is -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/e10.8.png") -->
+<!-- ``` -->
+<!-- ## PCA: Proportion of Variance Explained (PVE) -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.4.png") -->
+<!-- ``` -->
+</div>
+<div id="pca-how-many-pcs-to-use" class="section level2 hasAnchor" number="10.12">
+<h2><span class="header-section-number">10.12</span> PCA: How Many PCs to Use?<a href="unsupervised-learning-1.html#pca-how-many-pcs-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>We would like to use the smallest number of PCs required to get a good understanding of the data.</p></li>
+<li><p>CV cannot be implemented to answer this question.</p></li>
+<li><p>Two common approaches in helping to make this decision (depends on the objective and analytic workflow):</p>
+<ul>
+<li>Proportion of variance explained (PVE)</li>
+<li>Screeplot. Look for an <strong>elbow</strong>.</li>
+</ul></li>
+</ul>
+</div>
+<div id="your-turn-61" class="section level2 smaller hasAnchor" number="10.13">
+<h2><span class="header-section-number">10.13</span> <span style="color:blue">Your Turn!!!</span><a href="unsupervised-learning-1.html#your-turn-61" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will work with the <code>iris</code> dataset. Since we are in the unsupervised learning framework we will drop the <code>Species</code> variable which is commonly used as the response.</p>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="unsupervised-learning-1.html#cb487-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;iris&quot;</span>)   <span class="co"># load dataset</span></span>
+<span id="cb487-2"><a href="unsupervised-learning-1.html#cb487-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb487-3"><a href="unsupervised-learning-1.html#cb487-3" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Species)   <span class="co"># drop &#39;Species&#39;</span></span></code></pre></div>
+<p><strong>(1)</strong> Investigate the dataset.</p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="unsupervised-learning-1.html#cb488-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(iris))   <span class="co"># no missing entries</span></span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="unsupervised-learning-1.html#cb490-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(iris)    <span class="co"># all variables are numerical (need to be standardized)</span></span></code></pre></div>
+<pre><code>##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500</code></pre>
+</div>
+<div id="your-turn-62" class="section level2 hasAnchor" number="10.14">
+<h2><span class="header-section-number">10.14</span> <span style="color:blue">Your Turn!!!</span><a href="unsupervised-learning-1.html#your-turn-62" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>(2)</strong> Perform PCA on the dataset after required preprocessing.</p>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="unsupervised-learning-1.html#cb492-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(iris, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)   <span class="co"># perform PCA on scaled dataset</span></span></code></pre></div>
+<!-- ## <span style="color:blue">Your Turn!!!</span> {.smaller} -->
+<p><strong>(3)</strong> What proportion of variance is explained cumulatively by the first two principal components?</p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="unsupervised-learning-1.html#cb493-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca)   <span class="co"># The first two PCs explain approximately 96% of the total variation.</span></span></code></pre></div>
+<pre><code>## Importance of components:
+##                           PC1    PC2     PC3     PC4
+## Standard deviation     1.7084 0.9560 0.38309 0.14393
+## Proportion of Variance 0.7296 0.2285 0.03669 0.00518
+## Cumulative Proportion  0.7296 0.9581 0.99482 1.00000</code></pre>
+</div>
+<div id="your-turn-63" class="section level2 hasAnchor" number="10.15">
+<h2><span class="header-section-number">10.15</span> <span style="color:blue">Your Turn!!!</span><a href="unsupervised-learning-1.html#your-turn-63" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>(4)</strong> What is the sum of squared loadings for the second PC loading vector?</p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="unsupervised-learning-1.html#cb495-1" aria-hidden="true" tabindex="-1"></a>pca   <span class="co"># obtain loading vectors</span></span></code></pre></div>
+<pre><code>## Standard deviations (1, .., p=4):
+## [1] 1.7083611 0.9560494 0.3830886 0.1439265
+## 
+## Rotation (n x k) = (4 x 4):
+##                     PC1         PC2        PC3        PC4
+## Sepal.Length  0.5210659 -0.37741762  0.7195664  0.2612863
+## Sepal.Width  -0.2693474 -0.92329566 -0.2443818 -0.1235096
+## Petal.Length  0.5804131 -0.02449161 -0.1421264 -0.8014492
+## Petal.Width   0.5648565 -0.06694199 -0.6342727  0.5235971</code></pre>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="unsupervised-learning-1.html#cb497-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(pca<span class="sc">$</span>rotation[,<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span>)   <span class="co"># sum of squared loadings for second PC</span></span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+</div>
+<div id="your-turn-64" class="section level2 smaller hasAnchor" number="10.16">
+<h2><span class="header-section-number">10.16</span> <span style="color:blue">Your Turn!!!</span><a href="unsupervised-learning-1.html#your-turn-64" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>(5)</strong> Create a biplot for the analysis. From the biplot, the loading vector for the first PC places most of its weight on which variable(s)? Similarly, the loading vector for the second PC places most of its weight on which variable(s)?</p>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="unsupervised-learning-1.html#cb499-1" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pca, <span class="at">scale =</span> <span class="dv">0</span>, <span class="at">cex =</span> <span class="fl">0.6</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-327-1.png" width="576" style="display: block; margin: auto;" /></p>
+<!-- * From the biplot, the loading vector for the first PC places most of its weight on which variable(s)? Similarly, the loading vector for the second PC places most of its weight on which variable(s)?  -->
+<!-- ```{r} -->
+<p>The first loading vector places most if its weight on the variables <code>Sepal.Length</code>, <code>Petal.Length</code>, and <code>Petal.Width</code>. The second loading vector places most if its weight on the variable <code>Sepal.Width</code>.
+<!-- ``` --></p>
+</div>
+<div id="your-turn-65" class="section level2 hasAnchor" number="10.17">
+<h2><span class="header-section-number">10.17</span> <span style="color:blue">Your Turn!!!</span><a href="unsupervised-learning-1.html#your-turn-65" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>(6)</strong> From the biplot, which variables seem to be correlated with the variable <code>Sepal.Length</code>?</p>
+<!-- ```{r} -->
+<p>The variables <code>Petal.Length</code> and <code>Petal.Width</code> are highly correlated with <code>Sepal.Length</code>. One can also verify that from the correlation matrix below.</p>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="unsupervised-learning-1.html#cb500-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(iris)   <span class="co"># correlation matrix</span></span></code></pre></div>
+<pre><code>##              Sepal.Length Sepal.Width Petal.Length Petal.Width
+## Sepal.Length    1.0000000  -0.1175698    0.8717538   0.8179411
+## Sepal.Width    -0.1175698   1.0000000   -0.4284401  -0.3661259
+## Petal.Length    0.8717538  -0.4284401    1.0000000   0.9628654
+## Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000</code></pre>
+<!-- ``` -->
+<p><strong>(7)</strong> From the biplot, which observation has the highest first PC score and which observation has the highest second PC score?</p>
+<!-- ```{r} -->
+<p>Observation 119 has the highest score for the first PC, whereas observation 61 has the highest score for the second PC.
+<!-- ``` --></p>
+</div>
+<div id="principal-components-regression-pcr" class="section level2 smaller hasAnchor" number="10.18">
+<h2><span class="header-section-number">10.18</span> Principal Components Regression (PCR)<a href="unsupervised-learning-1.html#principal-components-regression-pcr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>PCA can be used to represent correlated variables with a smaller number of uncorrelated features (called principal components) and the resulting components can be used as predictors in a linear regression model. This two-step process is known as principal components regression (PCR).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-329"></span>
+<img src="EFT/pcr.jpg" alt="PCR Workflow. [Adapted from HMLR, Boehmke &amp; Greenwell]" width="70%" />
+<p class="caption">
+Figure 10.2: PCR Workflow. [Adapted from HMLR, Boehmke &amp; Greenwell]
+</p>
+</div>
+</div>
+<div id="principal-components-regression-pcr-1" class="section level2 hasAnchor" number="10.19">
+<h2><span class="header-section-number">10.19</span> Principal Components Regression (PCR)<a href="unsupervised-learning-1.html#principal-components-regression-pcr-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are two equivalent ways of using PCA in supervised learning problems.</p>
+<ul>
+<li><p>Include <code>step_pca()</code> in blueprint and use <code>method = "lm"</code> while training/implementing CV. Final model is an MLR model with PCs as predictors.</p></li>
+<li><p>directly use <code>method = "pcr"</code> while training/implementing CV to choose for the optimal number of PCs. Final model can be built with the <code>pcr</code> function from <code>pls</code> library.</p></li>
+</ul>
+<p>Let’s implement that on the <strong>Ames Housing Dataset</strong>.</p>
+<!-- ## PCR: Boston Dataset Example -->
+<!-- ```{r} -->
+<!-- library(MASS) -->
+<!-- data(Boston) -->
+<!-- head(Boston) -->
+<!-- ``` -->
+</div>
+<div id="clustering" class="section level2 hasAnchor" number="10.20">
+<h2><span class="header-section-number">10.20</span> Clustering<a href="unsupervised-learning-1.html#clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Broad class of techniques for finding <strong>subgroups</strong> or <strong>clusters</strong> in a dataset.</p></li>
+<li><p>Partition the data into distinct groups so that observations within each group are similar to each other.</p></li>
+<li><p>Definition of similarity depends on the context and the dataset being studied.</p></li>
+<li><p>We will talk about:</p>
+<ul>
+<li>K-means clustering</li>
+<li>Hierarchical clustering</li>
+</ul></li>
+</ul>
+</div>
+<div id="clustering-applications" class="section level2 hasAnchor" number="10.21">
+<h2><span class="header-section-number">10.21</span> Clustering: Applications<a href="unsupervised-learning-1.html#clustering-applications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Cancer research: <span class="math inline">\(n\)</span> observations correspond to tissue samples for patients with different types of cancer, <span class="math inline">\(p\)</span> features correspond to gene expression measurements.</p></li>
+<li><p>Market segmentation: <span class="math inline">\(n\)</span> observations on <span class="math inline">\(p\)</span> variables. Identify subgroups of people who might be more receptive to a particular form of advertising.</p></li>
+<li><p>Social network analysis, astronomical data analysis, organizing computing clusters etc.</p></li>
+</ul>
+</div>
+<div id="k-means-clustering" class="section level2 hasAnchor" number="10.22">
+<h2><span class="header-section-number">10.22</span> K-Means Clustering<a href="unsupervised-learning-1.html#k-means-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Partition the dataset into a pre-specified number of <span class="math inline">\(K\)</span> distinct, non-overlapping clusters.</p>
+<p><img src="EFT/10.5.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>The coloring (ordering) of the clusters is arbitrary.</p>
+</div>
+<div id="k-means-clustering-1" class="section level2 hasAnchor" number="10.23">
+<h2><span class="header-section-number">10.23</span> K-Means Clustering<a href="unsupervised-learning-1.html#k-means-clustering-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/10.6.png" width="70%" style="display: block; margin: auto;" /></p>
+<!-- ## K-Means Clustering Formulation -->
+</div>
+<div id="k-means-clustering-2" class="section level2 hasAnchor" number="10.24">
+<h2><span class="header-section-number">10.24</span> K-Means Clustering<a href="unsupervised-learning-1.html#k-means-clustering-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!-- Let $C_1,C_2, \ldots, C_K$ denote sets containing the indices of the observations in each cluster. These sets satisfy two properties: -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/e10.85.png") -->
+<!-- ``` -->
+<!-- If the $i^{th}$ observation is in the $k^{th}$ cluster, then $i \in C_k$. -->
+<p>The idea behind K-means clustering is that a <strong>good clustering</strong> is one for which the <strong>within-cluster variation</strong> is as small as possible. The resulting clusters are such that</p>
+<ul>
+<li><p>each observation belongs to at least one cluster, and</p></li>
+<li><p>clusters are non-overlapping, no observation belongs to more than one cluster.</p></li>
+</ul>
+</div>
+<div id="k-means-clustering-formulation" class="section level2 hasAnchor" number="10.25">
+<h2><span class="header-section-number">10.25</span> K-Means Clustering Formulation<a href="unsupervised-learning-1.html#k-means-clustering-formulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>within-cluster variation</strong> for cluster <span class="math inline">\(C_k\)</span> is a measure <span class="math inline">\(W(C_k)\)</span> of the amount by which the observations within a cluster differ from each other. Thus the objective is to</p>
+<p><img src="EFT/e10.9.png" width="30%" style="display: block; margin: auto;" /></p>
+<p>where</p>
+<p><img src="EFT/e10.10.png" width="55%" style="display: block; margin: auto;" /></p>
+<p>Combining, we have,</p>
+<p><img src="EFT/e10.11.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="k-means-clustering-algorithm" class="section level2 hasAnchor" number="10.26">
+<h2><span class="header-section-number">10.26</span> K-Means Clustering Algorithm<a href="unsupervised-learning-1.html#k-means-clustering-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/algo10.1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="k-means-clustering-algorithm-1" class="section level2 hasAnchor" number="10.27">
+<h2><span class="header-section-number">10.27</span> K-Means Clustering Algorithm<a href="unsupervised-learning-1.html#k-means-clustering-algorithm-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>The algorithm is guaranteed to decrease the value of the objective at each step since</li>
+</ul>
+<p><img src="EFT/e10.12.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>where <span class="math inline">\(\bar{x}_{kj}=\frac{1}{|C_k|}\sum_{i \in C_k} x_{ij}\)</span>: mean of <span class="math inline">\(j^{th}\)</span> feature in cluster <span class="math inline">\(C_k\)</span>.</p>
+<ul>
+<li><p>The algorithm is not guaranteed to find the global optimum.</p></li>
+<li><p>Results depend on the initial (random) cluster assignments. It is recommended to run the algorithm multiple times from different random initial configurations.</p></li>
+</ul>
+</div>
+<div id="k-means-clustering-algorithm-2" class="section level2 hasAnchor" number="10.28">
+<h2><span class="header-section-number">10.28</span> K-Means Clustering Algorithm<a href="unsupervised-learning-1.html#k-means-clustering-algorithm-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/10.7.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hierarchical-clustering" class="section level2 hasAnchor" number="10.29">
+<h2><span class="header-section-number">10.29</span> Hierarchical Clustering<a href="unsupervised-learning-1.html#hierarchical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>K-means clustering requires us to pre-specify the number of clusters <span class="math inline">\(K\)</span>. This can be a disadvantage.</p></li>
+<li><p>Hierarchical clustering is an alternative approach which does not require that we commit to a particular choice of <span class="math inline">\(K\)</span>.</p></li>
+<li><p>Hierarchical clustering results in a tree-based representation of the observations, called a <strong>dendrogram</strong>.</p></li>
+<li><p>We discuss <strong>bottom-up</strong> or <strong>agglomerative</strong> clustering. This is the most common type of hierarchical
+clustering. The dendrogram is built starting from the leaves (bottom) and combining clusters up to the trunk (top).</p></li>
+</ul>
+</div>
+<div id="hierarchical-clustering-1" class="section level2 hasAnchor" number="10.30">
+<h2><span class="header-section-number">10.30</span> Hierarchical Clustering<a href="unsupervised-learning-1.html#hierarchical-clustering-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/SL_C10_1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hierarchical-clustering-2" class="section level2 hasAnchor" number="10.31">
+<h2><span class="header-section-number">10.31</span> Hierarchical Clustering<a href="unsupervised-learning-1.html#hierarchical-clustering-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/SL_C10_2.png" width="100%" style="display: block; margin: auto;" /></p>
+<!-- ## Hierarchical Clustering: Interpreting a Dendrogram -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.10.png") -->
+<!-- ``` -->
+<!-- ## Hierarchical Clustering: Example -->
+<!-- **Simulated dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/10.8.png") -->
+<!-- ``` -->
+<!-- ## Hierarchical Clustering: Example -->
+<!-- **Dendrogram from simulated dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.9.png") -->
+<!-- ``` -->
+</div>
+<div id="hierarchical-clustering-types-of-linkage" class="section level2 hasAnchor" number="10.32">
+<h2><span class="header-section-number">10.32</span> Hierarchical Clustering: Types of Linkage<a href="unsupervised-learning-1.html#hierarchical-clustering-types-of-linkage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/linkage.png" width="100%" style="display: block; margin: auto;" /></p>
+<!-- ## Hierarchical Clustering: Types of Linkage -->
+<!-- ## Hierarchical Clustering: Types of Linkage -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.12.png") -->
+<!-- ``` -->
+</div>
+<div id="hierarchical-clustering-algorithm" class="section level2 hasAnchor" number="10.33">
+<h2><span class="header-section-number">10.33</span> Hierarchical Clustering Algorithm<a href="unsupervised-learning-1.html#hierarchical-clustering-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/algo10.2.png" width="100%" style="display: block; margin: auto;" /></p>
+<!-- ## Hierarchical Clustering Algorithm -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/10.11.png") -->
+<!-- ``` -->
+</div>
+<div id="hierarchical-clustering-choice-of-dissimilarity-measure" class="section level2 hasAnchor" number="10.34">
+<h2><span class="header-section-number">10.34</span> Hierarchical Clustering: Choice of Dissimilarity Measure<a href="unsupervised-learning-1.html#hierarchical-clustering-choice-of-dissimilarity-measure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Correlation-based distance</strong> considers two observations to be similar if their features are highly correlated. It focuses on the shapes of dissimilarity profiles rather than their magnitudes.</p>
+<p><img src="EFT/10.13.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="practical-issues-in-clustering" class="section level2 hasAnchor" number="10.35">
+<h2><span class="header-section-number">10.35</span> Practical Issues in Clustering<a href="unsupervised-learning-1.html#practical-issues-in-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Scaling of the variables matters.</p></li>
+<li><p>Choices in hierarchical clustering.</p>
+<ul>
+<li>Dissimilarity measure</li>
+<li>Type of linkage</li>
+<li>Where to cut the dendrogram?</li>
+</ul></li>
+<li><p>Choices in K-means clustering.</p>
+<ul>
+<li>What should be the value of <span class="math inline">\(K\)</span>?</li>
+</ul></li>
+<li><p>Clustering methods are not very robust to perturbations to the data.</p></li>
+<li><p>Which features should be used for clustering?</p></li>
+<li><p>For more details, see <em>Elements of Statistical Learning</em>, Chapter 14.</p></li>
+</ul>
+</div>
+<div id="your-turn-66" class="section level2 hasAnchor" number="10.36">
+<h2><span class="header-section-number">10.36</span> <span style="color:blue">Your Turn!!!</span><a href="unsupervised-learning-1.html#your-turn-66" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will work with the <code>USArrests</code> dataset.</p>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="unsupervised-learning-1.html#cb502-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)   <span class="co"># load package</span></span>
+<span id="cb502-2"><a href="unsupervised-learning-1.html#cb502-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;USArrests&quot;</span>)   <span class="co"># load dataset</span></span></code></pre></div>
+<p><strong>(1)</strong> Using <code>fviz_nbclust</code>, choose an appropriate number of clusters separately for K-means and hierarchical clustering.</p>
+<p><strong>(2)</strong> Implement K-means with your chosen number of clusters. Plot the resulting clusters. Mention any three states that are clustered together with Wisconsin.</p>
+<p><strong>(3)</strong> Implement hierarchical clustering (both <code>complete</code> and <code>single</code> linkage) with your chosen number of clusters. Observe the respective dendrograms. What do you see?</p>
+</div>
+<div id="your-turn-67" class="section level2 hasAnchor" number="10.37">
+<h2><span class="header-section-number">10.37</span> <span style="color:blue">Your Turn!!!</span><a href="unsupervised-learning-1.html#your-turn-67" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Winter works at a juice-packing company where she uses a machine-learning model to predict the demand for different juice flavors. After training and evaluating the model, Winter was confident that it was ready for production. The model was deployed, and the company started using it to plan its production and distribution.</p>
+<p>During the first few months, everything was working as expected. But then, the company noticed that the model consistently overestimated the demand for certain flavors. What could be the cause of the problem with the model?</p>
+<ul>
+<li><p>The model is underfitting and needs more complexity.</p></li>
+<li><p>The model is overfitting and needs more regularization.</p></li>
+<li><p>The model is suffering from data drift.</p></li>
+<li><p>The model is suffering from sampling bias.</p></li>
+</ul>
+</div>
+<div id="your-turn-68" class="section level2 hasAnchor" number="10.38">
+<h2><span class="header-section-number">10.38</span> <span style="color:blue">Your Turn!!!</span><a href="unsupervised-learning-1.html#your-turn-68" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Winter’s been working on a model to classify photos of food. Her company is building an application that will let users snap a picture of a plate at a restaurant and show them a potential recipe so they can cook it at home. After a year of work, Winter’s model was working great. The company launched the model worldwide and started monitoring user feedback.</p>
+<p>Unfortunately, users from an Asian country complained because the model wasn’t working for them. What is the most likely reason for the problem?</p>
+<ul>
+<li><p>Winter’s model didn’t have enough complexity to learn all the data, so it’s normal to have problems with certain regions.</p></li>
+<li><p>Winter needed to train the model for more time to fully capture the dataset’s information.</p></li>
+<li><p>Winter’s model is suffering from data drift.</p></li>
+<li><p>Winter’s model is suffering from sampling bias.</p></li>
+</ul>
+</div>
+<div id="to-sum-it-all-up" class="section level2 hasAnchor" number="10.39">
+<h2><span class="header-section-number">10.39</span> To Sum It All Up<a href="unsupervised-learning-1.html#to-sum-it-all-up" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="EFT/MachineLearningAlgorithms.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="next-steps" class="section level2 hasAnchor" number="10.40">
+<h2><span class="header-section-number">10.40</span> Next Steps<a href="unsupervised-learning-1.html#next-steps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Statistics and Data Science Minor</p></li>
+<li><p>Future readings</p>
+<ul>
+<li><em>Elements of Statistical Learning</em>, HTF</li>
+<li><em>Deep Learning</em>, GBC</li>
+<li>Optimization Algorithms</li>
+<li>Linear Algebra</li>
+<li>Programming in Python</li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="support-vector-machines-svm.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/abhicc/208notes/edit/master/09-Slides10.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/abhicc/208notes/blob/master/09-Slides10.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
